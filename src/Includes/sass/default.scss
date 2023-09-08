@@ -1,0 +1,63 @@
+
+input {
+  font-size: 16px;
+  font-weight: 400;
+  max-width: 100%;
+}
+
+.error {
+  color: red;
+  line-height: 20px;
+  font-weight: 400;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.creditCardNumber {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  svg {
+    position: absolute;
+    width: 30px;
+    height: auto;
+    left: 10px;
+  }
+
+  input {
+    padding-left: 45px !important;
+  }
+}
+
+button.link {
+  background: none;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+
+  &:hover {
+    color: #bbb;
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.btn-medium-size {
+  width: 155px;
+  text-align: left;
+}
+
+.cc-number-review {
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 5px;
+    height: auto;
+    width: 32px;
+  }
+}

@@ -1,0 +1,6 @@
+.DS_STORE
+.vagrant
+.idea
+.htaccess
+readme.txt
+/node_modules

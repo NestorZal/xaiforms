@@ -1,0 +1,16 @@
+{
+    "name": "xaifos/xaiforms",
+    "description": "Plugin help you to create custom forms or payment forms using basic html forms. Includes integration with several Payment Gateways.",
+    "type": "wordpress-plugin",
+    "autoload": {
+        "psr-4": {
+            "XaiForms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Xaifos.com"
+        }
+    ],
+    "require": {}
+}
