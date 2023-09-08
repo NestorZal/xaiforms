@@ -3,12 +3,15 @@ import { maskValue } from "../utils/InputCurrencyMask";
 import { getCardImage } from "../utils/FormHelper";
 
 const FieldValue = (props) => {
-  const { tag, name, className, format } = props;
+  const { name, className, format } = props;
   const { values } = useFormikContext();
 
   const fieldName = name;
 
   const value = values[fieldName] ? values[fieldName] : null;
+  console.dir(props);
+  console.dir(values);
+
   if (value) {
     switch (format) {
       case "price":

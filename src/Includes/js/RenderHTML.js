@@ -61,7 +61,7 @@ const render = () => {
     const initialActiveTab = getInitialTab();
     return renderWithTabs(htmlParsed, initialActiveTab);
   }
-
+  console.log(htmlParsed);
   return htmlParsed;
 };
 

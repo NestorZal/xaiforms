@@ -1130,14 +1130,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 var FieldValue = function FieldValue(props) {
-  var tag = props.tag,
-    name = props.name,
+  var name = props.name,
     className = props.className,
     format = props.format;
   var _useFormikContext = (0,formik__WEBPACK_IMPORTED_MODULE_0__.useFormikContext)(),
     values = _useFormikContext.values;
   var fieldName = name;
   var value = values[fieldName] ? values[fieldName] : null;
+  console.dir(props);
+  console.dir(values);
   if (value) {
     switch (format) {
       case "price":
@@ -1302,7 +1303,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_FieldsValidation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/FieldsValidation */ "./src/Includes/js/form/utils/FieldsValidation.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-var _excluded = ["label", "name", "className", "id", "noValidate"];
+var _excluded = ["label", "name", "className", "id", "required"];
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1323,12 +1324,8 @@ var PriceAmount = function PriceAmount(props) {
     name = props.name,
     className = props.className,
     id = props.id,
-    noValidate = props.noValidate,
+    required = props.required,
     rest = _objectWithoutProperties(props, _excluded);
-  var required = true;
-  if (noValidate) {
-    required = false;
-  }
   if (required) {
     (0,_utils_FieldsValidation__WEBPACK_IMPORTED_MODULE_4__.setCustomErrors)(name, rest);
   }
@@ -17916,6 +17913,7 @@ var render = function render() {
     var initialActiveTab = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getInitialTab)();
     return renderWithTabs(htmlParsed, initialActiveTab);
   }
+  console.log(htmlParsed);
   return htmlParsed;
 };
 if (typeof renderTemplateForm !== "undefined" && renderTemplateForm != null) {

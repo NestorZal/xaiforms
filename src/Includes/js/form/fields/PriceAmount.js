@@ -5,12 +5,7 @@ import { clearInputNumber, maskValue } from "../utils/InputCurrencyMask";
 import { validateField, setCustomErrors } from "../utils/FieldsValidation";
 
 const PriceAmount = (props) => {
-  const { label, name, className, id, noValidate, ...rest } = props;
-
-  let required = true;
-  if (noValidate) {
-    required = false;
-  }
+  const { label, name, className, id, required, ...rest } = props;
 
   if (required) {
     setCustomErrors(name, rest);
