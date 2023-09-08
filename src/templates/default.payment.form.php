@@ -6,7 +6,7 @@
 
        <email name="emailAddress" label="Your Email" wrapper-class="email-address" required error-msg-required="Your email is required." error-msg-invalid="Your email is invalid. Please try again!"/>
 
-       <select name="paymentOption" label="Select an option">
+       <select name="paymentOption" label="Select an option" placeholder="Select one" required>
            <option value="opt-1">Option 1 sdfsgtr wrtrt wrt</option>
            <option value="opt-2">Option 2</option>
            <option value="opt-3">Option 3</option>
@@ -26,7 +26,7 @@
     <step>
         <div>Hello Final STEP</div>
         <fieldvalue name="emailAddress"    >
-        <fieldvalue name="paymentOption" />
+        <fieldvalue format="option-label" name="paymentOption" />
         <fieldvalue name="billingName">
         <fieldvalue format="cardnumber" name="cardNumber">
         <fieldvalue name="expiryDate"/>

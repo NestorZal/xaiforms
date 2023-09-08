@@ -65,6 +65,9 @@ const Select = (props) => {
             }
           : "")}
       >
+        <option value="" disabled selected>
+          {placeholder || "Select one"}
+        </option>
         <Options data={options} />
       </Field>
       <ErrorMessage name={name} component="div" className="error" />

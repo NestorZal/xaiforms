@@ -7,10 +7,7 @@ const FieldValue = (props) => {
   const { values } = useFormikContext();
 
   const fieldName = name;
-
   const value = values[fieldName] ? values[fieldName] : null;
-  console.dir(props);
-  console.dir(values);
 
   if (value) {
     switch (format) {
@@ -23,6 +20,18 @@ const FieldValue = (props) => {
             <span>{value}</span>
           </div>
         );
+      case "option-label": {
+        const select = document.querySelector(`select[name="${fieldName}"]`);
+
+        let valueOption;
+        Object.values(select.options).forEach(function (option) {
+          if (option.value === value) {
+            valueOption = option.text;
+          }
+        });
+
+        return <div className={className}>{valueOption}</div>;
+      }
       default:
         return <div className={className}>{value}</div>;
     }

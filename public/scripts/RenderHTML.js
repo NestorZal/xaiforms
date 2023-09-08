@@ -1137,8 +1137,6 @@ var FieldValue = function FieldValue(props) {
     values = _useFormikContext.values;
   var fieldName = name;
   var value = values[fieldName] ? values[fieldName] : null;
-  console.dir(props);
-  console.dir(values);
   if (value) {
     switch (format) {
       case "price":
@@ -1153,6 +1151,20 @@ var FieldValue = function FieldValue(props) {
             children: value
           })]
         });
+      case "option-label":
+        {
+          var select = document.querySelector("select[name=\"".concat(fieldName, "\"]"));
+          var valueOption;
+          Object.values(select.options).forEach(function (option) {
+            if (option.value === value) {
+              valueOption = option.text;
+            }
+          });
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: className,
+            children: valueOption
+          });
+        }
       default:
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: className,
@@ -1445,7 +1457,7 @@ var Select = function Select(props) {
     children: [label ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_2__["default"], {
       text: label,
       domId: id || null
-    }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Field, _objectSpread(_objectSpread({
+    }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(formik__WEBPACK_IMPORTED_MODULE_1__.Field, _objectSpread(_objectSpread({
       id: id || null,
       className: className || null,
       name: name,
@@ -1455,9 +1467,14 @@ var Select = function Select(props) {
         return (0,_utils_FieldsValidation__WEBPACK_IMPORTED_MODULE_3__.validateField)(name, value);
       }
     } : ""), {}, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Options, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+        value: "",
+        disabled: true,
+        selected: true,
+        children: placeholder || "Select one"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Options, {
         data: options
-      })
+      })]
     })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.ErrorMessage, {
       name: name,
       component: "div",
@@ -17913,7 +17930,6 @@ var render = function render() {
     var initialActiveTab = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getInitialTab)();
     return renderWithTabs(htmlParsed, initialActiveTab);
   }
-  console.log(htmlParsed);
   return htmlParsed;
 };
 if (typeof renderTemplateForm !== "undefined" && renderTemplateForm != null) {
