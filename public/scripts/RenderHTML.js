@@ -576,41 +576,23 @@ var handleSubmit = /*#__PURE__*/function () {
 }();
 var renderXaiForm = function renderXaiForm(children, formValues, props) {
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    /* eslint no-param-reassign: "error" */
     formValues.current = props.values;
   }, [props.values]);
   return children;
 };
 var XaiForm = function XaiForm(_ref2) {
-  var children = _ref2.children;
+  var _children = _ref2.children;
   var _formData2 = formData,
     formValues = _formData2.formValues;
-
-  /* const FormObserver = () => {
-     const { values } = useFormikContext();
-        React.useEffect(() => {
-           console.log(values);
-           console.log(formValues.current);
-           let newValues = {};
-           Object.keys({...formValues.current, ...values}).map(key => {
-               newValues[key] = values[key] ? values[key] : formValues.current[key];
-           });
-            formValues.current = newValues;
-       });
-      return null;
-   };*/
-
-  /*return (
-      <Formik initialValues={formValues.current} onSubmit={handleSubmit}>
-          {(props) => <Form>{renderXaiForm(children, formValues, props)}</Form>}
-      </Formik>
-  );*/
-
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Formik, {
     initialValues: formValues.current,
     onSubmit: handleSubmit,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Form, {
-      children: children
-    })
+    children: function children(props) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Form, {
+        children: renderXaiForm(_children, formValues, props)
+      });
+    }
   });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (XaiForm);
@@ -1178,15 +1160,21 @@ var FieldValue = function FieldValue(props) {
             children: value
           })]
         });
-      case "option-label":
+      case "select":
         {
-          var select = document.querySelector("select[name=\"".concat(fieldName, "\"]"));
-          var valueOption;
-          Object.values(select.options).forEach(function (option) {
-            if (option.value === value) {
-              valueOption = option.text;
-            }
-          });
+          var options = props.options;
+          options = options ? options.split(",") : null;
+          var valueOption = value;
+          if (options) {
+            Object.values(options).forEach(function (option) {
+              var opt = option.split(":");
+              var optValue = opt[0] ? opt[0].trim() : "";
+              var optLabel = opt[1] ? opt[1].trim() : "";
+              if (optValue === value) {
+                valueOption = optLabel;
+              }
+            });
+          }
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: className,
             children: valueOption
@@ -17937,7 +17925,7 @@ var renderWithTabs = function renderWithTabs(htmlParsed, initialActiveTab) {
 };
 var render = function render() {
   var options = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getParseOptions)();
-  //const initialValues = getFormFields();
+  // const initialValues = getFormFields();
   var formValues = react__WEBPACK_IMPORTED_MODULE_0___default().useRef((0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getFormFields)());
   var steps = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getFormSteps)();
   var metaData = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getFormMetaData)();

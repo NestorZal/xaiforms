@@ -20,15 +20,23 @@ const FieldValue = (props) => {
             <span>{value}</span>
           </div>
         );
-      case "option-label": {
-        const select = document.querySelector(`select[name="${fieldName}"]`);
+      case "select": {
+        let { options } = props;
+        options = options ? options.split(",") : null;
 
-        let valueOption;
-        Object.values(select.options).forEach(function (option) {
-          if (option.value === value) {
-            valueOption = option.text;
-          }
-        });
+        let valueOption = value;
+
+        if (options) {
+          Object.values(options).forEach(function (option) {
+            const opt = option.split(":");
+            const optValue = opt[0] ? opt[0].trim() : "";
+            const optLabel = opt[1] ? opt[1].trim() : "";
+
+            if (optValue === value) {
+              valueOption = optLabel;
+            }
+          });
+        }
 
         return <div className={className}>{valueOption}</div>;
       }
