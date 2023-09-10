@@ -541,10 +541,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var formData;
-var setFormData = function setFormData(metaData, initialValues) {
+var setFormData = function setFormData(metaData, formValues) {
   formData = {
     metaData: metaData,
-    initialValues: initialValues
+    formValues: formValues
   };
 };
 var handleSubmit = /*#__PURE__*/function () {
@@ -574,12 +574,39 @@ var handleSubmit = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+var renderXaiForm = function renderXaiForm(children, formValues, props) {
+  react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    formValues.current = props.values;
+  }, [props.values]);
+  return children;
+};
 var XaiForm = function XaiForm(_ref2) {
   var children = _ref2.children;
   var _formData2 = formData,
-    initialValues = _formData2.initialValues;
+    formValues = _formData2.formValues;
+
+  /* const FormObserver = () => {
+     const { values } = useFormikContext();
+        React.useEffect(() => {
+           console.log(values);
+           console.log(formValues.current);
+           let newValues = {};
+           Object.keys({...formValues.current, ...values}).map(key => {
+               newValues[key] = values[key] ? values[key] : formValues.current[key];
+           });
+            formValues.current = newValues;
+       });
+      return null;
+   };*/
+
+  /*return (
+      <Formik initialValues={formValues.current} onSubmit={handleSubmit}>
+          {(props) => <Form>{renderXaiForm(children, formValues, props)}</Form>}
+      </Formik>
+  );*/
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Formik, {
-    initialValues: initialValues,
+    initialValues: formValues.current,
     onSubmit: handleSubmit,
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Form, {
       children: children
@@ -17910,13 +17937,18 @@ var renderWithTabs = function renderWithTabs(htmlParsed, initialActiveTab) {
 };
 var render = function render() {
   var options = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getParseOptions)();
-  var initialValues = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getFormFields)();
+  //const initialValues = getFormFields();
+  var formValues = react__WEBPACK_IMPORTED_MODULE_0___default().useRef((0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getFormFields)());
   var steps = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getFormSteps)();
   var metaData = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getFormMetaData)();
   var tabs = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getTabs)();
-  (0,_form_XaiForm__WEBPACK_IMPORTED_MODULE_2__.setFormData)(metaData, initialValues);
+  (0,_form_XaiForm__WEBPACK_IMPORTED_MODULE_2__.setFormData)(metaData, formValues);
   (0,_components_Tabs__WEBPACK_IMPORTED_MODULE_4__.setTabLabels)(tabs);
   var htmlParsed = (0,html_react_parser__WEBPACK_IMPORTED_MODULE_1__["default"])(templateFormHTML, options);
+  if (tabs.length > 0) {
+    var initialActiveTab = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getInitialTab)();
+    htmlParsed = renderWithTabs(htmlParsed, initialActiveTab);
+  }
   var initialStep = steps ? steps[0] : "";
   var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0___default().useState(initialStep),
     _React$useState4 = _slicedToArray(_React$useState3, 2),
@@ -17926,10 +17958,6 @@ var render = function render() {
     setStep(currentStep);
   }, [step]);
   (0,_components_Step__WEBPACK_IMPORTED_MODULE_7__.setStepData)(step, setCurrentStep, steps);
-  if (tabs.length > 0) {
-    var initialActiveTab = (0,_ParseOptions__WEBPACK_IMPORTED_MODULE_5__.getInitialTab)();
-    return renderWithTabs(htmlParsed, initialActiveTab);
-  }
   return htmlParsed;
 };
 if (typeof renderTemplateForm !== "undefined" && renderTemplateForm != null) {

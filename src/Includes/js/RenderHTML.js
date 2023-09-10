@@ -37,15 +37,20 @@ const renderWithTabs = (htmlParsed, initialActiveTab) => {
 
 const render = () => {
   const options = getParseOptions();
-  const initialValues = getFormFields();
+  // const initialValues = getFormFields();
+  const formValues = React.useRef(getFormFields());
   const steps = getFormSteps();
   const metaData = getFormMetaData();
   const tabs = getTabs();
 
-  setFormData(metaData, initialValues);
+  setFormData(metaData, formValues);
   setTabLabels(tabs);
 
-  const htmlParsed = parse(templateFormHTML, options);
+  let htmlParsed = parse(templateFormHTML, options);
+  if (tabs.length > 0) {
+    const initialActiveTab = getInitialTab();
+    htmlParsed = renderWithTabs(htmlParsed, initialActiveTab);
+  }
 
   const initialStep = steps ? steps[0] : "";
   const [step, setStep] = React.useState(initialStep);
@@ -56,11 +61,6 @@ const render = () => {
     [step],
   );
   setStepData(step, setCurrentStep, steps);
-
-  if (tabs.length > 0) {
-    const initialActiveTab = getInitialTab();
-    return renderWithTabs(htmlParsed, initialActiveTab);
-  }
 
   return htmlParsed;
 };

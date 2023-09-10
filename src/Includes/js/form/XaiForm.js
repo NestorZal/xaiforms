@@ -3,10 +3,10 @@ import { Formik, Form } from "formik";
 import request from "./utils/Request";
 
 let formData;
-export const setFormData = (metaData, initialValues) => {
+export const setFormData = (metaData, formValues) => {
   formData = {
     metaData: metaData,
-    initialValues: initialValues,
+    formValues: formValues,
   };
 };
 
@@ -28,12 +28,21 @@ const handleSubmit = async (values) => {
   console.dir(values);
 };
 
+const renderXaiForm = (children, formValues, props) => {
+  React.useEffect(() => {
+    /* eslint no-param-reassign: "error" */
+    formValues.current = props.values;
+  }, [props.values]);
+
+  return children;
+};
+
 const XaiForm = ({ children }) => {
-  const { initialValues } = formData;
+  const { formValues } = formData;
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      <Form>{children}</Form>
+    <Formik initialValues={formValues.current} onSubmit={handleSubmit}>
+      {(props) => <Form>{renderXaiForm(children, formValues, props)}</Form>}
     </Formik>
   );
 };
