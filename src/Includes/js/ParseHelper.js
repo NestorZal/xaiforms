@@ -1,5 +1,6 @@
 import XaiForm from "./form/XaiForm";
-import { Step, Tab } from "./components";
+import Step from "./components/Step";
+import Tab from "./components/Tab";
 import {
   InputField,
   EmailAddress,

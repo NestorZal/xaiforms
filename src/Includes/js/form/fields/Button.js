@@ -1,18 +1,19 @@
+import Children from "../../components/Children";
+
 const Button = (props) => {
   const { children, className, type, ...rest } = props;
 
+  const ButtonComponent = "button";
+
   return (
-    <button
-      type={type === "submit" ? "submit" : "button"}
-      className={className}
-      {...rest}
-    >
-      {children}
-    </button>
+    <ButtonComponent type={type} className={className} {...rest}>
+      <Children>{children}</Children>
+    </ButtonComponent>
   );
 };
 
 Button.defaultProps = {
+  type: "button",
   className: null,
 };
 

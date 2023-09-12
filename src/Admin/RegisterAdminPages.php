@@ -9,5 +9,6 @@ class RegisterAdminPages
     public function setup(): void
     {
         new Settings();
+        new PaymentGateways();
     }
 }

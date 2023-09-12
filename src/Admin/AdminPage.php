@@ -89,21 +89,33 @@ abstract class AdminPage
         $helper = new Helper();
 
         foreach ($this->assets as $asset) {
-            $handle = $asset['handle'] ?? '';
             $file = $asset['file'] ?? '';
             $deps = $asset['deps'] ?? [];
 
-            if ( str_contains($file, '.css') ) {
-                if (!empty($file)) {
-                    wp_register_style($handle, XAIFORMS_URL . $file, $deps, $helper->auto_version($file));
-                }
-                wp_enqueue_style($handle);
+            if (!$file) {
+                continue;
             }
-            else if ( str_contains($file, '.js') ) {
-                if (!empty($file)) {
-                    wp_register_script($handle, XAIFORMS_URL . $file, $deps, $helper->auto_version($file), true);
+
+            $handle = basename($file);
+            if ( str_contains($handle, ' ') ) {
+                $handle = str_replace(' ', '-', $handle);
+            }
+
+            if ( str_contains($handle, '.css') ) {
+                $handle = str_replace('.css', '', $handle);
+
+                if ( !wp_script_is($handle) ) {
+                    wp_register_style($handle, XAIFORMS_URL . $file, $deps, $helper->auto_version($file));
+                    wp_enqueue_style($handle);
                 }
-                wp_enqueue_script($handle);
+            }
+            else if ( str_contains($handle, '.js') ) {
+                $handle = str_replace('.js', '', $handle);
+
+                if ( !wp_script_is($handle) ) {
+                    wp_register_script($handle, XAIFORMS_URL . $file, $deps, $helper->auto_version($file), true);
+                    wp_enqueue_script($handle);
+                }
             }
         }
     }

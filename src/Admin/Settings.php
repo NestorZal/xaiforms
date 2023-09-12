@@ -17,7 +17,6 @@ class Settings extends AdminPage
                 'parent_slug' => '',
                 'assets' => [
                     [
-                        'handle' => 'render-payment-form',
                         'file' => 'public/scripts/RenderHTML.js',
                         'deps' => ['wp-element'],
                     ],
@@ -34,7 +33,7 @@ class Settings extends AdminPage
     {
         $helper = new Helper();
         ?>
-        <div id="render-template-form">
+        <div class="render-template">
             <?php
                 ob_start();
                 include_once XAIFORMS_DIR . 'src/templates/default.payment.form.php';
@@ -43,18 +42,9 @@ class Settings extends AdminPage
                 ob_end_flush();
 
                 echo $helper->close_custom_html_tags($html);
-           /// echo htmlspecialchars($helper->close_custom_html_tags($html), ENT_QUOTES);
             ?>
         </div>
         <?php
     }
 
-    private function format_content( $html) {
-        if (!$html) {
-            return '';
-        }
-        $newHTML = preg_replace('/<\/fieldvalue(.*?)>/', '', $html);
-        $newHTML = preg_replace('/<fieldvalue (.*?)(\/|\S|\s)>/', '<fieldvalue $1></fieldvalue>', $newHTML);
-        echo htmlspecialchars($newHTML, ENT_QUOTES);
-    }
 }

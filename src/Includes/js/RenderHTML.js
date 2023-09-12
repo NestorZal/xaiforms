@@ -3,6 +3,7 @@ import parse from "html-react-parser";
 import { setFormData } from "./form/XaiForm";
 import { setTabData } from "./components/Tab";
 import { setTabLabels } from "./components/Tabs";
+import { setStepData } from "./components/Step";
 import {
   getParseOptions,
   getFormFields,
@@ -13,12 +14,6 @@ import {
 } from "./ParseOptions";
 
 import "../sass/default.scss";
-import { setStepData } from "./components/Step";
-
-const renderTemplateForm = document.getElementById("render-template-form");
-
-const templateFormHTML =
-  renderTemplateForm != null ? renderTemplateForm.innerHTML : "";
 
 const renderWithTabs = (htmlParsed, initialActiveTab) => {
   const [activeTab, setActiveTab] = React.useState(initialActiveTab);
@@ -35,9 +30,12 @@ const renderWithTabs = (htmlParsed, initialActiveTab) => {
   return htmlParsed;
 };
 
-const render = () => {
+const render = (props) => {
+  const { html } = props;
+
   const options = getParseOptions();
-  // const initialValues = getFormFields();
+  let htmlParsed = parse(html, options);
+
   const formValues = React.useRef(getFormFields());
   const steps = getFormSteps();
   const metaData = getFormMetaData();
@@ -46,7 +44,6 @@ const render = () => {
   setFormData(metaData, formValues);
   setTabLabels(tabs);
 
-  let htmlParsed = parse(templateFormHTML, options);
   if (tabs.length > 0) {
     const initialActiveTab = getInitialTab();
     htmlParsed = renderWithTabs(htmlParsed, initialActiveTab);
@@ -65,6 +62,15 @@ const render = () => {
   return htmlParsed;
 };
 
-if (typeof renderTemplateForm !== "undefined" && renderTemplateForm != null) {
-  wp.element.render(wp.element.createElement(render), renderTemplateForm);
+const templates = document.querySelectorAll(".render-template");
+if (typeof templates !== "undefined" && templates != null) {
+  templates.forEach(function (item) {
+    const html = item.innerHTML;
+    wp.element.render(
+      wp.element.createElement(render, {
+        html: html,
+      }),
+      item,
+    );
+  });
 }

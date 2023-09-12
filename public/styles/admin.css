@@ -1,0 +1,35 @@
+.hide-show-toggle-key {
+  position: relative;
+  width: 350px;
+}
+.hide-show-toggle-key input {
+  padding-right: 36px;
+}
+.hide-show-toggle-key button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background: transparent;
+  border: none;
+}
+.hide-show-toggle-key button:hover {
+  cursor: pointer;
+}
+.hide-show-toggle-key button span {
+  color: #0a4b78;
+}
+
+.token {
+  display: flex;
+}
+.token .token-details {
+  margin-right: 40px;
+}
+.token .token-details span {
+  padding: 8px 16px;
+  border: 1px solid rgb(140, 143, 148);
+  border-radius: 3px;
+  margin-left: 10px;
+  background-color: white;
+}

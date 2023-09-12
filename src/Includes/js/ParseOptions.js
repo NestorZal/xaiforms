@@ -1,6 +1,6 @@
 import React from "react";
 import { domToReact, attributesToProps } from "html-react-parser";
-import { getTagComponent, cleanArrayObject } from "./ParseHelper";
+import { getTagComponent } from "./ParseHelper";
 
 const metaData = {};
 let fieldValues;
@@ -21,7 +21,7 @@ export const getParseOptions = () => {
       const props = attributesToProps(attribs);
 
       if (["input", "select", "textarea"].includes(name)) {
-        if (props.name) {
+        if (props.name && props.type !== "submit") {
           fieldValues[props.name] = props.type === "hidden" ? props.value : "";
         }
       }
@@ -39,8 +39,7 @@ export const getParseOptions = () => {
         case "Button":
         case "ButtonNext":
         case "ButtonBack": {
-          const btnCopy =
-            name === "input" ? props.value : cleanArrayObject(children);
+          const btnCopy = name === "input" ? props.value : children;
 
           return <Element {...props}>{btnCopy}</Element>;
         }
