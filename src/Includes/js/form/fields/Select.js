@@ -1,5 +1,6 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
+import { attributesToProps } from "html-react-parser";
 import Label from "./Label";
 import { validateField, setCustomErrors } from "../utils/FieldsValidation";
 
@@ -7,10 +8,13 @@ const Options = (props) => {
   const { data } = props;
 
   return data.map((option, index) => {
-    const uniqueKey =
-      option.attribs && option.attribs.value
-        ? `${option.attribs.value}-${index}`
-        : `${option.name}-${index}`;
+    if (option.type === "text") {
+      return null;
+    }
+
+    const { value } = attributesToProps(option.attribs);
+
+    const uniqueKey = value ? `${value}-${index}` : `${option.name}-${index}`;
 
     if (option.name === "optgroup") {
       return (
@@ -65,10 +69,10 @@ const Select = (props) => {
             }
           : "")}
       >
-        <option value="" disabled selected>
-          {placeholder || "Select one"}
+        <option value="" disabled>
+          {placeholder || "Select an option"}
         </option>
-        <Options data={options} />
+        <Options data={options} name={name} />
       </Field>
       <ErrorMessage name={name} component="div" className="error" />
     </div>

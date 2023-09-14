@@ -1,40 +1,20 @@
 <?php
-namespace Xaifos\PaymentForms\Gateway\FluidPay;
+namespace XaiForms\Gateway\FluidPay;
 
-class FluidPayOption
+use XaiForms\Includes\Option;
+
+class FluidPayOption extends Option
 {
-    private static $option_name = 'wp-fluidpay-integration-options';
-    private static $option_page = 'wp-fluidpay-integration-options-page';
-    private static $option_group = 'wp-fluidpay-integration-options-group';
-
-    private $option_values;
-
-    public static function option_name()
+    public function option_name(): string
     {
-        return self::$option_name;
+        return 'xf-fluidpay-options';
     }
 
-    public static function option_page()
+    protected function default_options(): array
     {
-        return self::$option_page;
-    }
-
-    public static function option_group()
-    {
-        return self::$option_group;
-    }
-
-    public function get_value( string $field )
-    {
-        $values = $this->get_values();
-        return isset($values[$field]) ? $values[$field] : false;
-    }
-
-    public function get_values()
-    {
-        if (!$this->option_values) {
-            $this->option_values = get_option(self::option_name());
-        }
-        return $this->option_values;
+        return [
+            'env-mode' => 'test',
+            'private-key' => ''
+        ];
     }
 }

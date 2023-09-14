@@ -1,6 +1,6 @@
 import React from "react";
 import { domToReact, attributesToProps } from "html-react-parser";
-import { getTagComponent } from "./ParseHelper";
+import { getSelectValue, getTagComponent } from "./ParseHelper";
 
 const metaData = {};
 let fieldValues;
@@ -22,12 +22,15 @@ export const getParseOptions = () => {
 
       if (["input", "select", "textarea"].includes(name)) {
         if (props.name && props.type !== "submit") {
-          fieldValues[props.name] = props.type === "hidden" ? props.value : "";
+          fieldValues[props.name] = props.value ? props.value : "";
+        }
+
+        if (name === "select") {
+          fieldValues[props.name] = getSelectValue(children);
         }
       }
 
       const Element = getTagComponent(name, props.type);
-
       if (!Element) {
         return null;
       }

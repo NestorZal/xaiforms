@@ -2,6 +2,7 @@
 namespace XaiForms\Admin;
 
 use XaiForms\Admin\AdminPage;
+use XaiForms\Gateway\FluidPay\FluidPayOption;
 use XaiForms\Includes\Helper;
 
 class PaymentGateways extends AdminPage
@@ -41,7 +42,7 @@ class PaymentGateways extends AdminPage
                 <tab label="FluidPay">
                     <?php
                     ob_start();
-                    include_once XAIFORMS_DIR . 'src/Admin/templates/template-fluidpay-options.php';
+                    load_template( XAIFORMS_DIR . 'src/Admin/templates/fluidpay-options.php' );
 
                     $html = ob_get_clean();
                     ob_end_flush();

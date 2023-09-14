@@ -11,8 +11,8 @@ abstract class FluidPay
 
     private $gateway_options;
 
-    protected $route = '';
-    protected $mode = '';
+    protected string $route = '';
+    protected string $mode = '';
 
     protected function endpoint()
     {

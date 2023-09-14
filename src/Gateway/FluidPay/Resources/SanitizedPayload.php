@@ -60,24 +60,13 @@ class SanitizedPayload
         return $value;
     }
 
-    private function sanitize_value( string $value, $key = '' )
+    private function sanitize_value( string $value, $key = '' ): string
     {
-        switch ( $key ) {
-        case 'email':
-        case 'email_address':
-            $sanitized_value = sanitize_email($value);
-            break;
-
-        case 'description':
-            $sanitized_value = sanitize_textarea_field($value);
-            break;
-
-        default:
-            $sanitized_value = sanitize_text_field($value);
-            break;
-        }
-
-        return $sanitized_value;
+        return match ($key) {
+            'email', 'email_address' => sanitize_email($value),
+            'description' => sanitize_textarea_field($value),
+            default => sanitize_text_field($value),
+        };
     }
 
     private function sanitize_array(array $array)

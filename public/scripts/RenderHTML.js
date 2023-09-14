@@ -132,12 +132,16 @@ var unitlessKeys = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   cleanArrayObject: () => (/* binding */ cleanArrayObject),
+/* harmony export */   definedTypes: () => (/* binding */ definedTypes),
+/* harmony export */   getSelectValue: () => (/* binding */ getSelectValue),
 /* harmony export */   getTagComponent: () => (/* binding */ getTagComponent)
 /* harmony export */ });
-/* harmony import */ var _form_XaiForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form/XaiForm */ "./src/Includes/js/form/XaiForm.js");
-/* harmony import */ var _components_Step__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Step */ "./src/Includes/js/components/Step.js");
-/* harmony import */ var _components_Tab__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Tab */ "./src/Includes/js/components/Tab.js");
-/* harmony import */ var _form_fields__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form/fields */ "./src/Includes/js/form/fields/index.js");
+/* harmony import */ var html_react_parser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! html-react-parser */ "./node_modules/html-react-parser/index.mjs");
+/* harmony import */ var _form_XaiForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form/XaiForm */ "./src/Includes/js/form/XaiForm.js");
+/* harmony import */ var _components_Step__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Step */ "./src/Includes/js/components/Step.js");
+/* harmony import */ var _components_Tab__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Tab */ "./src/Includes/js/components/Tab.js");
+/* harmony import */ var _form_fields__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form/fields */ "./src/Includes/js/form/fields/index.js");
+
 
 
 
@@ -153,25 +157,42 @@ var cleanArrayObject = function cleanArrayObject(array) {
     return value !== "";
   });
 };
+var definedTypes = ["email", "cardnumber", "cvc", "expirydate", "price", "button", "submit", "next", "back"];
 var getTagComponent = function getTagComponent(tag, type) {
   var components = {
-    input: _form_fields__WEBPACK_IMPORTED_MODULE_3__.InputField,
-    email: _form_fields__WEBPACK_IMPORTED_MODULE_3__.EmailAddress,
-    cardnumber: _form_fields__WEBPACK_IMPORTED_MODULE_3__.CardNumber,
-    cvc: _form_fields__WEBPACK_IMPORTED_MODULE_3__.CardCVC,
-    expirydate: _form_fields__WEBPACK_IMPORTED_MODULE_3__.CardExpiryDate,
-    price: _form_fields__WEBPACK_IMPORTED_MODULE_3__.PriceAmount,
-    next: _form_fields__WEBPACK_IMPORTED_MODULE_3__.ButtonNext,
-    back: _form_fields__WEBPACK_IMPORTED_MODULE_3__.ButtonBack,
-    submit: _form_fields__WEBPACK_IMPORTED_MODULE_3__.Button,
-    button: _form_fields__WEBPACK_IMPORTED_MODULE_3__.Button,
-    select: _form_fields__WEBPACK_IMPORTED_MODULE_3__.Select,
-    fieldvalue: _form_fields__WEBPACK_IMPORTED_MODULE_3__.FieldValue,
-    form: _form_XaiForm__WEBPACK_IMPORTED_MODULE_0__["default"],
-    tab: _components_Tab__WEBPACK_IMPORTED_MODULE_2__["default"],
-    step: _components_Step__WEBPACK_IMPORTED_MODULE_1__["default"]
+    input: _form_fields__WEBPACK_IMPORTED_MODULE_4__.InputField,
+    email: _form_fields__WEBPACK_IMPORTED_MODULE_4__.EmailAddress,
+    cardnumber: _form_fields__WEBPACK_IMPORTED_MODULE_4__.CardNumber,
+    cvc: _form_fields__WEBPACK_IMPORTED_MODULE_4__.CardCVC,
+    expirydate: _form_fields__WEBPACK_IMPORTED_MODULE_4__.CardExpiryDate,
+    price: _form_fields__WEBPACK_IMPORTED_MODULE_4__.PriceAmount,
+    next: _form_fields__WEBPACK_IMPORTED_MODULE_4__.ButtonNext,
+    back: _form_fields__WEBPACK_IMPORTED_MODULE_4__.ButtonBack,
+    submit: _form_fields__WEBPACK_IMPORTED_MODULE_4__.Button,
+    button: _form_fields__WEBPACK_IMPORTED_MODULE_4__.Button,
+    select: _form_fields__WEBPACK_IMPORTED_MODULE_4__.Select,
+    fieldvalue: _form_fields__WEBPACK_IMPORTED_MODULE_4__.FieldValue,
+    form: _form_XaiForm__WEBPACK_IMPORTED_MODULE_1__["default"],
+    tab: _components_Tab__WEBPACK_IMPORTED_MODULE_3__["default"],
+    step: _components_Step__WEBPACK_IMPORTED_MODULE_2__["default"]
   };
-  return type ? components[type] : components[tag];
+  return type && definedTypes.includes(type) ? components[type] : components[tag];
+};
+var getSelectValue = function getSelectValue(options) {
+  if (Array.isArray(options)) {
+    for (var i = 0; i < options.length; i += 1) {
+      var option = options[i];
+      if (option.type === "tag" && option.name === "option") {
+        var _attributesToProps = (0,html_react_parser__WEBPACK_IMPORTED_MODULE_0__.attributesToProps)(option.attribs),
+          value = _attributesToProps.value,
+          selected = _attributesToProps.selected;
+        if (selected) {
+          return value;
+        }
+      }
+    }
+  }
+  return "";
 };
 
 /***/ }),
@@ -227,7 +248,10 @@ var getParseOptions = function getParseOptions() {
       var props = (0,html_react_parser__WEBPACK_IMPORTED_MODULE_1__.attributesToProps)(attribs);
       if (["input", "select", "textarea"].includes(name)) {
         if (props.name && props.type !== "submit") {
-          fieldValues[props.name] = props.type === "hidden" ? props.value : "";
+          fieldValues[props.name] = props.value ? props.value : "";
+        }
+        if (name === "select") {
+          fieldValues[props.name] = (0,_ParseHelper__WEBPACK_IMPORTED_MODULE_2__.getSelectValue)(children);
         }
       }
       var Element = (0,_ParseHelper__WEBPACK_IMPORTED_MODULE_2__.getTagComponent)(name, props.type);
@@ -614,7 +638,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_Request__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/Request */ "./src/Includes/js/form/utils/Request.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+var _excluded = ["_wpnonce"];
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return { value: void 0, done: !0 }; } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable || "" === iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } throw new TypeError(_typeof(iterable) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
@@ -630,22 +657,25 @@ var setFormData = function setFormData(metaData, formValues) {
 };
 var handleSubmit = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(values) {
-    var _formData, metaData, data, requestData;
+    var _formData, metaData, _wpnonce, data, requestData;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _formData = formData, metaData = _formData.metaData;
-          data = values;
+          _wpnonce = values._wpnonce, data = _objectWithoutProperties(values, _excluded);
           requestData = {
             method: metaData.method,
             endpoint: metaData.endpoint,
             body: data
           };
+          if (_wpnonce) {
+            requestData._wpnonce = _wpnonce;
+          }
           (0,_utils_Request__WEBPACK_IMPORTED_MODULE_2__["default"])(requestData).then(function (response) {
             console.log(response);
           });
           console.dir(values);
-        case 5:
+        case 6:
         case "end":
           return _context.stop();
       }
@@ -1502,9 +1532,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
-/* harmony import */ var _Label__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Label */ "./src/Includes/js/form/fields/Label.js");
-/* harmony import */ var _utils_FieldsValidation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/FieldsValidation */ "./src/Includes/js/form/utils/FieldsValidation.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var html_react_parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! html-react-parser */ "./node_modules/html-react-parser/index.mjs");
+/* harmony import */ var _Label__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Label */ "./src/Includes/js/form/fields/Label.js");
+/* harmony import */ var _utils_FieldsValidation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/FieldsValidation */ "./src/Includes/js/form/utils/FieldsValidation.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 var _excluded = ["label", "name", "className", "type", "placeholder", "id", "required", "options"];
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -1520,14 +1551,20 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 
 
 
+
 var Options = function Options(props) {
   var data = props.data;
   return data.map(function (option, index) {
-    var uniqueKey = option.attribs && option.attribs.value ? "".concat(option.attribs.value, "-").concat(index) : "".concat(option.name, "-").concat(index);
+    if (option.type === "text") {
+      return null;
+    }
+    var _attributesToProps = (0,html_react_parser__WEBPACK_IMPORTED_MODULE_2__.attributesToProps)(option.attribs),
+      value = _attributesToProps.value;
+    var uniqueKey = value ? "".concat(value, "-").concat(index) : "".concat(option.name, "-").concat(index);
     if (option.name === "optgroup") {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("optgroup", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("optgroup", {
         label: option.attribs.label,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Options, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(Options, {
           data: option.children
         })
       }, uniqueKey);
@@ -1535,7 +1572,7 @@ var Options = function Options(props) {
     if (option.name !== "option") {
       return null;
     }
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("option", {
       value: option.attribs.value,
       children: option.children[0].data
     }, uniqueKey);
@@ -1552,32 +1589,32 @@ var Select = function Select(props) {
     options = props.options,
     rest = _objectWithoutProperties(props, _excluded);
   if (required) {
-    (0,_utils_FieldsValidation__WEBPACK_IMPORTED_MODULE_3__.setCustomErrors)(name, rest);
+    (0,_utils_FieldsValidation__WEBPACK_IMPORTED_MODULE_4__.setCustomErrors)(name, rest);
   }
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     className: rest["wrapper-class"] ? rest["wrapper-class"] : null,
-    children: [label ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    children: [label ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_3__["default"], {
       text: label,
       domId: id || null
-    }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(formik__WEBPACK_IMPORTED_MODULE_1__.Field, _objectSpread(_objectSpread({
+    }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(formik__WEBPACK_IMPORTED_MODULE_1__.Field, _objectSpread(_objectSpread({
       id: id || null,
       className: className || null,
       name: name,
       as: "select"
     }, required ? {
       validate: function validate(value) {
-        return (0,_utils_FieldsValidation__WEBPACK_IMPORTED_MODULE_3__.validateField)(name, value);
+        return (0,_utils_FieldsValidation__WEBPACK_IMPORTED_MODULE_4__.validateField)(name, value);
       }
     } : ""), {}, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("option", {
         value: "",
         disabled: true,
-        selected: true,
-        children: placeholder || "Select one"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Options, {
-        data: options
+        children: placeholder || "Select an option"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(Options, {
+        data: options,
+        name: name
       })]
-    })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.ErrorMessage, {
+    })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.ErrorMessage, {
       name: name,
       component: "div",
       className: "error"
@@ -1828,42 +1865,48 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var request = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(data) {
-    var requestMetadata, response;
+    var method, requestMetadata, response;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          if (!(!data.body || !data.endpoint)) {
+          if (data.endpoint) {
             _context.next = 2;
             break;
           }
           return _context.abrupt("return", null);
         case 2:
+          method = data.method ? data.method.toUpperCase() : "POST";
           requestMetadata = {
-            method: data.method ? data.method : "POST",
+            method: method,
             credentials: "same-origin",
             headers: {
               "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data.body)
+            }
           };
-          _context.prev = 3;
-          _context.next = 6;
-          return fetch(data.endpoint, requestMetadata);
-        case 6:
-          response = _context.sent;
+          if (data._wpnonce) {
+            requestMetadata.headers["X-WP-Nonce"] = data._wpnonce;
+          }
+          if (data.body && method !== "GET") {
+            requestMetadata.body = JSON.stringify(data.body);
+          }
+          _context.prev = 6;
           _context.next = 9;
-          return response.json();
+          return fetch(data.endpoint, requestMetadata);
         case 9:
-          return _context.abrupt("return", _context.sent);
+          response = _context.sent;
+          _context.next = 12;
+          return response.json();
         case 12:
-          _context.prev = 12;
-          _context.t0 = _context["catch"](3);
-          return _context.abrupt("return", _context.t0);
+          return _context.abrupt("return", _context.sent);
         case 15:
+          _context.prev = 15;
+          _context.t0 = _context["catch"](6);
+          return _context.abrupt("return", _context.t0);
+        case 18:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[3, 12]]);
+    }, _callee, null, [[6, 15]]);
   }));
   return function request(_x) {
     return _ref.apply(this, arguments);

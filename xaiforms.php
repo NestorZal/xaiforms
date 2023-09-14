@@ -34,6 +34,8 @@ if (!class_exists('XaiFormsInit')) {
                 $admin_pages->setup();
             }
 
+            new \XaiForms\Includes\Routes();
+
         }
     }
     new XaiFormsInit();

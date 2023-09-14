@@ -49,7 +49,8 @@
     ],
     "func-names": "off",
     "object-shorthand": "off",
-    "no-restricted-syntax": ["error", "ForOfStatement", "LabeledStatement", "WithStatement"]
+    "no-restricted-syntax": ["error", "ForOfStatement", "LabeledStatement", "WithStatement"],
+    "no-underscore-dangle": ["error", { "allow": ["_wpnonce"] }]
   },
   "globals": {
     "wp": true,

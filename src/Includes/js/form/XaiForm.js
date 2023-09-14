@@ -12,14 +12,17 @@ export const setFormData = (metaData, formValues) => {
 
 const handleSubmit = async (values) => {
   const { metaData } = formData;
-
-  const data = values;
+  const { _wpnonce, ...data } = values;
 
   const requestData = {
     method: metaData.method,
     endpoint: metaData.endpoint,
     body: data,
   };
+
+  if (_wpnonce) {
+    requestData._wpnonce = _wpnonce;
+  }
 
   request(requestData).then((response) => {
     console.log(response);
