@@ -1,18 +1,13 @@
 import React from "react";
 import Tabs from "./Tabs";
-
-let tabData;
-export const setTabData = (activeTab, setCurrentTab) => {
-  tabData = {
-    activeTab: activeTab,
-    setCurrentTab: setCurrentTab,
-  };
-};
+import { XaiFormContext } from "../XaiFormContextProvider";
 
 const Tab = (props) => {
   const { children, label, className } = props;
 
-  const { activeTab, setCurrentTab } = tabData;
+  const content = React.useContext(XaiFormContext);
+  const { tabs, activeTab, setCurrentTab } = content;
+  console.log(content);
 
   if (activeTab !== label) {
     return null;
@@ -20,7 +15,11 @@ const Tab = (props) => {
 
   return (
     <div className="tabs">
-      <Tabs activeTab={activeTab} setCurrentTab={setCurrentTab} />
+      <Tabs
+        tabLabels={tabs}
+        activeTab={activeTab}
+        setCurrentTab={setCurrentTab}
+      />
       <div className={`tab-content ${className || ""}`}>{children}</div>
     </div>
   );

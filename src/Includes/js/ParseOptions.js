@@ -2,19 +2,15 @@ import React from "react";
 import { domToReact, attributesToProps } from "html-react-parser";
 import { getSelectValue, getTagComponent } from "./ParseHelper";
 
-const metaData = {};
-let fieldValues;
-let tabs;
-let initialTab;
-let steps;
-let indexStep;
-
 export const getParseOptions = () => {
-  fieldValues = {};
-  tabs = [];
-  initialTab = "";
-  steps = [];
-  indexStep = 0;
+  const metaData = {};
+  const fieldValues = {};
+
+  const tabs = [];
+  let initialTab = "";
+
+  const steps = [];
+  let indexStep = 0;
 
   const parseOptions = {
     replace: ({ name, attribs, children }) => {
@@ -65,11 +61,7 @@ export const getParseOptions = () => {
           const { className, label } = props;
           tabs.push(label);
 
-          let active = className ? className.includes("active") : false;
-          if (!active) {
-            active = tabs.length === 1;
-          }
-
+          const active = className ? className.includes("active") : false;
           if (active) {
             initialTab = label;
           }
@@ -96,25 +88,13 @@ export const getParseOptions = () => {
     },
   };
 
-  return parseOptions;
+  return {
+    metaData: metaData,
+    fieldValues: fieldValues,
+    tabs: tabs,
+    initialTab: initialTab,
+    steps: steps,
+    parseOptions: parseOptions,
+  };
 };
-
-export const getFormFields = () => {
-  return fieldValues;
-};
-
-export const getFormSteps = () => {
-  return steps;
-};
-
-export const getTabs = () => {
-  return tabs;
-};
-
-export const getInitialTab = () => {
-  return initialTab;
-};
-
-export const getFormMetaData = () => {
-  return metaData;
-};
+export default getParseOptions;

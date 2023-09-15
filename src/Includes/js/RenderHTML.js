@@ -1,21 +1,15 @@
 import React from "react";
 import parse from "html-react-parser";
-import { setFormData } from "./form/XaiForm";
-import { setTabData } from "./components/Tab";
-import { setTabLabels } from "./components/Tabs";
-import { setStepData } from "./components/Step";
-import {
-  getParseOptions,
-  getFormFields,
-  getFormSteps,
-  getFormMetaData,
-  getTabs,
-  getInitialTab,
-} from "./ParseOptions";
-
+import getParseOptions from "./ParseOptions";
+import XaiFormContextProvider from "./XaiFormContextProvider";
 import "../sass/default.scss";
 
-const renderWithTabs = (htmlParsed, initialActiveTab) => {
+const renderTabs = (tabs, initialTab) => {
+  if (tabs.length === 0) {
+    return { activeTab: null, setCurrentTab: null };
+  }
+
+  const initialActiveTab = initialTab || tabs[0];
   const [activeTab, setActiveTab] = React.useState(initialActiveTab);
 
   const setCurrentTab = React.useCallback(
@@ -25,28 +19,12 @@ const renderWithTabs = (htmlParsed, initialActiveTab) => {
     [activeTab],
   );
 
-  setTabData(activeTab, setCurrentTab);
-
-  return htmlParsed;
+  return { activeTab: activeTab, setCurrentTab: setCurrentTab };
 };
 
-const render = (props) => {
-  const { html } = props;
-
-  const options = getParseOptions();
-  let htmlParsed = parse(html, options);
-
-  const formValues = React.useRef(getFormFields());
-  const steps = getFormSteps();
-  const metaData = getFormMetaData();
-  const tabs = getTabs();
-
-  setFormData(metaData, formValues);
-  setTabLabels(tabs);
-
-  if (tabs.length > 0) {
-    const initialActiveTab = getInitialTab();
-    htmlParsed = renderWithTabs(htmlParsed, initialActiveTab);
+const renderSteps = (steps) => {
+  if (steps.length === 0) {
+    return { step: null, setCurrentStep: null };
   }
 
   const initialStep = steps ? steps[0] : "";
@@ -57,9 +35,33 @@ const render = (props) => {
     },
     [step],
   );
-  setStepData(step, setCurrentStep, steps);
 
-  return htmlParsed;
+  return { step: step, setCurrentStep: setCurrentStep };
+};
+
+const render = (props) => {
+  const { html } = props;
+  const { metaData, fieldValues, tabs, initialTab, steps, parseOptions } =
+    getParseOptions();
+  const htmlParsed = parse(html, parseOptions);
+
+  const { activeTab, setCurrentTab } = renderTabs(tabs, initialTab);
+  const { step, setCurrentStep } = renderSteps(steps);
+
+  return (
+    <XaiFormContextProvider
+      metaData={metaData}
+      fieldValues={fieldValues}
+      tabs={tabs}
+      activeTab={activeTab}
+      setCurrentTab={setCurrentTab}
+      steps={steps}
+      step={step}
+      setCurrentStep={setCurrentStep}
+    >
+      {htmlParsed}
+    </XaiFormContextProvider>
+  );
 };
 
 const templates = document.querySelectorAll(".render-template");

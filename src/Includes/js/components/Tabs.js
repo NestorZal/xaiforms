@@ -1,12 +1,7 @@
 import Button from "../form/fields/Button";
 
-let tabLabels;
-export const setTabLabels = (tabs) => {
-  tabLabels = tabs;
-};
-
 const Tabs = (props) => {
-  const { activeTab, setCurrentTab } = props;
+  const { tabLabels, activeTab, setCurrentTab } = props;
 
   return (
     <ol className="tab-list">

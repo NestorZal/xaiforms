@@ -1,12 +1,11 @@
+import React from "react";
 import { useFormikContext } from "formik";
 import Button from "./Button";
-import { getStepData } from "../../components/Step";
+import { XaiFormContext } from "../../XaiFormContextProvider";
 
 const ButtonNext = (props) => {
   const { children, className } = props;
-
-  const stepData = getStepData();
-
+  const { steps, step, setCurrentStep } = React.useContext(XaiFormContext);
   const { isValid, dirty } = useFormikContext();
 
   let isValidForm = false;
@@ -21,12 +20,10 @@ const ButtonNext = (props) => {
         if (!isValidForm) {
           return false;
         }
-        if (stepData) {
-          const index = stepData.steps.indexOf(stepData.step);
-          const nextStep = stepData.steps[index + 1]
-            ? stepData.steps[index + 1]
-            : null;
-          stepData.setCurrentStep(nextStep);
+        if (steps) {
+          const index = steps.indexOf(step);
+          const nextStep = steps[index + 1] ? steps[index + 1] : null;
+          setCurrentStep(nextStep);
           return true;
         }
         return false;

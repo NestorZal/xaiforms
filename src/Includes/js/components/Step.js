@@ -1,21 +1,11 @@
 import React from "react";
-
-let stepData;
-export const setStepData = (step, setCurrentStep, steps) => {
-  stepData = {
-    step: step,
-    setCurrentStep: setCurrentStep,
-    steps: steps,
-  };
-};
-export const getStepData = () => {
-  return stepData;
-};
+import { XaiFormContext } from "../XaiFormContextProvider";
 
 const Step = (props) => {
   const { name, className, children } = props;
+  const { step } = React.useContext(XaiFormContext);
 
-  if (stepData.step !== name) {
+  if (step !== name) {
     return null;
   }
 

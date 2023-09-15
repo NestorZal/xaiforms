@@ -1,21 +1,19 @@
+import React from "react";
 import Button from "./Button";
-import { getStepData } from "../../components/Step";
+import { XaiFormContext } from "../../XaiFormContextProvider";
 
 const ButtonBack = (props) => {
   const { children, className } = props;
-
-  const stepData = getStepData();
+  const { steps, step, setCurrentStep } = React.useContext(XaiFormContext);
 
   return (
     <Button
       className={className}
       onClick={() => {
-        if (stepData) {
-          const index = stepData.steps.indexOf(stepData.step);
-          const backStep = stepData.steps[index - 1]
-            ? stepData.steps[index - 1]
-            : null;
-          stepData.setCurrentStep(backStep);
+        if (steps) {
+          const index = steps.indexOf(step);
+          const backStep = steps[index - 1] ? steps[index - 1] : null;
+          setCurrentStep(backStep);
           return true;
         }
         return false;

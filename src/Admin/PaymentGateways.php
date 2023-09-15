@@ -39,7 +39,7 @@ class PaymentGateways extends AdminPage
         <div class="wrap">
 
             <div class="render-template">
-                <tab label="FluidPay">
+                <tab label="FluidPay" class="active">
                     <?php
                     ob_start();
                     load_template( XAIFORMS_DIR . 'src/Admin/templates/fluidpay-options.php' );
