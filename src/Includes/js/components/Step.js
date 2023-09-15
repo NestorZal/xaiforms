@@ -1,5 +1,5 @@
 import React from "react";
-import { XaiFormContext } from "../XaiFormContextProvider";
+import { XaiFormContext } from "./XaiFormContextProvider";
 
 const Step = (props) => {
   const { name, className, children } = props;

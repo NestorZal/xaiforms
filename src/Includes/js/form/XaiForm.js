@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import request from "./utils/Request";
-import { XaiFormContext } from "../XaiFormContextProvider";
+import { XaiFormContext } from "../components/XaiFormContextProvider";
 
 const handleSubmit = async (values) => {
   const { metaData } = React.useContext(XaiFormContext);

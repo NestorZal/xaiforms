@@ -1,7 +1,6 @@
 import React from "react";
-import parse from "html-react-parser";
-import getParseOptions from "./ParseOptions";
-import XaiFormContextProvider from "./XaiFormContextProvider";
+import getParsedHTML from "./ParseHTML";
+import XaiFormContextProvider from "./components/XaiFormContextProvider";
 import "../sass/default.scss";
 
 const renderTabs = (tabs, initialTab) => {
@@ -41,9 +40,9 @@ const renderSteps = (steps) => {
 
 const render = (props) => {
   const { html } = props;
-  const { metaData, fieldValues, tabs, initialTab, steps, parseOptions } =
-    getParseOptions();
-  const htmlParsed = parse(html, parseOptions);
+  const { htmlParsed, options } = getParsedHTML(html);
+
+  const { metaData, fieldValues, tabs, initialTab, steps } = options;
 
   const { activeTab, setCurrentTab } = renderTabs(tabs, initialTab);
   const { step, setCurrentStep } = renderSteps(steps);
@@ -64,6 +63,7 @@ const render = (props) => {
   );
 };
 
+window.xaiforms = [];
 const templates = document.querySelectorAll(".render-template");
 if (typeof templates !== "undefined" && templates != null) {
   templates.forEach(function (item) {

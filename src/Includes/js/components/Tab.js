@@ -1,13 +1,10 @@
 import React from "react";
 import Tabs from "./Tabs";
-import { XaiFormContext } from "../XaiFormContextProvider";
+import { XaiFormContext } from "./XaiFormContextProvider";
 
 const Tab = (props) => {
   const { children, label, className } = props;
-
-  const content = React.useContext(XaiFormContext);
-  const { tabs, activeTab, setCurrentTab } = content;
-  console.log(content);
+  const { tabs, activeTab, setCurrentTab } = React.useContext(XaiFormContext);
 
   if (activeTab !== label) {
     return null;

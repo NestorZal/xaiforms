@@ -14,19 +14,22 @@ const XaiFormContextProvider = (props) => {
     setCurrentStep,
   } = props;
 
+  const contextValues = React.useMemo(
+    () => ({
+      metaData: metaData,
+      fieldValues: fieldValues,
+      tabs: tabs,
+      activeTab: activeTab,
+      setCurrentTab: setCurrentTab,
+      steps: steps,
+      step: step,
+      setCurrentStep: setCurrentStep,
+    }),
+    [activeTab, step],
+  );
+
   return (
-    <XaiFormContext.Provider
-      value={{
-        metaData,
-        fieldValues,
-        tabs,
-        activeTab,
-        setCurrentTab,
-        steps,
-        step,
-        setCurrentStep,
-      }}
-    >
+    <XaiFormContext.Provider value={contextValues}>
       {children}
     </XaiFormContext.Provider>
   );

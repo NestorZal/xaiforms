@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./Button";
-import { XaiFormContext } from "../../XaiFormContextProvider";
+import { XaiFormContext } from "../../components/XaiFormContextProvider";
 
 const ButtonBack = (props) => {
   const { children, className } = props;

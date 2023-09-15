@@ -1,15 +1,16 @@
 import React from "react";
-import { domToReact, attributesToProps } from "html-react-parser";
+import parse, { domToReact, attributesToProps } from "html-react-parser";
 import { getSelectValue, getTagComponent } from "./ParseHelper";
 
-export const getParseOptions = () => {
-  const metaData = {};
-  const fieldValues = {};
+const getParsedHTML = (html) => {
+  const options = {
+    metaData: {},
+    fieldValues: {},
+    tabs: [],
+    initialTab: "",
+    steps: [],
+  };
 
-  const tabs = [];
-  let initialTab = "";
-
-  const steps = [];
   let indexStep = 0;
 
   const parseOptions = {
@@ -18,11 +19,11 @@ export const getParseOptions = () => {
 
       if (["input", "select", "textarea"].includes(name)) {
         if (props.name && props.type !== "submit") {
-          fieldValues[props.name] = props.value ? props.value : "";
+          options.fieldValues[props.name] = props.value ? props.value : "";
         }
 
         if (name === "select") {
-          fieldValues[props.name] = getSelectValue(children);
+          options.fieldValues[props.name] = getSelectValue(children);
         }
       }
 
@@ -31,24 +32,22 @@ export const getParseOptions = () => {
         return null;
       }
 
-      switch (Element.name) {
-        case "Select":
+      switch (name) {
+        case "select":
           return <Element options={children} {...props} />;
 
-        case "Button":
-        case "ButtonNext":
-        case "ButtonBack": {
+        case "button": {
           const btnCopy = name === "input" ? props.value : children;
-
           return <Element {...props}>{btnCopy}</Element>;
         }
 
-        case "Step": {
+        case "step": {
           const { className } = props;
 
           indexStep += 1;
           const stepName = `step-${indexStep}`;
-          steps.push(stepName);
+
+          options.steps.push(stepName);
 
           return (
             <Element name={stepName} className={className}>
@@ -57,13 +56,14 @@ export const getParseOptions = () => {
           );
         }
 
-        case "Tab": {
+        case "tab": {
           const { className, label } = props;
-          tabs.push(label);
+
+          options.tabs.push(label);
 
           const active = className ? className.includes("active") : false;
           if (active) {
-            initialTab = label;
+            options.initialTab = label;
           }
 
           return (
@@ -73,11 +73,13 @@ export const getParseOptions = () => {
           );
         }
 
-        case "XaiForm": {
+        case "form": {
           const { method, action } = props;
 
-          metaData.method = method;
-          metaData.endpoint = action;
+          options.metaData = {
+            method: method,
+            endpoint: action,
+          };
 
           return <Element>{domToReact(children, parseOptions)}</Element>;
         }
@@ -89,12 +91,8 @@ export const getParseOptions = () => {
   };
 
   return {
-    metaData: metaData,
-    fieldValues: fieldValues,
-    tabs: tabs,
-    initialTab: initialTab,
-    steps: steps,
-    parseOptions: parseOptions,
+    htmlParsed: parse(html, parseOptions),
+    options: options,
   };
 };
-export default getParseOptions;
+export default getParsedHTML;

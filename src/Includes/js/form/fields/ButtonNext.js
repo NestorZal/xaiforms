@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormikContext } from "formik";
 import Button from "./Button";
-import { XaiFormContext } from "../../XaiFormContextProvider";
+import { XaiFormContext } from "../../components/XaiFormContextProvider";
 
 const ButtonNext = (props) => {
   const { children, className } = props;
