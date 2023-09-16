@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import request from "./utils/Request";
-import { XaiFormContext } from "../components/XaiFormContextProvider";
+import { TemplateContext } from "../components/TemplateContextProvider";
 
 const handleSubmit = (values, metaData) => {
   const { _wpnonce, ...data } = values;
@@ -35,15 +35,15 @@ const renderXaiForm = (children, formValues, props) => {
 };
 
 const XaiForm = ({ children }) => {
-  const { fieldValues, metaData } = React.useContext(XaiFormContext);
+  const { fieldValues, metaData } = React.useContext(TemplateContext);
   const formValues = React.useRef(fieldValues);
 
   return (
     <Formik
-        initialValues={formValues.current}
-        onSubmit={ async values => {
-          return handleSubmit(values, metaData);
-        }}
+      initialValues={formValues.current}
+      onSubmit={async (values) => {
+        return handleSubmit(values, metaData);
+      }}
     >
       {(props) => <Form>{renderXaiForm(children, formValues, props)}</Form>}
     </Formik>

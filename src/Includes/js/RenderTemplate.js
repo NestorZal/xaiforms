@@ -1,6 +1,6 @@
 import React from "react";
 import getParsedHTML from "./ParseHTML";
-import XaiFormContextProvider from "./components/XaiFormContextProvider";
+import TemplateContextProvider from "./components/TemplateContextProvider";
 import "../sass/default.scss";
 
 const renderTabs = (tabs, initialTab) => {
@@ -48,7 +48,7 @@ const render = (props) => {
   const { step, setCurrentStep } = renderSteps(steps);
 
   return (
-    <XaiFormContextProvider
+    <TemplateContextProvider
       metaData={metaData}
       fieldValues={fieldValues}
       tabs={tabs}
@@ -59,11 +59,10 @@ const render = (props) => {
       setCurrentStep={setCurrentStep}
     >
       {htmlParsed}
-    </XaiFormContextProvider>
+    </TemplateContextProvider>
   );
 };
 
-window.xaiforms = [];
 const templates = document.querySelectorAll(".render-template");
 if (typeof templates !== "undefined" && templates != null) {
   templates.forEach(function (item) {

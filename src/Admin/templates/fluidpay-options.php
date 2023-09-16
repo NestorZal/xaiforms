@@ -40,14 +40,9 @@ foreach ($environments as $key => $env) {
     <table class="form-table" role="presentation">
         <tbody>
             <tr>
-                <th scope="row">Private API key (optional)</th>
+                <th scope="row">Private API key</th>
                 <td>
-                    <div class="hide-show-toggle-key">
-                        <input type="text" name="private-key" class="regular-text" value="<?php echo $options['private-key'] ?? ''; ?>" autocomplete="off" aria-autocomplete="none" required>
-                        <button type="button">
-                            <span class="dashicons dashicons-visibility"></span>
-                        </button>
-                    </div>
+                    <input type="hide-show-input" name="private-key" class="regular-text" value="<?php echo $options['private-key'] ?? ''; ?>" autocomplete="off" aria-autocomplete="none" required>
                 </td>
             </tr>
         </tbody>

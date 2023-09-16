@@ -1,9 +1,9 @@
 import React from "react";
-import { XaiFormContext } from "./XaiFormContextProvider";
+import { TemplateContext } from "./TemplateContextProvider";
 
 const Step = (props) => {
   const { name, className, children } = props;
-  const { step } = React.useContext(XaiFormContext);
+  const { step } = React.useContext(TemplateContext);
 
   if (step !== name) {
     return null;

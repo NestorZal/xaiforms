@@ -4,7 +4,7 @@ const Tabs = (props) => {
   const { tabLabels, activeTab, setCurrentTab } = props;
 
   return (
-    <ol className="tab-list">
+    <ul className="tab-list">
       {tabLabels.map((tab, index) => {
         const uniqueKey = `${tab.split(" ").join("-")}-${index}`;
 
@@ -24,7 +24,7 @@ const Tabs = (props) => {
           </li>
         );
       })}
-    </ol>
+    </ul>
   );
 };
 

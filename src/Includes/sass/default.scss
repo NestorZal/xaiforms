@@ -1,7 +1,4 @@
-
 input {
-  font-size: 16px;
-  font-weight: 400;
   max-width: 100%;
 }
 
@@ -30,6 +27,9 @@ input {
   }
 }
 
+button:hover {
+    cursor: pointer;
+}
 button.link {
   background: none;
   border-top: 0;
@@ -37,18 +37,12 @@ button.link {
   border-right: 0;
 
   &:hover {
-    color: #bbb;
     cursor: pointer;
   }
 
   &:focus {
     outline: 0;
   }
-}
-
-.btn-medium-size {
-  width: 155px;
-  text-align: left;
 }
 
 .cc-number-review {
@@ -59,5 +53,18 @@ button.link {
     margin-right: 5px;
     height: auto;
     width: 32px;
+  }
+}
+
+.tab-list {
+  display: flex;
+  align-items: center;
+
+  li {
+    margin: 0 10px 0 0;
+
+    button {
+      padding: 5px 10px;
+    }
   }
 }

@@ -1,11 +1,11 @@
 import React from "react";
 import { useFormikContext } from "formik";
 import Button from "./Button";
-import { XaiFormContext } from "../../components/XaiFormContextProvider";
+import { TemplateContext } from "../../components/TemplateContextProvider";
 
 const ButtonNext = (props) => {
   const { children, className } = props;
-  const { steps, step, setCurrentStep } = React.useContext(XaiFormContext);
+  const { steps, step, setCurrentStep } = React.useContext(TemplateContext);
   const { isValid, dirty } = useFormikContext();
 
   let isValidForm = false;

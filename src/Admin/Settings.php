@@ -17,7 +17,7 @@ class Settings extends AdminPage
                 'parent_slug' => '',
                 'assets' => [
                     [
-                        'file' => 'public/scripts/RenderHTML.js',
+                        'file' => 'public/scripts/RenderTemplate.js',
                         'deps' => ['wp-element'],
                     ],
                 ],

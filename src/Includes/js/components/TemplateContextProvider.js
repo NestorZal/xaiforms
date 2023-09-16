@@ -1,7 +1,7 @@
 import React from "react";
 
-export const XaiFormContext = React.createContext(null);
-const XaiFormContextProvider = (props) => {
+export const TemplateContext = React.createContext(null);
+const TemplateContextProvider = (props) => {
   const {
     children,
     metaData,
@@ -29,9 +29,9 @@ const XaiFormContextProvider = (props) => {
   );
 
   return (
-    <XaiFormContext.Provider value={contextValues}>
+    <TemplateContext.Provider value={contextValues}>
       {children}
-    </XaiFormContext.Provider>
+    </TemplateContext.Provider>
   );
 };
-export default XaiFormContextProvider;
+export default TemplateContextProvider;

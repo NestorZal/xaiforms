@@ -16,7 +16,7 @@ class PaymentGateways extends AdminPage
                 'slug' => 'xaiforms-gateways-settings',
                 'assets' => [
                     [
-                        'file' => 'public/scripts/RenderHTML.js',
+                        'file' => 'public/scripts/RenderTemplate.js',
                         'deps' => ['wp-element'],
                     ],
                     [
