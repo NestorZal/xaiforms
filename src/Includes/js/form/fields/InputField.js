@@ -5,8 +5,7 @@ import { validateField, setCustomErrors } from "../utils/FieldsValidation";
 import HideShowInput from "../../components/HideShowInput";
 
 const InputField = (props) => {
-  const { label, name, className, type, placeholder, id, required, ...rest } =
-    props;
+  const { label, name, type, id, required, ...rest } = props;
 
   if (required) {
     setCustomErrors(name, rest);
@@ -28,19 +27,12 @@ const InputField = (props) => {
         {({ field }) => (
           <>
             {type === "hide-show-input" ? (
-              <HideShowInput
-                id={id || null}
-                className={className || null}
-                type="text"
-                placeholder={placeholder || null}
-                {...field}
-              />
+              <HideShowInput id={id || null} type="text" {...rest} {...field} />
             ) : (
               <input
                 id={id || null}
-                className={className || null}
                 type={type || "text"}
-                placeholder={placeholder || null}
+                {...rest}
                 {...field}
               />
             )}
