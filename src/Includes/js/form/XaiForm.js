@@ -4,7 +4,7 @@ import request from "./utils/Request";
 import { TemplateContext } from "../components/TemplateContextProvider";
 
 const handleSubmit = (values, metaData) => {
-  const { _wpnonce, ...data } = values;
+  const { _wpnonce, _wp_http_referer, ...data } = values;
 
   const requestData = {
     method: metaData.method,
@@ -17,7 +17,15 @@ const handleSubmit = (values, metaData) => {
   }
 
   request(requestData).then((response) => {
-    console.log(response);
+    if (response.status === "success") {
+      if (_wp_http_referer) {
+        window.location.href = _wp_http_referer;
+      }
+    } else {
+      console.log(response);
+    }
+
+    return true;
   });
 
   console.dir(values);

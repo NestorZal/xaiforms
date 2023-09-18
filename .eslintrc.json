@@ -50,7 +50,8 @@
     "func-names": "off",
     "object-shorthand": "off",
     "no-restricted-syntax": ["error", "ForOfStatement", "LabeledStatement", "WithStatement"],
-    "no-underscore-dangle": ["error", { "allow": ["_wpnonce"] }]
+    "no-underscore-dangle": ["error", { "allow": ["_wpnonce", "_wp_http_referer"] }],
+    "camelcase": ["error", { "allow":  ["_wp_http_referer"] }]
   },
   "globals": {
     "wp": true,

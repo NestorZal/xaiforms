@@ -16,17 +16,6 @@ import {
   FieldValue,
 } from "./form/fields";
 
-export const cleanArrayObject = (array) => {
-  const arrayObject = array.map((component) => {
-    if (component.type === "text") {
-      return component.data.trim();
-    }
-    return component;
-  });
-
-  return arrayObject.filter((value) => value !== "");
-};
-
 export const definedTypes = [
   "email",
   "cardnumber",
@@ -40,6 +29,10 @@ export const definedTypes = [
 ];
 
 export const getTagComponent = (tag, type) => {
+  if (type === "hidden") {
+    return null;
+  }
+
   const components = {
     input: InputField,
     email: EmailAddress,
