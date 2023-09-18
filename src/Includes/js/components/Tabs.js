@@ -4,27 +4,29 @@ const Tabs = (props) => {
   const { tabLabels, activeTab, setCurrentTab } = props;
 
   return (
-    <ul className="tab-list">
-      {tabLabels.map((tab, index) => {
-        const uniqueKey = `${tab.split(" ").join("-")}-${index}`;
+    <nav>
+      <ul className="tab-list">
+        {tabLabels.map((tab, index) => {
+          const uniqueKey = `${tab.split(" ").join("-")}-${index}`;
 
-        return (
-          <li
-            key={uniqueKey}
-            className={`tab-item ${activeTab === tab ? "active" : ""}`}
-          >
-            <Button
-              type="button"
-              onClick={() => {
-                setCurrentTab(tab);
-              }}
+          return (
+            <li
+              key={uniqueKey}
+              className={`tab-item ${activeTab === tab ? "active" : ""}`}
             >
-              {tab}
-            </Button>
-          </li>
-        );
-      })}
-    </ul>
+              <Button
+                type="button"
+                onClick={() => {
+                  setCurrentTab(tab);
+                }}
+              >
+                {tab}
+              </Button>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 };
 
