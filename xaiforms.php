@@ -24,18 +24,7 @@ if (!class_exists('XaiFormsInit')) {
     {
         public function __construct()
         {
-            add_action('plugins_loaded', array($this, 'init'));
-        }
-
-        public function init(): void
-        {
-            if ( is_admin() ) {
-                $admin_pages = new \XaiForms\Admin\RegisterAdminPages();
-                $admin_pages->setup();
-            }
-
-            new \XaiForms\Includes\Routes();
-
+            add_action('plugins_loaded', array( new \XaiForms\Includes\Loader(), 'init' ) );
         }
     }
     new XaiFormsInit();

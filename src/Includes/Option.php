@@ -44,7 +44,7 @@ abstract class Option
         return update_option( $this->option_name(), $current_options );
     }
 
-    public function save_option_rest_api( \WP_REST_Request $request ): \WP_REST_Response
+    public function save_option_api_callback( \WP_REST_Request $request ): \WP_REST_Response
     {
         $this->save_option($request->get_params());
         return new \WP_REST_Response(['status' => 'success']);

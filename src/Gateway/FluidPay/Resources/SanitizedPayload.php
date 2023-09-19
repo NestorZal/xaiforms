@@ -1,28 +1,19 @@
 <?php
-namespace Xaifos\WpFluidPayIntegration\Gateway\Resources;
+namespace XaiForms\Gateway\FluidPay\Resources;
+
+use XaiForms\Includes\Helper;
 
 class SanitizedPayload
 {
-    private $payload = [];
+    private array $payload = [];
 
     public function __construct( $payload )
     {
-        if (is_array($payload) && !empty($payload)) {
-            foreach ( $payload as $key => $value ) {
-                $key = sanitize_key($key);
-
-                if (is_array($value)) {
-                    $value = $this->sanitize_array($value);
-                }
-                else {
-                    $value = $value ? $this->sanitize_value($value, $key) : '';
-                }
-                $this->payload[ $key ] = $value;
-            }
-        }
+        $helper = new Helper();
+        $this->payload = $helper->sanitize_array( $payload );
     }
 
-    public function all()
+    public function all(): array
     {
         return $this->payload;
     }
@@ -30,10 +21,10 @@ class SanitizedPayload
     public function get( string $key, $level = 0, $parent_key = '' )
     {
         if (0 === $level) {
-            return isset($this->payload[$key]) ? $this->payload[$key] : null;
+            return $this->payload[$key] ?? null;
         }
         else {
-            $payload = isset($this->payload[$parent_key]) ? $this->payload[$parent_key] : null;
+            $payload = $this->payload[$parent_key] ?? null;
             return is_array($payload) ? $this->get_in_depth($payload, $key, $level, 1) : null;
         }
     }
@@ -42,50 +33,18 @@ class SanitizedPayload
     {
         $value = null;
 
-        foreach ($payload as $_key => $_value ) {
-            if (($level == $current_level) && ($key == $_key) ) {
+        foreach ( $payload as $_key => $_value ) {
+            if ( ($level == $current_level) && ($key == $_key) ) {
                 return $_value;
             }
-            else if (($level > $current_level) && is_array($_value) ) {
+            else if ( ($level > $current_level) && is_array($_value) ) {
                 $value = $this->get_in_depth($_value, $key, $level, ++$current_level);
                 if ($value) {
                     return $value;
                 }
             }
-            else {
-                continue;
-            }
         }
 
         return $value;
     }
-
-    private function sanitize_value( string $value, $key = '' ): string
-    {
-        return match ($key) {
-            'email', 'email_address' => sanitize_email($value),
-            'description' => sanitize_textarea_field($value),
-            default => sanitize_text_field($value),
-        };
-    }
-
-    private function sanitize_array(array $array)
-    {
-        $sanitized_array = [];
-        foreach ($array as $key => $value) {
-            $key = sanitize_key($key);
-
-            if (is_array($value)) {
-                $value = $this->sanitize_array($value);
-            }
-            else {
-                $value = $value ? $this->sanitize_value($value, $key) : '';
-            }
-
-            $sanitized_array[$key] = $value;
-        }
-
-        return $sanitized_array;
-    }
-
 }

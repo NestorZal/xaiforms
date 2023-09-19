@@ -26,8 +26,20 @@ class ComposerStaticInitbcdfb086e71956a60459863f0817b251
         'XaiForms\\Admin\\PaymentGateways' => __DIR__ . '/../..' . '/src/Admin/PaymentGateways.php',
         'XaiForms\\Admin\\RegisterAdminPages' => __DIR__ . '/../..' . '/src/Admin/RegisterAdminPages.php',
         'XaiForms\\Admin\\Settings' => __DIR__ . '/../..' . '/src/Admin/Settings.php',
+        'XaiForms\\Gateway\\FluidPay\\FluidPay' => __DIR__ . '/../..' . '/src/Gateway/FluidPay/FluidPay.php',
+        'XaiForms\\Gateway\\FluidPay\\FluidPayOption' => __DIR__ . '/../..' . '/src/Gateway/FluidPay/FluidPayOption.php',
+        'XaiForms\\Gateway\\FluidPay\\FluidPayRoute' => __DIR__ . '/../..' . '/src/Gateway/FluidPay/FluidPayRoute.php',
+        'XaiForms\\Gateway\\FluidPay\\FluidPayTransaction' => __DIR__ . '/../..' . '/src/Gateway/FluidPay/FluidPayTransaction.php',
+        'XaiForms\\Gateway\\FluidPay\\Resources\\ACH' => __DIR__ . '/../..' . '/src/Gateway/FluidPay/Resources/ACH.php',
+        'XaiForms\\Gateway\\FluidPay\\Resources\\Address' => __DIR__ . '/../..' . '/src/Gateway/FluidPay/Resources/Address.php',
+        'XaiForms\\Gateway\\FluidPay\\Resources\\CreditCard' => __DIR__ . '/../..' . '/src/Gateway/FluidPay/Resources/CreditCard.php',
+        'XaiForms\\Gateway\\FluidPay\\Resources\\RequestObject' => __DIR__ . '/../..' . '/src/Gateway/FluidPay/Resources/RequestObject.php',
+        'XaiForms\\Gateway\\FluidPay\\Resources\\SanitizedPayload' => __DIR__ . '/../..' . '/src/Gateway/FluidPay/Resources/SanitizedPayload.php',
+        'XaiForms\\Gateway\\FluidPay\\Resources\\TransactionObject' => __DIR__ . '/../..' . '/src/Gateway/FluidPay/Resources/TransactionObject.php',
         'XaiForms\\Includes\\Helper' => __DIR__ . '/../..' . '/src/Includes/Helper.php',
-        'XaiForms\\Includes\\Routes' => __DIR__ . '/../..' . '/src/Includes/Routes.php',
+        'XaiForms\\Includes\\Loader' => __DIR__ . '/../..' . '/src/Includes/Loader.php',
+        'XaiForms\\Includes\\Option' => __DIR__ . '/../..' . '/src/Includes/Option.php',
+        'XaiForms\\Includes\\Route' => __DIR__ . '/../..' . '/src/Includes/Route.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

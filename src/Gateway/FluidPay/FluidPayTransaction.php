@@ -1,25 +1,20 @@
 <?php
-namespace Xaifos\PaymentForms\Gateway\FluidPay;
+namespace XaiForms\Gateway\FluidPay;
 
-use Xaifos\WpFluidPayIntegration\Gateway\FluidPay;
-use Xaifos\WpFluidPayIntegration\Gateway\Resources\SanitizedPayload;
-use Xaifos\WpFluidPayIntegration\Gateway\Resources\TransactionObject;
+use XaiForms\Gateway\FluidPay\FluidPay;
+use XaiForms\Gateway\FluidPay\Resources\SanitizedPayload;
+use XaiForms\Gateway\FluidPay\Resources\TransactionObject;
 
 class FluidPayTransaction extends FluidPay
 {
-    private $api_key;
 
     public function __construct()
     {
+        parent::__construct();
         $this->route = '/api/transaction';
-
-        $this->api_key = $this->get_api_key(true);
-        if (!$this->api_key) {
-            wp_die('Access denied!');
-        }
     }
 
-    public function charge( $payload )
+    public function charge( $payload ): \WP_Error|\WP_REST_Response
     {
         if ($payload instanceof SanitizedPayload) {
             $sanitized_payload = $payload;
@@ -37,7 +32,7 @@ class FluidPayTransaction extends FluidPay
             $this->endpoint(), array(
                 'method'      => 'POST',
                 'headers'     => array(
-                    'Authorization' => $this->api_key,
+                    'Authorization' => $this->get_api_key(),
                     'Content-Type' => 'application/json',
                 ),
                 'body'        => $request->data_json(),
@@ -47,14 +42,23 @@ class FluidPayTransaction extends FluidPay
 
         if (is_wp_error($response) ) {
             return $response;
-        } else {
-            $code = isset($response['response']['code']) ? $response['response']['code'] : 400;
-            $data = json_decode($response['body']);
-
-            return new \WP_REST_Response($data, $code);
         }
 
-        return new \WP_Error(400, 'Bad request', array( 'status' => 'failed' ));
+        $code = $response['response']['code'] ?? 400;
+        $data = json_decode( $response['body'] );
+        return new \WP_REST_Response( $data, $code );
+    }
+
+    public function charge_api_callback( \WP_REST_Request $request ): \WP_Error|\WP_REST_Response
+    {
+        $params = $request->get_params();
+        $token = $params['token'] ?? '';
+        if ($token !== $this->get_token() ) {
+            return new \WP_Error( 400, 'Invalid token', array( 'status' => 'failed' ) );
+        }
+
+        $sanitized_payload = new SanitizedPayload($params);
+        return $this->charge($sanitized_payload);
     }
 
 }

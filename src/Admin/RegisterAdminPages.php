@@ -2,6 +2,7 @@
 namespace XaiForms\Admin;
 
 use XaiForms\Admin\Settings;
+use XaiForms\Admin\PaymentGateways;
 
 class RegisterAdminPages
 {

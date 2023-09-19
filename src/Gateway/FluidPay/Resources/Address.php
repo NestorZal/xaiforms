@@ -1,24 +1,23 @@
 <?php
-namespace Xaifos\WpFluidPayIntegration\Gateway\Resources;
+namespace XaiForms\Gateway\FluidPay\Resources;
 
-use Xaifos\WpFluidPayIntegration\Gateway\Resources\RequestObject;
-use Xaifos\WpFluidPayIntegration\Gateway\Resources\SanitizedPayload;
+use XaiForms\Gateway\FluidPay\Resources\RequestObject;
+use XaiForms\Gateway\FluidPay\Resources\SanitizedPayload;
 
 class Address extends RequestObject
 {
-
-    protected $first_name = '';
-    protected $last_name = '';
-    protected $company = '';
-    protected $address_line_1 = '';
-    protected $address_line_2 = '';
-    protected $city = '';
-    protected $state = '';
-    protected $postal_code = '';
-    protected $country = '';
-    protected $phone = '';
-    protected $fax = '';
-    protected $email = '';
+    protected string $first_name = '';
+    protected string $last_name = '';
+    protected string $company = '';
+    protected string $address_line_1 = '';
+    protected string $address_line_2 = '';
+    protected string $city = '';
+    protected string $state = '';
+    protected string $postal_code = '';
+    protected string $country = '';
+    protected string $phone = '';
+    protected string $fax = '';
+    protected string $email = '';
 
     public function __construct( SanitizedPayload $payload, $parent_key = '' )
     {

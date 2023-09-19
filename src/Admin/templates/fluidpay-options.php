@@ -16,7 +16,7 @@ foreach ($environments as $key => $env) {
 }
 ?>
 
-<form action="<?php echo home_url('/wp-json/xaiforms/v1/option/fluidpay/save'); ?>" method="post">
+<form action="<?php echo home_url('/wp-json/xaiforms/v1/fluidpay/option/save'); ?>" method="post">
     <?php wp_nonce_field('wp_rest'); ?>
     <h2>Gateway Environment</h2>
     Choose your FluidPay Gateway environment, for testing purpose choose the sandbox.

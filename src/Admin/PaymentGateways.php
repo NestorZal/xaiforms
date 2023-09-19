@@ -28,11 +28,10 @@ class PaymentGateways extends AdminPage
         );
 
         parent::__construct();
-
         $this->register();
     }
 
-    public function render()
+    public function render(): void
     {
         $helper = new Helper();
         ?>
@@ -51,10 +50,7 @@ class PaymentGateways extends AdminPage
                     ?>
                 </tab>
                 <tab label="Authorize.Net">
-                     COMING SOON!
-                    <label>
-                        <div>Testing HELLO</div>
-                    </label>
+                     <h2>COMING SOON!</h2>
                 </tab>
             </div>
 

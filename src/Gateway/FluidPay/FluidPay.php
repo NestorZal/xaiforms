@@ -1,39 +1,43 @@
 <?php
-namespace Xaifos\PaymentForms\Gateway\FluidPay;
+namespace XaiForms\Gateway\FluidPay;
+
+use XaiForms\Gateway\FluidPay\FluidPayOption;
 
 abstract class FluidPay
 {
-
-    private $base_urls = [
+    private ?string $api_key;
+    private array $base_urls = [
         'test' => 'https://sandbox.fluidpay.com',
         'live' => 'https://app.fluidpay.com'
     ];
 
-    private $gateway_options;
-
     protected string $route = '';
     protected string $mode = '';
 
-    protected function endpoint()
+    public function __construct()
     {
-        if (!$this->mode) {
-            $mode = $this->get_gateway_option('env_mode');
-            $this->mode = $mode ? $mode : 'test';
+        $option = new FluidPayOption();
+
+        $this->api_key = $option->get_option('private-key');
+        if ( !$this->api_key ) {
+            wp_die('Access denied!');
         }
-        return $this->base_urls[$this->mode] . $this->route;
+
+        $this->mode = $option->get_option('env-mode');
     }
 
-    protected function get_api_key( $private = true )
+    protected function endpoint(): string
     {
-        return $private ? $this->get_gateway_option('private_key') : $this->get_gateway_option('public_key');
+        return $this->base_urls[ $this->mode ] . $this->route;
     }
 
-    private function get_gateway_option( string $key )
+    protected function get_api_key()
     {
-        if (!$this->gateway_options) {
-            $option = new FluidPayOption();
-            $this->gateway_options = $option->get_values();
-        }
-        return $this->gateway_options[$key] ?? null;
+        return $this->api_key;
+    }
+
+    protected function get_token()
+    {
+        return  wp_hash( $this->base_urls[ $this->mode ] );
     }
 }
