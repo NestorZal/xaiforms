@@ -23,7 +23,7 @@ class FluidPayTransaction extends FluidPay
             $sanitized_payload = new SanitizedPayload($payload);
         }
         else {
-            return new \WP_Error(400, 'Invalid transaction', array( 'status' => 'failed' ));
+            return new \WP_Error( 400, 'Invalid transaction', array( 'status' => 'failed' ) );
         }
 
         $request = new TransactionObject($sanitized_payload);

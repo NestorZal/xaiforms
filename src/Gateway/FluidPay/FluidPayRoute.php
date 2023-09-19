@@ -7,14 +7,17 @@ use XaiForms\Gateway\FluidPay\FluidPayTransaction;
 
 class FluidPayRoute extends Route
 {
-    public function __construct()
+    public function route_names(): array
     {
-        add_action( 'rest_api_init', array($this, 'route'));
+        return [
+          'save_option' => '/fluidpay/option/save',
+          'charge_transaction' => '/fluidpay/charge'
+        ];
     }
 
     public function route(): void
     {
-        register_rest_route( $this->namespace, '/fluidpay/option/save', [
+        register_rest_route( $this->get_namespace(), $this->get_route( 'save_option' ), [
             'methods'   => 'POST',
             'callback'  => array( new FluidPayOption(), 'save_option_api_callback' ),
             'permission_callback'   => function () {
@@ -22,7 +25,7 @@ class FluidPayRoute extends Route
             }
         ]);
 
-        register_rest_route($this->namespace, '/fluidpay/charge', [
+        register_rest_route($this->get_namespace(), $this->get_route( 'charge_transaction' ), [
             'methods' => 'POST',
             'callback' => array( new FluidPayTransaction(), 'charge_api_callback' ),
             'permission_callback' => '__return_true',

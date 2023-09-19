@@ -15,7 +15,8 @@ class Loader
         }
 
         // Routes
-        new FluidPayRoute();
+        $fluidpay_route = new FluidPayRoute();
+        $fluidpay_route->register();
     }
 
 }
