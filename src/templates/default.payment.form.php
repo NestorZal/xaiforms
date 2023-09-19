@@ -1,9 +1,12 @@
-<?php ?>
+<?php
+$fluidpay_options = new \XaiForms\Gateway\FluidPay\FluidPayOption();
+
+?>
 <div style="margin-bottom: 30px; color: #00a0d2; font-size: 24px; ">TESTING FORM</div>
 
 <tab label="Tab 1">
     <form method="post" action="">
-        <input type="hidden" name="token" value="asdfwe12454"/>
+        <?php $fluidpay_options->token_field(); ?>
         <step>
 
             <email name="emailAddress" label="Your Email" wrapper-class="email-address" required error-msg-required="Your email is required." error-msg-invalid="Your email is invalid. Please try again!"/>

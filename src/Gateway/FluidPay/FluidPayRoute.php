@@ -25,7 +25,7 @@ class FluidPayRoute extends Route
             }
         ]);
 
-        register_rest_route($this->get_namespace(), $this->get_route( 'charge_transaction' ), [
+        register_rest_route( $this->get_namespace(), $this->get_route( 'charge_transaction' ), [
             'methods' => 'POST',
             'callback' => array( new FluidPayTransaction(), 'charge_api_callback' ),
             'permission_callback' => '__return_true',

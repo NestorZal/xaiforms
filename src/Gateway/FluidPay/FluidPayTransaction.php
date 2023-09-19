@@ -52,8 +52,8 @@ class FluidPayTransaction extends FluidPay
     public function charge_api_callback( \WP_REST_Request $request ): \WP_Error|\WP_REST_Response
     {
         $params = $request->get_params();
-        $token = $params['token'] ?? '';
-        if ($token !== $this->get_token() ) {
+        $token = $params[ $this->fluidpay_option->get_transaction_token_name() ] ?? '';
+        if ($token !== $this->fluidpay_option->get_transaction_token() ) {
             return new \WP_Error( 400, 'Invalid token', array( 'status' => 'failed' ) );
         }
 
