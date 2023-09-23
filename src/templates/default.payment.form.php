@@ -1,11 +1,11 @@
 <?php
 $fluidpay_options = new \XaiForms\Gateway\FluidPay\FluidPayOption();
-
+$fluidpay_route = new \XaiForms\Gateway\FluidPay\FluidPayRoute();
 ?>
 <div style="margin-bottom: 30px; color: #00a0d2; font-size: 24px; ">TESTING FORM</div>
 
-<tab label="Tab 1">
-    <form method="post" action="">
+<tab label="Tab 1" class="active">
+    <form method="post" action="<?php echo $fluidpay_route->get_route_url('charge_transaction'); ?>">
         <?php $fluidpay_options->token_field(); ?>
         <step>
 
@@ -13,7 +13,7 @@ $fluidpay_options = new \XaiForms\Gateway\FluidPay\FluidPayOption();
 
             <select name="paymentOption" label="Select an option" placeholder="Select one" required>
                 <option value="opt-1">Option 1</option>
-                <option value="opt-2">Option 2</option>
+                <option value="opt-2" selected="selected">Option 2</option>
                 <option value="opt-3">Option 3</option>
             </select>
 
@@ -22,23 +22,23 @@ $fluidpay_options = new \XaiForms\Gateway\FluidPay\FluidPayOption();
             <cardnumber  name="cardNumber" wrapper-class="form-group row" label="Credit card number" class="form-control lock-icon" error-msg-required="Please enter your credit card."/>
             <expirydate name="expiryDate" label="Epiry date" error-msg-invalid="Please try again and insert a valid expiration date."/>
             <cvc name="cvc" label="CVC (3 or 4 digit code)"/>
-            <input type="price" required name="amount" error-msg-required="The amount to pay is required."/>
+            <price name="amount" required error-msg-required="The amount to pay is required." value="145" />
 
-            <button type="next">Next Step</button   >
+            <button type="next">Next Step</button>
 
         </step>
 
         <step>
             <div>Hello Final STEP</div>
-            <fieldvalue name="emailAddress"    >
+                <fieldvalue name="emailAddress" />
                 <fieldvalue format="select"  name="paymentOption" options="opt-1:Option 1, opt-2: Option 2, opt-3 : Option 3" />
 
-                <fieldvalue name="billingName">
+                <fieldvalue name="billingName"/>
 
-                <fieldvalue format="cardnumber" name="cardNumber">
+                <fieldvalue format="cardnumber" name="cardNumber"/>
 
                 <fieldvalue name="expiryDate"/>
-                <fieldvalue name="cvc">
+                <fieldvalue name="cvc"/>
 
                 <fieldvalue format="price" name="amount"/>
 
@@ -46,11 +46,24 @@ $fluidpay_options = new \XaiForms\Gateway\FluidPay\FluidPayOption();
                 <button type="submit">Submit</button>
         </step>
     </form>
+
+    <formresponse status="success">
+        Thank you! You will receive an email soon with more instructions <responsevalue key="billingName"> then we go where ever you want. <response key="paymentOption">
+    </formresponse>
+    <formresponse status="declined">
+       Hey <response key="billingName">, YOur credit card was declined
+    </formresponse>
+    <formresponse status="failed">
+        there was an error in your application: <responsevalue key="msg">
+    </formresponse>
+    <formresponse status="error">
+        there was an error in your application
+    </formresponse>
+
 </tab>
 
 <tab label="Tab 2">
     <p>Second TAB</p>
-
     <h2>What is Lorem Ipsum?</h2>
    <div style="width: 500px">
        <p>
@@ -81,5 +94,4 @@ $fluidpay_options = new \XaiForms\Gateway\FluidPay\FluidPayOption();
            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
        </p>
    </div>
-
 </tab>

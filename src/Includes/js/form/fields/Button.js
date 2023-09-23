@@ -1,5 +1,3 @@
-import Children from "../../components/Children";
-
 const Button = (props) => {
   const { children, className, type, ...rest } = props;
 
@@ -7,7 +5,7 @@ const Button = (props) => {
 
   return (
     <ButtonComponent type={type} className={className} {...rest}>
-      <Children>{children}</Children>
+      {children}
     </ButtonComponent>
   );
 };

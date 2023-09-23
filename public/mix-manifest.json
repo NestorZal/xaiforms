@@ -1,4 +1,5 @@
 {
     "/scripts/RenderTemplate.js": "/scripts/RenderTemplate.js",
-    "/styles/admin.css": "/styles/admin.css"
+    "/styles/admin.css": "/styles/admin.css",
+    "/styles/default.css": "/styles/default.css"
 }

@@ -100,6 +100,7 @@ abstract class AdminPage
             if ( str_contains($handle, ' ') ) {
                 $handle = str_replace(' ', '-', $handle);
             }
+            $handle = 'xaiforms-' . $handle;
 
             if ( str_contains($handle, '.css') ) {
                 $handle = str_replace('.css', '', $handle);

@@ -1,6 +1,6 @@
 import React from "react";
 import Tabs from "./Tabs";
-import { TemplateContext } from "./TemplateContextProvider";
+import { TemplateContext } from "../providers/TemplateContextProvider";
 
 const Tab = (props) => {
   const { children, label, className } = props;

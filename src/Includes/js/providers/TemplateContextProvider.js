@@ -2,30 +2,16 @@ import React from "react";
 
 export const TemplateContext = React.createContext(null);
 const TemplateContextProvider = (props) => {
-  const {
-    children,
-    metaData,
-    fieldValues,
-    tabs,
-    activeTab,
-    setCurrentTab,
-    steps,
-    step,
-    setCurrentStep,
-  } = props;
+  const { children, tabs, activeTab, setCurrentTab, forms } = props;
 
   const contextValues = React.useMemo(
     () => ({
-      metaData: metaData,
-      fieldValues: fieldValues,
       tabs: tabs,
       activeTab: activeTab,
       setCurrentTab: setCurrentTab,
-      steps: steps,
-      step: step,
-      setCurrentStep: setCurrentStep,
+      forms: forms,
     }),
-    [activeTab, step],
+    [activeTab],
   );
 
   return (

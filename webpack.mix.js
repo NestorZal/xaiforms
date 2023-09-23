@@ -10,4 +10,5 @@ mix.js('src/Includes/js/RenderTemplate.js', 'scripts').react()
         },
     });
 
+mix.sass('src/Includes/sass/default.scss', 'styles');
 mix.sass('src/Includes/sass/admin.scss', 'styles');

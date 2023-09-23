@@ -20,8 +20,10 @@ class PaymentGateways extends AdminPage
                         'deps' => ['wp-element'],
                     ],
                     [
+                        'file' => 'public/styles/default.css',
+                    ],
+                    [
                         'file' => 'public/styles/admin.css',
-                        'type' => 'css'
                     ],
                 ],
             ]

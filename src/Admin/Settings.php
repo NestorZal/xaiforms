@@ -20,6 +20,9 @@ class Settings extends AdminPage
                         'file' => 'public/scripts/RenderTemplate.js',
                         'deps' => ['wp-element'],
                     ],
+                    [
+                        'file' => 'public/styles/default.css',
+                    ],
                 ],
             ]
         );

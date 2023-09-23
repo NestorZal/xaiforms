@@ -1,7 +1,7 @@
 import React from "react";
-import getParsedHTML from "./ParseHTML";
-import TemplateContextProvider from "./components/TemplateContextProvider";
-import "../sass/default.scss";
+import parse from "html-react-parser";
+import replace from "./utils/ReplaceComponents";
+import TemplateContextProvider from "./providers/TemplateContextProvider";
 
 const renderTabs = (tabs, initialTab) => {
   if (tabs.length === 0) {
@@ -21,46 +21,32 @@ const renderTabs = (tabs, initialTab) => {
   return { activeTab: activeTab, setCurrentTab: setCurrentTab };
 };
 
-const renderSteps = (steps) => {
-  if (steps.length === 0) {
-    return { step: null, setCurrentStep: null };
-  }
+const Template = (props) => {
+  const { children, options } = props;
+  const { tabs, initialTab, forms } = options;
+  const { activeTab, setCurrentTab } = renderTabs(tabs, initialTab);
 
-  const initialStep = steps ? steps[0] : "";
-  const [step, setStep] = React.useState(initialStep);
-  const setCurrentStep = React.useCallback(
-    (currentStep) => {
-      setStep(currentStep);
-    },
-    [step],
+  return (
+    <TemplateContextProvider
+      tabs={tabs}
+      activeTab={activeTab}
+      setCurrentTab={setCurrentTab}
+      forms={forms}
+    >
+      {children}
+    </TemplateContextProvider>
   );
-
-  return { step: step, setCurrentStep: setCurrentStep };
 };
 
 const render = (props) => {
   const { html } = props;
-  const { htmlParsed, options } = getParsedHTML(html);
 
-  const { metaData, fieldValues, tabs, initialTab, steps } = options;
+  const htmlParsed = parse(html);
 
-  const { activeTab, setCurrentTab } = renderTabs(tabs, initialTab);
-  const { step, setCurrentStep } = renderSteps(steps);
+  const { components, options } = replace(htmlParsed);
+  console.log(components, options);
 
-  return (
-    <TemplateContextProvider
-      metaData={metaData}
-      fieldValues={fieldValues}
-      tabs={tabs}
-      activeTab={activeTab}
-      setCurrentTab={setCurrentTab}
-      steps={steps}
-      step={step}
-      setCurrentStep={setCurrentStep}
-    >
-      {htmlParsed}
-    </TemplateContextProvider>
-  );
+  return <Template options={options}>{components}</Template>;
 };
 
 const templates = document.querySelectorAll(".render-template");

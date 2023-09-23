@@ -1,9 +1,9 @@
 import React from "react";
-import { TemplateContext } from "./TemplateContextProvider";
+import { FormContext } from "../providers/FormContextProvider";
 
 const Step = (props) => {
   const { name, className, children } = props;
-  const { step } = React.useContext(TemplateContext);
+  const { step } = React.useContext(FormContext);
 
   if (step !== name) {
     return null;

@@ -1,43 +1,38 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
-import { attributesToProps } from "html-react-parser";
 import Label from "./Label";
 import { validateField, setCustomErrors } from "../utils/FieldsValidation";
 
 const Options = (props) => {
-  const { data } = props;
+  const { children: options } = props;
 
-  return data.map((option, index) => {
-    if (option.type === "text") {
-      return null;
-    }
+  return options.map((option, index) => {
+    if (React.isValidElement(option)) {
+      const { children, value, label } = option.props;
+      const uniqueKey = value ? `${value}-${index}` : `${option.type}-${index}`;
 
-    const { value } = attributesToProps(option.attribs);
+      if (option.type === "optgroup") {
+        return (
+          <optgroup key={uniqueKey} label={label}>
+            <Options>{children}</Options>
+          </optgroup>
+        );
+      }
 
-    const uniqueKey = value ? `${value}-${index}` : `${option.name}-${index}`;
-
-    if (option.name === "optgroup") {
       return (
-        <optgroup key={uniqueKey} label={option.attribs.label}>
-          <Options data={option.children} />
-        </optgroup>
+        <option key={uniqueKey} value={value}>
+          {children}
+        </option>
       );
     }
 
-    if (option.name !== "option") {
-      return null;
-    }
-
-    return (
-      <option key={uniqueKey} value={option.attribs.value}>
-        {option.children[0].data}
-      </option>
-    );
+    return null;
   });
 };
 
 const Select = (props) => {
   const {
+    children,
     label,
     name,
     className,
@@ -45,7 +40,6 @@ const Select = (props) => {
     placeholder,
     id,
     required,
-    options,
     ...rest
   } = props;
 
@@ -72,7 +66,7 @@ const Select = (props) => {
         <option value="" disabled>
           {placeholder || "Select an option"}
         </option>
-        <Options data={options} name={name} />
+        <Options name={name}>{children}</Options>
       </Field>
       <ErrorMessage name={name} component="div" className="error" />
     </div>
