@@ -4,15 +4,16 @@ import request from "./utils/Request";
 import Spinner from "../components/Spinner";
 import { TemplateContext } from "../providers/TemplateContextProvider";
 import FormContextProvider from "../providers/FormContextProvider";
+import FormResponseContextProvider from "../providers/FormResponseContextProvider";
 
-const handleSubmit = (values, metaData, setCurrentFormStatus) => {
+const handleSubmit = (values, formData, setCurrentFormStatus) => {
   setCurrentFormStatus("submitting");
 
-  const { _wpnonce, _wp_http_referer, ...data } = values;
+  const { _wpnonce, _wp_http_referer, http_referer, ...data } = values;
 
   const requestData = {
-    method: metaData.method,
-    endpoint: metaData.endpoint,
+    method: formData.method,
+    endpoint: formData.endpoint,
     body: data,
   };
 
@@ -21,14 +22,15 @@ const handleSubmit = (values, metaData, setCurrentFormStatus) => {
   }
 
   request(requestData).then((response) => {
-    if (_wp_http_referer) {
-      window.location.href = _wp_http_referer;
+    const redirect = _wp_http_referer || http_referer;
+    if (redirect) {
+      window.location.href = redirect;
     }
 
     if (response.status) {
       setCurrentFormStatus(response.status, response);
     } else {
-      setCurrentFormStatus("error", response);
+      setCurrentFormStatus("error", { status: "error", error: response });
     }
 
     return true;
@@ -83,10 +85,12 @@ const XaiForm = ({ children, index, method, action }) => {
   }
 
   const formValues = React.useRef(currentForm.fieldValues);
+  const formResponse = React.useRef(null);
 
   const [formStatus, setFormStatus] = React.useState("init");
   const setCurrentFormStatus = React.useCallback(
     (currentStatus, response) => {
+      formResponse.current = response;
       setFormStatus(currentStatus);
     },
     [formStatus],
@@ -112,7 +116,7 @@ const XaiForm = ({ children, index, method, action }) => {
               <XaiFormComponent
                 steps={currentForm.steps}
                 formValues={formValues}
-                {...props}
+                values={props.values}
               >
                 {children}
               </XaiFormComponent>
@@ -120,8 +124,17 @@ const XaiForm = ({ children, index, method, action }) => {
           )}
         </Formik>
       );
-    default:
+
+    default: {
+      if (currentForm.formResponse && currentForm.formResponse[formStatus]) {
+        return (
+          <FormResponseContextProvider response={formResponse.current}>
+            {currentForm.formResponse[formStatus]}
+          </FormResponseContextProvider>
+        );
+      }
       return null;
+    }
   }
 };
 

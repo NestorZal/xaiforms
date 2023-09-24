@@ -1,7 +1,8 @@
 import XaiForm from "../form/XaiForm";
 import Step from "../components/Step";
 import Tab from "../components/Tab";
-// import FormResponse from "../components/FormResponse";
+import FormResponse from "../components/FormResponse";
+import ResponseValue from "../components/ResponseValue";
 import {
   InputField,
   EmailAddress,
@@ -56,6 +57,8 @@ export const definedComponents = {
   form: XaiForm,
   tab: Tab,
   step: Step,
+  formresponse: FormResponse,
+  responsevalue: ResponseValue,
 };
 
 export const getTagComponent = (tag, type) => {

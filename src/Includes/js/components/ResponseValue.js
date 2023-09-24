@@ -1,12 +1,11 @@
 import React from "react";
-import { FormContext } from "../providers/FormContextProvider";
+import { FormResponseContext } from "../providers/FormResponseContextProvider";
 
 const ResponseValue = (props) => {
-  const { key, className } = props;
-  const { responseData } = React.useContext(FormContext);
+  const { name, className } = props;
+  const { response } = React.useContext(FormResponseContext);
 
-  const value = responseData[key];
-
+  const value = response && response[name] ? response[name] : "";
   return <span className={className || null}>{value}</span>;
 };
 

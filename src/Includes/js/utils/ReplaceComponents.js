@@ -1,5 +1,6 @@
 import React from "react";
 import { getTagComponent, definedFields } from "./DefinedComponents";
+import FormResponse from "../components/FormResponse";
 
 const options = {
   forms: [],
@@ -26,7 +27,16 @@ const getFieldSelectValue = (selectOptions) => {
 
 const setOptions = (component, formIndex) => {
   const { type: tag, props } = component;
-  const { children, type, label, value, defaultValue, className, name } = props;
+  const {
+    children,
+    type,
+    label,
+    value,
+    defaultValue,
+    className,
+    name,
+    status,
+  } = props;
 
   if (tag === "tab") {
     options.tabs.push(label);
@@ -55,6 +65,14 @@ const setOptions = (component, formIndex) => {
     const stepName = `step-${currentForm.indexStep}`;
 
     currentForm.steps.push(stepName);
+  }
+
+  if (tag === "formresponse") {
+    currentForm.formResponse[status] = (
+      <FormResponse className={className}>
+        {replaceComponent(children, formIndex)}
+      </FormResponse>
+    );
   }
 
   if (currentForm) {
@@ -98,10 +116,15 @@ const replaceComponent = (component, formIndex) => {
         fieldValues: {},
         steps: [],
         indexStep: 0,
+        formResponse: {},
       };
     }
 
     setOptions(component, currentFormIndex);
+
+    if (type === "formresponse") {
+      return null;
+    }
 
     const Element = getTagComponent(type, rest.type);
 

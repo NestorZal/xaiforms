@@ -45,21 +45,21 @@ $fluidpay_route = new \XaiForms\Gateway\FluidPay\FluidPayRoute();
                 <button type="back">Step Back</button>
                 <button type="submit">Submit</button>
         </step>
+
+        <formresponse status="success">
+            Thank you! You will receive an email soon with more instructions <responsevalue name="billingName"> then we go where ever you want. <responsevalue name="paymentOption">
+        </formresponse>
+        <formresponse status="declined">
+            Hey <responsevalue name="billingName">, YOur credit card was declined
+        </formresponse>
+        <formresponse status="failed">
+            there was an error in your application: <responsevalue name="msg">
+        </formresponse>
+        <formresponse status="error">
+            there was an error in your application
+        </formresponse>
+
     </form>
-
-    <formresponse status="success">
-        Thank you! You will receive an email soon with more instructions <responsevalue key="billingName"> then we go where ever you want. <response key="paymentOption">
-    </formresponse>
-    <formresponse status="declined">
-       Hey <response key="billingName">, YOur credit card was declined
-    </formresponse>
-    <formresponse status="failed">
-        there was an error in your application: <responsevalue key="msg">
-    </formresponse>
-    <formresponse status="error">
-        there was an error in your application
-    </formresponse>
-
 </tab>
 
 <tab label="Tab 2">

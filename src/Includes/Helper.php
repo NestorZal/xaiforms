@@ -27,7 +27,7 @@ class Helper
             return '';
         }
 
-        $custom_tags = ['fieldvalue', 'email', 'cardnumber', 'cvc', 'expirydate', 'price'];
+        $custom_tags = ['fieldvalue', 'email', 'cardnumber', 'cvc', 'expirydate', 'price', 'responsevalue'];
 
         $patterns = [];
         $replacements =[];
