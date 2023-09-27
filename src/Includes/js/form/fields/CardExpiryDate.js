@@ -27,17 +27,18 @@ const CardExpiryDate = (props) => {
       <Field
         name={name}
         validate={() => {
-          return validate(name, meta.erroredInputs[name]);
+          return validate(name, meta.erroredInputs.expiryDate);
         }}
       >
         {({ field }) => (
           <>
             <input
-              id={id || null}
               className={className || null}
-              placeholder={placeholder}
               {...field}
               {...getExpiryDateProps({
+                id: id,
+                name: name,
+                placeholder: placeholder,
                 onBlur: field.onBlur,
                 onChange: field.onChange,
               })}

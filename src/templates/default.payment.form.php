@@ -19,10 +19,10 @@ $fluidpay_route = new \XaiForms\Gateway\FluidPay\FluidPayRoute();
 
             <input name="billingName" placeholder="Credit Card Holder" required  wrapper-class="billing-name" label="Name on credit card" error-msg-required="Your Name is required." />
 
-            <cardnumber  name="cardNumber" wrapper-class="form-group row" label="Credit card number" class="form-control lock-icon" error-msg-required="Please enter your credit card."/>
-            <expirydate name="expiryDate" label="Epiry date" error-msg-invalid="Please try again and insert a valid expiration date."/>
-            <cvc name="cvc" label="CVC (3 or 4 digit code)"/>
-            <price name="amount" required error-msg-required="The amount to pay is required." value="145" />
+            <cardnumber id="card-id-number"  name="payment_method[card][number]" wrapper-class="form-group row" label="Credit card number" class="form-control lock-icon" error-msg-required="Please enter your credit card."/>
+            <expirydate name="payment_method[card][expiryDate]" label="Epiry date" error-msg-invalid="Please try again and insert a valid expiration date."/>
+            <cvc name="payment_method[card][cvc]" label="CVC (3 or 4 digit code)"/>
+            <price name="payment_method[card][amount]" required error-msg-required="The amount to pay is required." value="145" />
 
             <button type="next">Next Step</button>
 

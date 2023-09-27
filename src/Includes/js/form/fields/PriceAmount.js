@@ -3,6 +3,7 @@ import { Field, ErrorMessage } from "formik";
 import Label from "./Label";
 import { clearInputNumber, maskValue } from "../utils/InputCurrencyMask";
 import { validateField, setCustomErrors } from "../utils/FieldsValidation";
+import { getDeepValue } from "../../utils/Helper";
 
 const PriceAmount = (props) => {
   const { label, name, className, id, required, ...rest } = props;
@@ -10,6 +11,14 @@ const PriceAmount = (props) => {
   if (required) {
     setCustomErrors(name, rest);
   }
+
+  const getMaskedValue = (nameField, values) => {
+    const value = getDeepValue(nameField, values);
+    if (!value) {
+      return "$ ";
+    }
+    return maskValue(value);
+  };
 
   return (
     <div className={rest["wrapper-class"] ? rest["wrapper-class"] : null}>
@@ -31,7 +40,7 @@ const PriceAmount = (props) => {
               type="text"
               className={className || null}
               {...field}
-              value={values[name] ? maskValue(values[name]) : "$ "}
+              value={getMaskedValue(name, values)}
               onChange={(e) => {
                 const formattedNumber = clearInputNumber(e.target.value);
                 setFieldValue(name, formattedNumber);

@@ -34,7 +34,7 @@ const CardNumber = (props) => {
       <Field
         name={name}
         validate={() => {
-          return validate(name, meta.erroredInputs[name]);
+          return validate(name, meta.erroredInputs.cardNumber);
         }}
       >
         {({ field }) => (
@@ -42,11 +42,12 @@ const CardNumber = (props) => {
             <div className="creditCardNumber">
               <svg {...getCardImageProps({ images })} />
               <input
-                id={id || null}
                 className={className || null}
-                placeholder={placeholder}
                 {...field}
                 {...getCardNumberProps({
+                  id: id,
+                  placeholder: placeholder,
+                  name: name,
                   onBlur: field.onBlur,
                   onChange: field.onChange,
                 })}

@@ -39,8 +39,7 @@ export const setCustomErrors = (name, props, type) => {
   }
 
   if (Object.keys(customErrors).length > 0) {
-    const merge = { ...defaultErrors[fieldType], ...customErrors };
-    errors[name] = merge;
+    errors[name] = { ...defaultErrors[fieldType], ...customErrors };
   } else {
     errors[name] = defaultErrors[fieldType];
   }
@@ -62,7 +61,6 @@ export const validateEmail = (name, value, required) => {
 
 export const validateField = (name, value) => {
   let errorMessage;
-
   const error = errors[name];
 
   if (!value) {
@@ -73,8 +71,8 @@ export const validateField = (name, value) => {
 
 export const validate = (name, type) => {
   let errorMessage;
-
   const error = errors[name];
+
   if (error) {
     errorMessage = type ? error[type] : null;
   }

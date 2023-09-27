@@ -1,12 +1,15 @@
 import React from "react";
 import { getTagComponent, definedFields } from "./DefinedComponents";
 import FormResponse from "../components/FormResponse";
+import { mergeNestedObjects, inputArrayToObject } from "./Helper";
 
 const options = {
   forms: [],
   tabs: [],
   initialTab: "",
 };
+
+let replaceComponent;
 
 const getFieldSelectValue = (selectOptions) => {
   if (Array.isArray(selectOptions)) {
@@ -52,7 +55,20 @@ const setOptions = (component, formIndex) => {
   if (definedFields.includes(tag) && currentForm) {
     if (name && type !== "submit") {
       const fieldValue = value || defaultValue;
-      currentForm.fieldValues[name] = fieldValue || "";
+
+      const { inputNameObject, inputObject } = inputArrayToObject(
+        name,
+        fieldValue,
+      );
+
+      if (inputObject) {
+        const targetObj = currentForm.fieldValues[inputNameObject];
+        currentForm.fieldValues[inputNameObject] = targetObj
+          ? mergeNestedObjects(targetObj, inputObject)
+          : inputObject;
+      } else {
+        currentForm.fieldValues[name] = fieldValue || "";
+      }
     }
 
     if (tag === "select") {
@@ -90,7 +106,7 @@ const getStepName = (formIndex) => {
   return steps.length > 0 ? steps[steps.length - 1] : "";
 };
 
-const replaceComponent = (component, formIndex) => {
+replaceComponent = (component, formIndex) => {
   if (Array.isArray(component)) {
     return component.map((child, index) => {
       const uniqueKey = `component-${index}`;
