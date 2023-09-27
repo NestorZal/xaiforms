@@ -1,1 +1,86 @@
-input{max-width:100%}.error{color:red;display:inline-block;font-weight:400;line-height:20px;margin-top:5px}.creditCardNumber{align-items:center;display:flex;position:relative}.creditCardNumber svg{height:auto;left:10px;position:absolute;width:30px}.creditCardNumber input{padding-left:45px!important}button:hover{cursor:pointer}button.link{background:none;border-left:0;border-right:0;border-top:0}button.link:hover{cursor:pointer}button.link:focus{outline:0}.cc-number-review{align-items:center;display:flex}.cc-number-review svg{height:auto;margin-right:5px;width:32px}nav ul{border-bottom:1px solid #b3b3b3;display:flex;flex-wrap:wrap;list-style:none}nav ul button{background-color:transparent;border:none;font-size:16px;padding:12px 20px}nav ul li{background-color:#f0f0f1;margin:0}nav ul li.active,nav ul li:hover{border:1px solid #b3b3b3;border-bottom:0 solid #f0f0f1;border-radius:5px 5px 0 0}nav ul li.active button{border-bottom:1px solid #f0f0f1;margin-bottom:-1px}.loading-form{display:flex;justify-content:center;padding:60px}
+input {
+  max-width: 100%;
+}
+
+.error {
+  color: red;
+  line-height: 20px;
+  font-weight: 400;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.creditCardNumber {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.creditCardNumber svg {
+  position: absolute;
+  width: 30px;
+  height: auto;
+  left: 10px;
+}
+.creditCardNumber input {
+  padding-left: 45px !important;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button.link {
+  background: none;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+button.link:hover {
+  cursor: pointer;
+}
+button.link:focus {
+  outline: 0;
+}
+
+.cc-number-review {
+  display: flex;
+  align-items: center;
+}
+.cc-number-review svg {
+  margin-right: 5px;
+  height: auto;
+  width: 32px;
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  border-bottom: 1px solid #b3b3b3;
+}
+nav ul button {
+  font-size: 16px;
+  padding: 12px 20px;
+  background-color: transparent;
+  border: none;
+}
+nav ul li {
+  margin: 0;
+  background-color: #f0f0f1;
+}
+nav ul li.active, nav ul li:hover {
+  border-radius: 5px 5px 0 0;
+  border-color: #b3b3b3 #b3b3b3 #f0f0f1;
+  border-style: solid;
+  border-width: 1px 1px 0 1px;
+}
+nav ul li.active button {
+  margin-bottom: -1px;
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.loading-form {
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+}

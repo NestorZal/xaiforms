@@ -4,6 +4,7 @@ import { usePaymentInputs } from "react-payment-inputs";
 import images from "react-payment-inputs/images";
 import Label from "./Label";
 import { validate, setCustomErrors } from "../utils/FieldsValidation";
+import { getDeepValue } from "../../utils/Helper";
 
 const ERROR_MESSAGES = {
   emptyCardNumber: "required",
@@ -20,9 +21,11 @@ const CardNumber = (props) => {
   });
 
   setCustomErrors(name, rest, "cardNumber");
-  // console.dir(values);
+
+  const value = getDeepValue(name, values);
+
   const carType =
-    values[name] &&
+    value &&
     typeof meta.cardType !== "undefined" &&
     typeof meta.cardType.type !== "undefined"
       ? meta.cardType.type

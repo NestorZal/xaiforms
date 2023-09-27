@@ -1,13 +1,13 @@
 import { useFormikContext } from "formik";
 import { maskValue } from "../utils/InputCurrencyMask";
 import { getCardImage } from "../utils/FormHelper";
+import { getDeepValue } from "../../utils/Helper";
 
 const FieldValue = (props) => {
   const { name, className, format } = props;
-  const { values } = useFormikContext();
 
-  const fieldName = name;
-  const value = values[fieldName] ? values[fieldName] : null;
+  const { values } = useFormikContext();
+  const value = getDeepValue(name, values);
 
   if (value) {
     switch (format) {
