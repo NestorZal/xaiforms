@@ -16,7 +16,7 @@ const handleSubmit = (values, formData, setCurrentFormStatus) => {
     endpoint: formData.endpoint,
     body: data,
   };
-
+  console.log(data);
   if (_wpnonce) {
     requestData._wpnonce = _wpnonce;
   }

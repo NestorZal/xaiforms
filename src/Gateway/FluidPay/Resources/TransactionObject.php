@@ -24,11 +24,11 @@ class TransactionObject extends RequestObject
 
     protected string $processor_id = '';
 
-    protected array $payment_method;
+    protected array $payment_method = [];
 
-    protected ?Address $billing_address;
+    protected ?Address $billing_address = null;
 
-    protected ?Address $shipping_address;
+    protected ?Address $shipping_address = null;
 
     public function __construct( SanitizedPayload $payload )
     {
@@ -51,6 +51,7 @@ class TransactionObject extends RequestObject
     protected function set_payment_method( SanitizedPayload $payload ): void
     {
         $payment_method = $payload->get('payment_method');
+
         if (isset($payment_method['card']) ) {
             $this->payment_method = [
                 'card' => new CreditCard($payload)

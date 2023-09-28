@@ -28,6 +28,7 @@ abstract class RequestObject
         $properties = $this->properties();
         foreach ( $properties as $property ) {
             $method = 'set_' . $property;
+
             if (method_exists($this, $method) ) {
                 $this->{ $method }($payload);
             }

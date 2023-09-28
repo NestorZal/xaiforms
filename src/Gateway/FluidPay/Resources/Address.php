@@ -6,7 +6,7 @@ use XaiForms\Gateway\FluidPay\Resources\SanitizedPayload;
 
 class Address extends RequestObject
 {
-    private ?array $fullname = null;
+    private array $full_name = [];
 
     protected string $first_name = '';
     protected string $last_name = '';
@@ -52,16 +52,16 @@ class Address extends RequestObject
 
     private function split_name($name): array
     {
-        if ( !$this->fullname ) {
+        if ( !$this->full_name ) {
             $name = trim($name);
             $last_name = (!str_contains($name, ' ')) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $name);
             $first_name = trim( preg_replace('#'.preg_quote($last_name,'#').'#', '', $name ) );
 
-            $this->fullname = [
+            $this->full_name = [
                 'first_name' => $first_name,
                 'last_name' => $last_name
             ];
         }
-        return $this->fullname;
+        return $this->full_name;
     }
 }

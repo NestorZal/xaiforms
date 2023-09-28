@@ -53,8 +53,11 @@ export const getDeepValue = (inputName, values) => {
       }
     }
 
+    if (typeof currentValue === "object" || Array.isArray(currentValue)) {
+      return null;
+    }
     return currentValue;
   }
 
-  return values[inputName] || "";
+  return values[inputName] || null;
 };
