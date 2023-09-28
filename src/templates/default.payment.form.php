@@ -47,7 +47,7 @@ $fluidpay_route = new \XaiForms\Gateway\FluidPay\FluidPayRoute();
         </step>
 
         <formresponse status="success">
-            Thank you! You will receive an email soon with more instructions <responsevalue name="billingName"> then we go where ever you want. <responsevalue name="paymentOption">
+            Thank you! You will receive an email soon with more instructions <responsevalue name="data[billing_address][first_name]"> <responsevalue name="data[billing_address][last_name]"> then we go where ever you want.
         </formresponse>
         <formresponse status="declined">
             Hey <responsevalue name="billingName">, YOur credit card was declined

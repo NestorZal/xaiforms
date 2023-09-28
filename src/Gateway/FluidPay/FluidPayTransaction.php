@@ -46,6 +46,12 @@ class FluidPayTransaction extends FluidPay
 
         $code = $response['response']['code'] ?? 400;
         $data = json_decode( $response['body'] );
+
+        if (isset( $data->status) && ('success' === $data->status)) {
+            $status = isset($data->data->response_body->card->response) && $data->data->response_body->card->response === 'declined' ? 'declined' : $data->status;
+            $data->status = $status;
+        }
+
         return new \WP_REST_Response( $data, $code );
     }
 
