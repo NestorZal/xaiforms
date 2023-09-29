@@ -6,7 +6,7 @@ $fluidpay_route = new \XaiForms\Gateway\FluidPay\FluidPayRoute();
 
 <tab label="Tab 1" class="active">
     <form method="post" action="<?php echo $fluidpay_route->get_route_url('charge_transaction'); ?>">
-        <?php $fluidpay_options->token_field(); ?>
+        <?php $fluidpay_options->nonce_field(); ?>
         <step>
 
             <email name="billing_address[email]" label="Your Email" wrapper-class="email-address" required error-msg-required="Your email is required." error-msg-invalid="Your email is invalid. Please try again!"/>

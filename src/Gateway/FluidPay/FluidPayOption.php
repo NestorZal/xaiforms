@@ -33,18 +33,23 @@ class FluidPayOption extends Option
         return $base_urls[ $env_mode ];
     }
 
-    public function get_transaction_token(): string
+    public function nonce_action(): string
     {
-        return wp_hash( $this->get_base_url() );
+        return 'fluidpay_action';
     }
 
-    public function get_transaction_token_name(): string
+    public function nonce_name(): string
     {
-        return 'fluidpay-token';
+        return 'fluidpay_nonce';
     }
 
-    public function token_field(): void
+    public function nonce_field(): void
     {
-        echo '<input type="hidden" name="' . $this->get_transaction_token_name() . '" value="' . $this->get_transaction_token() . '"/>';
+        if ( is_user_logged_in() ) {
+            wp_nonce_field('wp_rest', '_wpnonce', false);
+        }
+        else {
+            wp_nonce_field( $this->nonce_action(), $this->nonce_name(), false );
+        }
     }
 }

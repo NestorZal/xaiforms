@@ -59,9 +59,12 @@ class FluidPayTransaction extends FluidPay
     {
         $params = $request->get_params();
 
-        $token = $params[ $this->fluidpay_option->get_transaction_token_name() ] ?? '';
-        if ($token !== $this->fluidpay_option->get_transaction_token() ) {
-            return new \WP_Error( 400, 'Invalid token', array( 'status' => 'failed' ) );
+        if ( !is_user_logged_in() ) {
+            $nonce = $params[$this->fluidpay_option->nonce_name()];
+
+            if ( !wp_verify_nonce( $nonce, $this->fluidpay_option->nonce_action() ) ) {
+                return new \WP_Error(400, 'Invalid transaction', array('status' => 'failed'));
+            }
         }
 
         $sanitized_payload = new SanitizedPayload($params);
