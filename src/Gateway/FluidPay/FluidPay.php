@@ -13,11 +13,6 @@ abstract class FluidPay
     public function __construct()
     {
         $this->fluidpay_option = new FluidPayOption();
-
-        $this->api_key = $this->fluidpay_option->get_option('private-key');
-        if ( !$this->api_key ) {
-            wp_die('Access denied!');
-        }
     }
 
     protected function endpoint(): string
@@ -28,5 +23,15 @@ abstract class FluidPay
     protected function get_api_key() : string|null
     {
         return $this->api_key;
+    }
+
+    protected function verify_api_key(): bool
+    {
+        $this->api_key = $this->fluidpay_option->get_option('private-key');
+        if ( !$this->api_key ) {
+            wp_die('Access denied!');
+        }
+
+        return true;
     }
 }

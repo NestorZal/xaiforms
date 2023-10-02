@@ -16,6 +16,8 @@ class FluidPayTransaction extends FluidPay
 
     public function charge( $payload ): \WP_Error|\WP_REST_Response
     {
+        $this->verify_api_key();
+
         if ($payload instanceof SanitizedPayload) {
             $sanitized_payload = $payload;
         }
