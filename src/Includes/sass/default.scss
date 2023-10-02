@@ -62,18 +62,19 @@ nav ul {
   list-style: none;
   border-bottom: 1px solid #b3b3b3;
 
-  button {
-    font-size: 16px;
-    padding: 12px 20px;
-    background-color: transparent;
-    border: none;
-  }
-
   li {
     margin: 0;
     background-color: #f0f0f1;
 
-    &.active, &:hover {
+    button {
+      font-size: 16px;
+      margin-bottom: -1px;
+      padding: 12px 20px;
+      background-color: transparent;
+      border: 1px solid transparent;
+    }
+
+    &.active button, button:hover {
       border-radius: 5px 5px 0 0;
       border-color: #b3b3b3 #b3b3b3 #f0f0f1;
       border-style: solid;
@@ -81,9 +82,9 @@ nav ul {
     }
 
     &.active button {
-      margin-bottom: -1px;
       border-bottom: 1px solid #f0f0f1;
     }
+
   }
 }
 
