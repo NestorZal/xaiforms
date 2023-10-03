@@ -25,4 +25,5 @@ return array(
     'XaiForms\\Includes\\Loader' => $baseDir . '/src/Includes/Loader.php',
     'XaiForms\\Includes\\Option' => $baseDir . '/src/Includes/Option.php',
     'XaiForms\\Includes\\Route' => $baseDir . '/src/Includes/Route.php',
+    'XaiForms\\Includes\\TemplateShortcode' => $baseDir . '/src/Includes/TemplateShortcode.php',
 );

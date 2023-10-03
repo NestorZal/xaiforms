@@ -87,38 +87,6 @@ abstract class AdminPage
     public function register_assets(): void
     {
         $helper = new Helper();
-
-        foreach ($this->assets as $asset) {
-            $file = $asset['file'] ?? '';
-            $deps = $asset['deps'] ?? [];
-
-            if (!$file) {
-                continue;
-            }
-
-            $handle = basename($file);
-            if ( str_contains($handle, ' ') ) {
-                $handle = str_replace(' ', '-', $handle);
-            }
-            $handle = 'xaiforms-' . $handle;
-
-            if ( str_contains($handle, '.css') ) {
-                $handle = str_replace('.css', '', $handle);
-
-                if ( !wp_script_is($handle) ) {
-                    wp_register_style($handle, XAIFORMS_URL . $file, $deps, $helper->auto_version($file));
-                    wp_enqueue_style($handle);
-                }
-            }
-            else if ( str_contains($handle, '.js') ) {
-                $handle = str_replace('.js', '', $handle);
-
-                if ( !wp_script_is($handle) ) {
-                    wp_register_script($handle, XAIFORMS_URL . $file, $deps, $helper->auto_version($file), true);
-                    wp_enqueue_script($handle);
-                }
-            }
-        }
+        $helper->enqueue_assets( $this->assets );
     }
-
 }

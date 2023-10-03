@@ -3,6 +3,7 @@ namespace XaiForms\Includes;
 
 use XaiForms\Admin\RegisterAdminPages;
 use XaiForms\Gateway\FluidPay\FluidPayRoute;
+use XaiForms\Includes\TemplateShortcode;
 
 class Loader
 {
@@ -17,6 +18,9 @@ class Loader
         // Routes
         $fluidpay_route = new FluidPayRoute();
         $fluidpay_route->register();
+
+        // Template Shortcode
+        new TemplateShortcode();
     }
 
 }

@@ -21,7 +21,7 @@ class Helper
         return filemtime(XAIFORMS_DIR . $path);
     }
 
-    public function close_custom_html_tags( string $html ): array|string|null
+    public function close_custom_html_tags( string $html ): ?string
     {
         if (!$html) {
             return '';
@@ -33,8 +33,8 @@ class Helper
         $replacements =[];
 
         foreach ($custom_tags as $tag) {
-            $patterns[] = '/<\/'.$tag.'(.*?)>/';
-            $patterns[] = '/<'.$tag.' (.*?)(\/>|\s>|>)/';
+            $patterns[] = '/<\/'.$tag.'(.*?)>/i';
+            $patterns[] = '/<'.$tag.' (.*?)(\/>|\s>|>)/i';
 
             $replacements[] = '';
             $replacements[] = '<'.$tag.' $1></'.$tag.'>';
@@ -73,5 +73,44 @@ class Helper
         }
 
         return $sanitized_array;
+    }
+
+    public function enqueue_assets( array $assets ): void
+    {
+        if (empty($assets)) {
+            return;
+        }
+
+        foreach ($assets as $asset) {
+            $file = $asset['file'] ?? '';
+            $deps = $asset['deps'] ?? [];
+
+            if (!$file) {
+                continue;
+            }
+
+            $handle = basename($file);
+            if ( str_contains($handle, ' ') ) {
+                $handle = str_replace(' ', '-', $handle);
+            }
+            $handle = 'xaiforms-' . $handle;
+
+            if ( str_contains($handle, '.css') ) {
+                $handle = str_replace('.css', '', $handle);
+
+                if ( !wp_script_is($handle) ) {
+                    wp_register_style($handle, XAIFORMS_URL . $file, $deps, $this->auto_version($file));
+                    wp_enqueue_style($handle);
+                }
+            }
+            else if ( str_contains($handle, '.js') ) {
+                $handle = str_replace('.js', '', $handle);
+
+                if ( !wp_script_is($handle) ) {
+                    wp_register_script($handle, XAIFORMS_URL . $file, $deps, $this->auto_version($file), true);
+                    wp_enqueue_script($handle);
+                }
+            }
+        }
     }
 }

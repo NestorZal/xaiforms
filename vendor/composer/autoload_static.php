@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitbcdfb086e71956a60459863f0817b251
 {
+    public static $files = array (
+        'e588dc014f2089bb799d92747efa79ad' => __DIR__ . '/../..' . '/src/Includes/Globals.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'X' => 
         array (
@@ -40,6 +44,7 @@ class ComposerStaticInitbcdfb086e71956a60459863f0817b251
         'XaiForms\\Includes\\Loader' => __DIR__ . '/../..' . '/src/Includes/Loader.php',
         'XaiForms\\Includes\\Option' => __DIR__ . '/../..' . '/src/Includes/Option.php',
         'XaiForms\\Includes\\Route' => __DIR__ . '/../..' . '/src/Includes/Route.php',
+        'XaiForms\\Includes\\TemplateShortcode' => __DIR__ . '/../..' . '/src/Includes/TemplateShortcode.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
