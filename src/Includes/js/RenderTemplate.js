@@ -44,8 +44,6 @@ const render = (props) => {
   const htmlParsed = parse(html);
   const { components, options } = replace(htmlParsed);
 
-  console.log(options);
-
   return <Template options={options}>{components}</Template>;
 };
 

@@ -21,28 +21,6 @@ class Helper
         return filemtime(XAIFORMS_DIR . $path);
     }
 
-    public function close_custom_html_tags( string $html ): ?string
-    {
-        if (!$html) {
-            return '';
-        }
-
-        $custom_tags = ['fieldvalue', 'email', 'cardnumber', 'cvc', 'expirydate', 'price', 'responsevalue'];
-
-        $patterns = [];
-        $replacements =[];
-
-        foreach ($custom_tags as $tag) {
-            $patterns[] = '/<\/'.$tag.'(.*?)>/i';
-            $patterns[] = '/<'.$tag.' (.*?)(\/>|\s>|>)/i';
-
-            $replacements[] = '';
-            $replacements[] = '<'.$tag.' $1></'.$tag.'>';
-        }
-
-        return preg_replace($patterns, $replacements, $html);
-    }
-
     public function sanitize_value( string $value, string $key = '' ): string
     {
         return match ($key) {
@@ -112,5 +90,16 @@ class Helper
                 }
             }
         }
+    }
+
+    public function close_html_tags( $html ): bool|string|null
+    {
+        if ( !$html ) {
+            return null;
+        }
+
+        $dom = new \DOMDocument();
+        $dom->loadHTML('<?xml encoding="'.get_bloginfo('charset').'" ?>' . $html);
+        return $dom->saveHTML();
     }
 }

@@ -44,7 +44,7 @@ class Settings extends AdminPage
                 $html = ob_get_clean();
                 ob_end_flush();
 
-                echo $helper->close_custom_html_tags($html);
+                echo $helper->close_html_tags($html);
             ?>
         </div>
         <?php

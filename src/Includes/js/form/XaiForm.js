@@ -39,7 +39,7 @@ const handleSubmit = (values, formData, setCurrentFormStatus) => {
   return true;
 };
 
-const renderSteps = (steps) => {
+const renderSteps = (steps, scrollTo) => {
   if (steps.length === 0) {
     return { step: null, setCurrentStep: null };
   }
@@ -49,6 +49,13 @@ const renderSteps = (steps) => {
   const setCurrentStep = React.useCallback(
     (currentStep) => {
       setStep(currentStep);
+
+      if (scrollTo !== null) {
+        window.scrollTo({
+          top: scrollTo,
+          behavior: "smooth",
+        });
+      }
     },
     [step],
   );
@@ -57,8 +64,8 @@ const renderSteps = (steps) => {
 };
 
 const XaiFormComponent = (props) => {
-  const { children, steps, formValues, values } = props;
-  const { step, setCurrentStep } = renderSteps(steps);
+  const { children, steps, formValues, values, scrollTo } = props;
+  const { step, setCurrentStep } = renderSteps(steps, scrollTo);
 
   React.useEffect(() => {
     /* eslint no-param-reassign: "error" */
@@ -76,7 +83,7 @@ const XaiFormComponent = (props) => {
   );
 };
 
-const XaiForm = ({ children, index, method, action }) => {
+const XaiForm = ({ children, index, method, action, ...rest }) => {
   const { forms } = React.useContext(TemplateContext);
 
   const currentForm = forms[index];
@@ -117,6 +124,7 @@ const XaiForm = ({ children, index, method, action }) => {
                 steps={currentForm.steps}
                 formValues={formValues}
                 values={props.values}
+                scrollTo={rest["data-scrollto"] ? rest["data-scrollto"] : null}
               >
                 {children}
               </XaiFormComponent>

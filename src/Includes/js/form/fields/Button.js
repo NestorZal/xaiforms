@@ -5,16 +5,16 @@ const Button = (props) => {
 
   return (
     <ButtonComponent
-        type={type}
-        className={className}
-        {...(rest['data-onclick']
-            ? {
-              onClick: () => {
-                window[rest['data-onclick']]();
-              },
-            }
-            : "")}
-        {...rest}
+      type={type}
+      className={className}
+      {...(rest["data-onclick"]
+        ? {
+            onClick: () => {
+              window[rest["data-onclick"]]();
+            },
+          }
+        : "")}
+      {...rest}
     >
       {children}
     </ButtonComponent>

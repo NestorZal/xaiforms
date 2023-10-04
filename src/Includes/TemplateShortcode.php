@@ -43,7 +43,7 @@ class TemplateShortcode
 
         return
             '<div class="render-template">' .
-                $helper->close_custom_html_tags( $html ) .
+                $helper->close_html_tags( $html ) .
             '</div>';
     }
 
