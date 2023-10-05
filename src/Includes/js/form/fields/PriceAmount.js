@@ -45,6 +45,11 @@ const PriceAmount = (props) => {
                 const formattedNumber = clearInputNumber(e.target.value);
                 setFieldValue(name, formattedNumber);
               }}
+              {...(rest["placeholder-color"] && !field.value
+                ? {
+                    style: { color: rest["placeholder-color"] },
+                  }
+                : "")}
             />
             <ErrorMessage name={name} component="div" className="error" />
           </>

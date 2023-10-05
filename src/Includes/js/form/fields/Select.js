@@ -51,10 +51,7 @@ const Select = (props) => {
     <div className={rest["wrapper-class"] ? rest["wrapper-class"] : null}>
       {label ? <Label text={label} domId={id || null} /> : ""}
       <Field
-        id={id || null}
-        className={className || null}
         name={name}
-        as="select"
         {...(required
           ? {
               validate: (value) => {
@@ -63,10 +60,23 @@ const Select = (props) => {
             }
           : "")}
       >
-        <option value="" disabled>
-          {placeholder || "Select an option"}
-        </option>
-        <Options name={name}>{children}</Options>
+        {({ field }) => (
+          <select
+            id={id || null}
+            className={className || null}
+            {...field}
+            {...(rest["placeholder-color"] && !field.value
+              ? {
+                  style: { color: rest["placeholder-color"] },
+                }
+              : "")}
+          >
+            <option value="" disabled>
+              {placeholder || "Select an option"}
+            </option>
+            <Options name={name}>{children}</Options>
+          </select>
+        )}
       </Field>
       <ErrorMessage name={name} component="div" className="error" />
     </div>

@@ -7,10 +7,10 @@ const Button = (props) => {
     <ButtonComponent
       type={type}
       className={className}
-      {...(rest["data-onclick"]
+      {...(rest["onclick-callback"]
         ? {
             onClick: () => {
-              window[rest["data-onclick"]]();
+              window[rest["onclick-callback"]]();
             },
           }
         : "")}

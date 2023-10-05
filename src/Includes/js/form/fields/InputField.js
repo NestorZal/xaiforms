@@ -34,6 +34,11 @@ const InputField = (props) => {
                 type={type || "text"}
                 {...rest}
                 {...field}
+                {...(rest["placeholder-color"] && !field.value
+                  ? {
+                      style: { color: rest["placeholder-color"] },
+                    }
+                  : "")}
               />
             )}
             <ErrorMessage name={name} component="div" className="error" />

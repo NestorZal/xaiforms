@@ -97,7 +97,7 @@ const XaiForm = ({ children, index, method, action, ...rest }) => {
   const formValues = React.useRef(currentForm.fieldValues);
   const formResponse = React.useRef(null);
 
-  const scrollTo = rest["data-scrollto"] ? rest["data-scrollto"] : null;
+  const scrollTo = rest["scroll-top"] ? rest["scroll-top"] : null;
 
   const [formStatus, setFormStatus] = React.useState("init");
   const setCurrentFormStatus = React.useCallback(

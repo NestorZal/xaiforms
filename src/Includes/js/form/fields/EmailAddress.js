@@ -25,6 +25,11 @@ const EmailAddress = (props) => {
               className={className || null}
               placeholder={placeholder}
               {...field}
+              {...(rest["placeholder-color"] && !field.value
+                ? {
+                    style: { color: rest["placeholder-color"] },
+                  }
+                : "")}
             />
             <ErrorMessage name={name} component="div" className="error" />
           </>
