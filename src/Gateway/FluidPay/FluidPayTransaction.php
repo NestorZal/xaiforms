@@ -70,7 +70,9 @@ class FluidPayTransaction extends FluidPay
         }
 
         $sanitized_payload = new SanitizedPayload($params);
-        return $this->charge($sanitized_payload);
+        $response = $this->charge($sanitized_payload);
+
+        return apply_filters( 'xaiforms_fluidpay_after_request', $response, $params );
     }
 
 }

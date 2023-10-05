@@ -20,8 +20,11 @@ const handleSubmit = (values, formData, setCurrentFormStatus) => {
   if (_wpnonce) {
     requestData._wpnonce = _wpnonce;
   }
+  console.log(data);
 
   request(requestData).then((response) => {
+    console.log(response);
+
     const redirect = _wp_http_referer || http_referer;
     if (redirect) {
       window.location.href = redirect;
