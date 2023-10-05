@@ -20,11 +20,8 @@ const handleSubmit = (values, formData, setCurrentFormStatus) => {
   if (_wpnonce) {
     requestData._wpnonce = _wpnonce;
   }
-  console.log(data);
 
   request(requestData).then((response) => {
-    console.log(response);
-
     const redirect = _wp_http_referer || http_referer;
     if (redirect) {
       window.location.href = redirect;
@@ -42,6 +39,15 @@ const handleSubmit = (values, formData, setCurrentFormStatus) => {
   return true;
 };
 
+const scrollTop = (scrollTo) => {
+  if (scrollTo !== null) {
+    window.scrollTo({
+      top: scrollTo,
+      behavior: "smooth",
+    });
+  }
+};
+
 const renderSteps = (steps, scrollTo) => {
   if (steps.length === 0) {
     return { step: null, setCurrentStep: null };
@@ -52,13 +58,7 @@ const renderSteps = (steps, scrollTo) => {
   const setCurrentStep = React.useCallback(
     (currentStep) => {
       setStep(currentStep);
-
-      if (scrollTo !== null) {
-        window.scrollTo({
-          top: scrollTo,
-          behavior: "smooth",
-        });
-      }
+      scrollTop(scrollTo);
     },
     [step],
   );
@@ -97,11 +97,14 @@ const XaiForm = ({ children, index, method, action, ...rest }) => {
   const formValues = React.useRef(currentForm.fieldValues);
   const formResponse = React.useRef(null);
 
+  const scrollTo = rest["data-scrollto"] ? rest["data-scrollto"] : null;
+
   const [formStatus, setFormStatus] = React.useState("init");
   const setCurrentFormStatus = React.useCallback(
     (currentStatus, response) => {
       formResponse.current = response;
       setFormStatus(currentStatus);
+      scrollTop(scrollTo);
     },
     [formStatus],
   );
@@ -127,7 +130,7 @@ const XaiForm = ({ children, index, method, action, ...rest }) => {
                 steps={currentForm.steps}
                 formValues={formValues}
                 values={props.values}
-                scrollTo={rest["data-scrollto"] ? rest["data-scrollto"] : null}
+                scrollTo={scrollTo}
               >
                 {children}
               </XaiFormComponent>
