@@ -99,7 +99,7 @@ class Helper
         }
 
         $dom = new \DOMDocument();
-        $dom->loadHTML('<?xml encoding="'.get_bloginfo('charset').'" ?>' . $html);
+        $dom->loadHTML( '<?xml encoding="'.get_bloginfo('charset').'" ?>' . $html, LIBXML_NOERROR );
         return $dom->saveHTML();
     }
 }
