@@ -111,7 +111,7 @@ const XaiForm = ({ children, index, method, action, ...rest }) => {
 
   switch (formStatus) {
     case "submitting":
-      return <Spinner />;
+      return <Spinner {...rest} />;
     case "init":
       return (
         <Formik

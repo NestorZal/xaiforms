@@ -13,13 +13,16 @@ const spinners = {
 };
 
 const Spinner = (props) => {
-  const { type, color, size } = props;
+  const { spinner, ...rest } = props;
 
-  const SpinnerElement = type ? spinners[type] : spinners.RingLoader;
+  const SpinnerElement = spinner ? spinners[spinner] : spinners.RingLoader;
 
   return (
     <div className="loading-form">
-      <SpinnerElement color={color || "#1275db"} size={size || 80} />
+      <SpinnerElement
+        color={rest["spinner-color"] || "#1275db"}
+        size={rest["spinner-size"] || 80}
+      />
     </div>
   );
 };
