@@ -1,3 +1,5 @@
+import parseExpression from "../../utils/math-parser/Expressions";
+
 const errors = {};
 
 const defaultErrors = {
@@ -59,13 +61,19 @@ export const validateEmail = (name, value, required) => {
   return errorMessage;
 };
 
-export const validateField = (name, value) => {
+export const validateField = (name, value, rest = null) => {
   let errorMessage;
   const error = errors[name];
 
-  if (!value) {
+  if (value && rest && rest["expression-validation"]) {
+    const validExp = parseExpression(rest["expression-validation"], value);
+    if (!validExp) {
+      errorMessage = rest["error-msg-expression"];
+    }
+  } else if (!value) {
     errorMessage = error.required;
   }
+
   return errorMessage;
 };
 

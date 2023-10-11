@@ -11,15 +11,20 @@ const InputField = (props) => {
     setCustomErrors(name, rest);
   }
 
+  const exp = rest["expression-validation"]
+    ? rest["expression-validation"]
+    : null;
+  const validation = !!(exp || required);
+
   return (
     <div className={rest["wrapper-class"] ? rest["wrapper-class"] : null}>
       {label ? <Label text={label} domId={id || null} /> : ""}
       <Field
         name={name}
-        {...(required
+        {...(validation
           ? {
               validate: (value) => {
-                return validateField(name, value);
+                return validateField(name, value, rest);
               },
             }
           : "")}
