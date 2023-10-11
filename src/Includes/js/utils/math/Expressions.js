@@ -70,10 +70,10 @@ const calculateExp = (expTree, value) => {
   return result;
 };
 
-const parseExpression = (expression, value) => {
+const validateExpression = (expression, value) => {
   const splitExp = expression.split(/[(,)]+/).filter((n) => n);
   const expressionTree = buildExpressionTree("", splitExp);
   return calculateExp(expressionTree, value);
 };
 
-export default parseExpression;
+export default validateExpression;

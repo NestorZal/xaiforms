@@ -16,6 +16,7 @@ import {
   Select,
   FieldValue,
 } from "../form/fields";
+import NumberField from "../form/fields/NumberField";
 
 export const definedFields = [
   "email",
@@ -39,10 +40,12 @@ export const definedTypes = [
   "next",
   "back",
   "hidden",
+  "number",
 ];
 
 export const definedComponents = {
   input: InputField,
+  number: NumberField,
   email: EmailAddress,
   cardnumber: CardNumber,
   cvc: CardCVC,

@@ -1,4 +1,4 @@
-import parseExpression from "../../utils/math-parser/Expressions";
+import validateExpression from "../../utils/math/Expressions";
 
 const errors = {};
 
@@ -40,6 +40,10 @@ export const setCustomErrors = (name, props, type) => {
     customErrors.invalid = props["error-msg-invalid"];
   }
 
+  if (props["error-msg-expression"]) {
+    customErrors.expression = props["error-msg-expression"];
+  }
+
   if (Object.keys(customErrors).length > 0) {
     errors[name] = { ...defaultErrors[fieldType], ...customErrors };
   } else {
@@ -61,20 +65,29 @@ export const validateEmail = (name, value, required) => {
   return errorMessage;
 };
 
-export const validateField = (name, value, rest = null) => {
+export const validateField = (name, value) => {
   let errorMessage;
   const error = errors[name];
 
-  if (value && rest && rest["expression-validation"]) {
-    const validExp = parseExpression(rest["expression-validation"], value);
-    if (!validExp) {
-      errorMessage = rest["error-msg-expression"];
-    }
-  } else if (!value) {
+  if (!value) {
     errorMessage = error.required;
   }
 
   return errorMessage;
+};
+
+export const validateFieldNumber = (name, value, required, exp) => {
+  const error = errors[name];
+
+  if (required && !value) {
+    return error.required;
+  }
+
+  if (!validateExpression(exp, value)) {
+    return error.expression;
+  }
+
+  return null;
 };
 
 export const validate = (name, type) => {
