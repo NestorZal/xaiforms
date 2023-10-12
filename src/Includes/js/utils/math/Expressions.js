@@ -14,6 +14,12 @@ const expressions = {
   multiply: (a, b) => {
     return parseInt(a, 10) * parseInt(b, 10);
   },
+  greaterThan: (a, b) => {
+    return parseInt(a, 10) > parseInt(b, 10);
+  },
+  lessThan: (a, b) => {
+    return parseInt(a, 10) < parseInt(b, 10);
+  },
 };
 
 const buildExpressionTree = (expression, arrayExp) => {

@@ -76,14 +76,14 @@ export const validateField = (name, value) => {
   return errorMessage;
 };
 
-export const validateFieldNumber = (name, value, required, exp) => {
+export const validateFieldNumber = (name, value, required, expression) => {
   const error = errors[name];
 
   if (required && !value) {
     return error.required;
   }
 
-  if (!calculateExpression(exp, value)) {
+  if (!calculateExpression(expression, value)) {
     return error.expression;
   }
 

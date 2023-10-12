@@ -12,3 +12,4 @@ export { default as PriceAmount } from "./PriceAmount";
 export { default as Select } from "./Select";
 export { default as NumberField } from "./NumberField";
 export { default as ExpressionField } from "./ExpressionField";
+export { default as ValidateField } from "./ValidateField";

@@ -17,6 +17,7 @@ import {
   FieldValue,
   NumberField,
   ExpressionField,
+  ValidateField,
 } from "../form/fields";
 
 export const definedFields = [
@@ -64,6 +65,7 @@ export const definedComponents = {
   formresponse: FormResponse,
   responsevalue: ResponseValue,
   expressionfield: ExpressionField,
+  validate: ValidateField,
 };
 
 export const getTagComponent = (tag, type) => {

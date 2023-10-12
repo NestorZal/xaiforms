@@ -8,11 +8,9 @@ import {
 import maskNumber from "../utils/Mask";
 
 const NumberField = (props) => {
-  const { label, name, type, id, required, ...rest } = props;
+  const { label, name, type, id, required, expression, ...rest } = props;
 
-  const exp = rest["validate-expression"] ? rest["validate-expression"] : null;
-  const requireValidation = !!(exp || required);
-
+  const requireValidation = !!(expression || required);
   if (requireValidation) {
     setCustomErrors(name, rest);
   }
@@ -32,7 +30,7 @@ const NumberField = (props) => {
         {...(requireValidation
           ? {
               validate: (value) => {
-                return validateFieldNumber(name, value, required, exp);
+                return validateFieldNumber(name, value, required, expression);
               },
             }
           : "")}
