@@ -10,3 +10,5 @@ export { default as InputField } from "./InputField";
 export { default as Label } from "./Label";
 export { default as PriceAmount } from "./PriceAmount";
 export { default as Select } from "./Select";
+export { default as NumberField } from "./NumberField";
+export { default as ExpressionField } from "./ExpressionField";

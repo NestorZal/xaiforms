@@ -11,6 +11,9 @@ const expressions = {
   sum: (a, b) => {
     return parseInt(a, 10) + parseInt(b, 10);
   },
+  multiply: (a, b) => {
+    return parseInt(a, 10) * parseInt(b, 10);
+  },
 };
 
 const buildExpressionTree = (expression, arrayExp) => {
@@ -70,10 +73,10 @@ const calculateExp = (expTree, value) => {
   return result;
 };
 
-const validateExpression = (expression, value) => {
+const calculateExpression = (expression, value = null) => {
   const splitExp = expression.split(/[(,)]+/).filter((n) => n);
   const expressionTree = buildExpressionTree("", splitExp);
   return calculateExp(expressionTree, value);
 };
 
-export default validateExpression;
+export default calculateExpression;

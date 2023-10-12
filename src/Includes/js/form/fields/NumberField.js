@@ -10,9 +10,7 @@ import maskNumber from "../utils/Mask";
 const NumberField = (props) => {
   const { label, name, type, id, required, ...rest } = props;
 
-  const exp = rest["expression-validation"]
-    ? rest["expression-validation"]
-    : null;
+  const exp = rest["validate-expression"] ? rest["validate-expression"] : null;
   const requireValidation = !!(exp || required);
 
   if (requireValidation) {

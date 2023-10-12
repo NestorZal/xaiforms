@@ -1,4 +1,4 @@
-import validateExpression from "../../utils/math/Expressions";
+import calculateExpression from "../../utils/math/Expressions";
 
 const errors = {};
 
@@ -83,7 +83,7 @@ export const validateFieldNumber = (name, value, required, exp) => {
     return error.required;
   }
 
-  if (!validateExpression(exp, value)) {
+  if (!calculateExpression(exp, value)) {
     return error.expression;
   }
 

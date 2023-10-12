@@ -15,7 +15,7 @@ export const mergeNestedObjects = (target, source) => {
   return targetCopy;
 };
 
-const getArrayName = (name) => {
+export const getArrayName = (name) => {
   return name.split(/[[\]]/).filter((n) => n.trim());
 };
 

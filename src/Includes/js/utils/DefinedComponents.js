@@ -15,8 +15,9 @@ import {
   Button,
   Select,
   FieldValue,
+  NumberField,
+  ExpressionField,
 } from "../form/fields";
-import NumberField from "../form/fields/NumberField";
 
 export const definedFields = [
   "email",
@@ -62,6 +63,7 @@ export const definedComponents = {
   step: Step,
   formresponse: FormResponse,
   responsevalue: ResponseValue,
+  expressionfield: ExpressionField,
 };
 
 export const getTagComponent = (tag, type) => {
