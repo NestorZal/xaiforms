@@ -4,22 +4,22 @@ import { getCardImage } from "../utils/FormHelper";
 import { getDeepValue } from "../../utils/Helper";
 
 const FieldValue = (props) => {
-  const { name, className, format, value } = props;
-
+  const { name, className, format, value, tag } = props;
   const { values } = useFormikContext();
 
-  const val = value || getDeepValue(name, values);
+  const Tag = tag || "div";
 
+  const val = value || getDeepValue(name, values);
   if (val) {
     switch (format) {
       case "price":
         return <div className={className}>{maskValue(val)}</div>;
       case "cardnumber":
         return (
-          <div className={`cc-number-review ${className || ""}`}>
+          <Tag className={`cc-number-review ${className || ""}`}>
             <svg {...getCardImage()} />
             <span>{val}</span>
-          </div>
+          </Tag>
         );
       case "select": {
         let { options } = props;
@@ -39,14 +39,14 @@ const FieldValue = (props) => {
           });
         }
 
-        return <div className={className}>{valueOption}</div>;
+        return <Tag className={className}>{valueOption}</Tag>;
       }
       default:
-        return <div className={className}>{val}</div>;
+        return <Tag className={className}>{val}</Tag>;
     }
   }
 
-  return val;
+  return null;
 };
 
 FieldValue.defaultProps = {

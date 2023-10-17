@@ -6,8 +6,12 @@ import { TemplateContext } from "../providers/TemplateContextProvider";
 import FormContextProvider from "../providers/FormContextProvider";
 import FormResponseContextProvider from "../providers/FormResponseContextProvider";
 
-const handleSubmit = (values, formData, setCurrentFormStatus, isValidXaiForm) => {
-  console.log(isValidXaiForm);
+const handleSubmit = (
+  values,
+  formData,
+  setCurrentFormStatus,
+  isValidXaiForm,
+) => {
   if (!isValidXaiForm) {
     return false;
   }
@@ -72,7 +76,15 @@ const renderSteps = (steps, scrollTo) => {
 };
 
 const XaiFormComponent = (props) => {
-  const { children, steps, formValues, values, scrollTo, isValidXaiForm, setCurrentValidXaiForm } = props;
+  const {
+    children,
+    steps,
+    formValues,
+    values,
+    scrollTo,
+    isValidXaiForm,
+    setCurrentValidXaiForm,
+  } = props;
   const { step, setCurrentStep } = renderSteps(steps, scrollTo);
 
   React.useEffect(() => {
@@ -118,10 +130,10 @@ const XaiForm = ({ children, index, method, action, ...rest }) => {
 
   const [isValidXaiForm, setValidXaiForm] = React.useState(true);
   const setCurrentValidXaiForm = React.useCallback(
-      (isValid) => {
-        setValidXaiForm(isValid);
-      },
-      [isValidXaiForm],
+    (isValid) => {
+      setValidXaiForm(isValid);
+    },
+    [isValidXaiForm],
   );
 
   switch (formStatus) {
@@ -136,7 +148,7 @@ const XaiForm = ({ children, index, method, action, ...rest }) => {
               values,
               { method: method, endpoint: action },
               setCurrentFormStatus,
-                isValidXaiForm,
+              isValidXaiForm,
             );
           }}
         >

@@ -1,7 +1,7 @@
 const expressions = {
   equal: (a, b) => {
     if (typeof a === "string" && typeof b === "string") {
-      return a === b;
+      return a.trim() === b.trim();
     }
     return parseInt(a, 10) === parseInt(b, 10);
   },
@@ -82,6 +82,7 @@ const calculateExp = (expTree, value) => {
 const calculateExpression = (expression, value = null) => {
   const splitExp = expression.split(/[(,)]+/).filter((n) => n);
   const expressionTree = buildExpressionTree("", splitExp);
+
   return calculateExp(expressionTree, value);
 };
 

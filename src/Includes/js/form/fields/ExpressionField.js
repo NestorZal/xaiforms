@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 import calculateExpression from "../../utils/math/Expressions";
 
 const ExpressionField = (props) => {
-  const { tag, className, expression, defaultValue, style } = props;
+  const { tag, className, expression, defaultValue } = props;
   const { values } = useFormikContext();
 
   const Tag = tag || "div";
@@ -19,11 +19,7 @@ const ExpressionField = (props) => {
   let result = calculateExpression(exp);
   result = !result && defaultValue ? defaultValue : result;
 
-  return (
-    <Tag className={className} style={style}>
-      {result}
-    </Tag>
-  );
+  return <Tag className={className}>{result}</Tag>;
 };
 
 export default ExpressionField;

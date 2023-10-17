@@ -2,7 +2,14 @@ import React from "react";
 
 export const FormContext = React.createContext(null);
 const FormContextProvider = (props) => {
-  const { children, steps, step, setCurrentStep, isValidXaiForm, setCurrentValidXaiForm } = props;
+  const {
+    children,
+    steps,
+    step,
+    setCurrentStep,
+    isValidXaiForm,
+    setCurrentValidXaiForm,
+  } = props;
 
   const contextValues = React.useMemo(
     () => ({

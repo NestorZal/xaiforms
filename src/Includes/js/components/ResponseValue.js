@@ -4,10 +4,12 @@ import { getDeepValue } from "../utils/Helper";
 import { maskValue } from "../form/utils/InputCurrencyMask";
 
 const ResponseValue = (props) => {
-  const { name, className, format } = props;
+  const { name, className, format, tag } = props;
   const { response } = React.useContext(FormResponseContext);
 
   let value = getDeepValue(name, response);
+
+  const Tag = tag || "span";
 
   if (value) {
     if (format === "price") {
@@ -17,7 +19,7 @@ const ResponseValue = (props) => {
       value = value.toUpperCase();
     }
 
-    return <span className={className || null}>{value}</span>;
+    return <Tag className={className || null}>{value}</Tag>;
   }
 
   return null;

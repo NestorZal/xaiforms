@@ -5,7 +5,8 @@ import { FormContext } from "../../providers/FormContextProvider";
 
 const ButtonNext = (props) => {
   const { children, className } = props;
-  const { steps, step, setCurrentStep, isValidXaiForm } = React.useContext(FormContext);
+  const { steps, step, setCurrentStep, isValidXaiForm } =
+    React.useContext(FormContext);
   const { isValid, dirty } = useFormikContext();
 
   let isValidForm = false;
