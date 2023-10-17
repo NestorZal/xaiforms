@@ -6,7 +6,12 @@ import { TemplateContext } from "../providers/TemplateContextProvider";
 import FormContextProvider from "../providers/FormContextProvider";
 import FormResponseContextProvider from "../providers/FormResponseContextProvider";
 
-const handleSubmit = (values, formData, setCurrentFormStatus) => {
+const handleSubmit = (values, formData, setCurrentFormStatus, isValidXaiForm) => {
+  console.log(isValidXaiForm);
+  if (!isValidXaiForm) {
+    return false;
+  }
+
   setCurrentFormStatus("submitting");
 
   const { _wpnonce, _wp_http_referer, http_referer, ...data } = values;
@@ -67,7 +72,7 @@ const renderSteps = (steps, scrollTo) => {
 };
 
 const XaiFormComponent = (props) => {
-  const { children, steps, formValues, values, scrollTo } = props;
+  const { children, steps, formValues, values, scrollTo, isValidXaiForm, setCurrentValidXaiForm } = props;
   const { step, setCurrentStep } = renderSteps(steps, scrollTo);
 
   React.useEffect(() => {
@@ -80,6 +85,8 @@ const XaiFormComponent = (props) => {
       steps={steps}
       step={step}
       setCurrentStep={setCurrentStep}
+      isValidXaiForm={isValidXaiForm}
+      setCurrentValidXaiForm={setCurrentValidXaiForm}
     >
       {children}
     </FormContextProvider>
@@ -109,6 +116,14 @@ const XaiForm = ({ children, index, method, action, ...rest }) => {
     [formStatus],
   );
 
+  const [isValidXaiForm, setValidXaiForm] = React.useState(true);
+  const setCurrentValidXaiForm = React.useCallback(
+      (isValid) => {
+        setValidXaiForm(isValid);
+      },
+      [isValidXaiForm],
+  );
+
   switch (formStatus) {
     case "submitting":
       return <Spinner {...rest} />;
@@ -121,6 +136,7 @@ const XaiForm = ({ children, index, method, action, ...rest }) => {
               values,
               { method: method, endpoint: action },
               setCurrentFormStatus,
+                isValidXaiForm,
             );
           }}
         >
@@ -131,6 +147,8 @@ const XaiForm = ({ children, index, method, action, ...rest }) => {
                 formValues={formValues}
                 values={props.values}
                 scrollTo={scrollTo}
+                isValidXaiForm={isValidXaiForm}
+                setCurrentValidXaiForm={setCurrentValidXaiForm}
               >
                 {children}
               </XaiFormComponent>

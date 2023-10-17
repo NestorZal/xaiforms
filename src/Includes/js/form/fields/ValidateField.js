@@ -1,10 +1,12 @@
 import React from "react";
 import { useFormikContext } from "formik";
 import calculateExpression from "../../utils/math/Expressions";
+import { FormContext } from "../../providers/FormContextProvider";
 
 const ValidateField = (props) => {
   const { expression, className, ...rest } = props;
   const { values } = useFormikContext();
+  const { setCurrentValidXaiForm } = React.useContext(FormContext);
 
   let exp = expression;
   Object.keys(values).forEach((key) => {
@@ -25,9 +27,11 @@ const ValidateField = (props) => {
     ? rest["error-msg-expression"]
     : "";
   if (!calculateExpression(exp) && !firstRender.current) {
+    setCurrentValidXaiForm(false);
     return <div className="error">{error}</div>;
   }
 
+  setCurrentValidXaiForm(true);
   return null;
 };
 
