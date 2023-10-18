@@ -7,27 +7,26 @@ const ConditionField = (props) => {
   const { tag, className, expression, truetxt, falsetxt, fieldname } = props;
   const { values } = useFormikContext();
 
-  const Tag = tag || "div";
-
   let exp = expression;
   Object.keys(values).forEach((key) => {
     const field = `{${key}}`;
     if (exp.includes(field)) {
-      exp = exp.replace(field, values[key]);
+      exp = exp.replaceAll(field, values[key]);
     }
   });
 
   let result = "";
   const value = fieldname ? getDeepValue(fieldname, values) : null;
 
-  if (calculateExpression(exp)) {
+  if (calculateExpression(exp) && truetxt) {
     result = value ? truetxt.replace("%s", value) : truetxt;
-  } else {
+  } else if (falsetxt) {
     result = value ? falsetxt.replace("%s", value) : falsetxt;
   }
 
   if (result) {
-    return <Tag className={className}>{result}</Tag>;
+    const Tag = tag;
+    return tag ? <Tag className={className}>{result}</Tag> : result;
   }
 
   return null;

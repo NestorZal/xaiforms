@@ -2,8 +2,8 @@ import React from "react";
 import { useFormikContext } from "formik";
 import calculateExpression from "../../utils/math/Expressions";
 
-const ExpressionField = (props) => {
-  const { tag, className, expression, defaultValue } = props;
+const GroupConditionField = (props) => {
+  const { children, tag, className, expression } = props;
   const { values } = useFormikContext();
 
   let exp = expression;
@@ -14,15 +14,12 @@ const ExpressionField = (props) => {
     }
   });
 
-  let result = calculateExpression(exp);
-  result = !result && defaultValue ? defaultValue : result;
-
-  if (result) {
+  if (calculateExpression(exp)) {
     const Tag = tag;
-    return tag ? <Tag className={className}>{result}</Tag> : result;
+    return tag ? <Tag className={className}>{children}</Tag> : children;
   }
 
   return null;
 };
 
-export default ExpressionField;
+export default GroupConditionField;

@@ -19,6 +19,7 @@ import {
   ExpressionField,
   ValidateField,
   ConditionField,
+  GroupConditionField,
 } from "../form/fields";
 
 export const definedFields = [
@@ -68,6 +69,7 @@ export const definedComponents = {
   expressionfield: ExpressionField,
   validate: ValidateField,
   condition: ConditionField,
+  groupcondition: GroupConditionField,
 };
 
 export const getTagComponent = (tag, type) => {

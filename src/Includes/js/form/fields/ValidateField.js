@@ -12,7 +12,7 @@ const ValidateField = (props) => {
   Object.keys(values).forEach((key) => {
     const field = `{${key}}`;
     if (exp.includes(field)) {
-      exp = exp.replace(field, values[key]);
+      exp = exp.replaceAll(field, values[key]);
     }
   });
 

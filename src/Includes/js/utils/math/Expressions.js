@@ -3,22 +3,28 @@ const expressions = {
     if (typeof a === "string" && typeof b === "string") {
       return a.trim() === b.trim();
     }
-    return parseInt(a, 10) === parseInt(b, 10);
+    return Number(a) === Number(b);
   },
   rest: (a, b) => {
-    return parseInt(a, 10) % parseInt(b, 10);
+    return Number(a) % Number(b);
   },
   sum: (a, b) => {
-    return parseInt(a, 10) + parseInt(b, 10);
+    return Number(a) + Number(b);
+  },
+  subtract: (a, b) => {
+    return Number(a) - Number(b);
   },
   multiply: (a, b) => {
-    return parseInt(a, 10) * parseInt(b, 10);
+    return Number(a) * Number(b);
+  },
+  divide: (a, b) => {
+    return Number(a) / Number(b);
   },
   greaterThan: (a, b) => {
-    return parseInt(a, 10) > parseInt(b, 10);
+    return Number(a) > Number(b);
   },
   lessThan: (a, b) => {
-    return parseInt(a, 10) < parseInt(b, 10);
+    return Number(a) < Number(b);
   },
 };
 
@@ -80,8 +86,16 @@ const calculateExp = (expTree, value) => {
 };
 
 const calculateExpression = (expression, value = null) => {
-  const splitExp = expression.split(/[(,)]+/).filter((n) => n);
+  let splitExp = expression.split(/[(,)]+/).map(function (item) {
+    return item.trim();
+  });
+  splitExp = splitExp.filter((n) => n);
+
+  console.log(expression, splitExp);
+
   const expressionTree = buildExpressionTree("", splitExp);
+
+  console.log(expressionTree);
 
   return calculateExp(expressionTree, value);
 };

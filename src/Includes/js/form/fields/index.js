@@ -14,3 +14,4 @@ export { default as NumberField } from "./NumberField";
 export { default as ExpressionField } from "./ExpressionField";
 export { default as ValidateField } from "./ValidateField";
 export { default as ConditionField } from "./ConditionField";
+export { default as GroupConditionField } from "./GroupConditionField";
