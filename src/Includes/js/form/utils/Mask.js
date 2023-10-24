@@ -2,7 +2,12 @@ export const clearNumber = (number) => {
   if (typeof number === "number") {
     return number;
   }
-  return Number(number.toString().replace(/[^0-9-]/g, ""));
+  return Number(
+    number
+      .toString()
+      .replace(/[^0-9-]/g, "")
+      .replace("-", ""),
+  );
 };
 
 export const maskNumber = (number) => {
@@ -30,8 +35,7 @@ export const maskCurrency = (value) => {
 };
 
 const maskPhone = (value, format) => {
-  const emptyValue =
-    format === "international" ? "+1 (___) ___ ____" : "(___) ___ ____";
+  const emptyValue = format === "international" ? "+1 " : "";
   if (!value) {
     return emptyValue;
   }
@@ -45,37 +49,47 @@ const maskPhone = (value, format) => {
     return emptyValue;
   }
 
-  const length = stringNumber.length;
+  const { length } = stringNumber;
 
   let formattedNumber = format === "international" ? "+1 (" : "(";
   for (let i = 0; i < 10; i += 1) {
-    let digit = "_";
+    if (i > length - 1) {
+      break;
+    }
 
+    let digit = "";
     if (i < length) {
       digit = stringNumber[i];
+    }
+
+    if (i === 3) {
+      formattedNumber += " ";
+    }
+
+    if (i === 6) {
+      formattedNumber += " ";
     }
 
     formattedNumber += digit;
 
     if (i === 2) {
-      formattedNumber += ") ";
-    }
-    if (i === 5) {
-      formattedNumber += " ";
+      formattedNumber += ")";
     }
   }
 
   return formattedNumber;
 };
 
-export const getMaskedValue = (value, type, format) => {
+export const getMaskedValue = (value, prevValue, type, format) => {
   switch (type) {
     case "number":
     case "price":
     case "currency":
       return clearNumber(value);
     case "phone": {
-      const number = clearNumber(value);
+      let number = clearNumber(value);
+      const { length } = value.toString();
+
       if (!number) {
         return "";
       }
@@ -84,38 +98,14 @@ export const getMaskedValue = (value, type, format) => {
         return "";
       }
 
-      return number;
+      if (prevValue === number && length === 7) {
+        number = number.toString().slice(0, -1);
+      }
+
+      return Number(number);
     }
     default:
       return value;
-  }
-};
-
-export const setMaskPositionIfNeeded = (e, type, format) => {
-  if (type === "phone") {
-    const value = e.target.value;
-    const number = clearNumber(value);
-
-    let position = 1;
-    if (format === "international") {
-      position += 2;
-    }
-
-    if (number > 0) {
-      const length = number.toString().length;
-      position += length;
-
-      if (length >= 3) {
-        position += 2;
-      }
-
-      if (length >= 6) {
-        position += 1;
-      }
-    }
-
-    console.log(position, length, number, value, e.currentTarget);
-    e.target.setSelectionRange(position, position);
   }
 };
 

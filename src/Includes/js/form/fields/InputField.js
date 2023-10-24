@@ -3,7 +3,7 @@ import { Field, ErrorMessage } from "formik";
 import Label from "./Label";
 import { validateField, setCustomErrors } from "../utils/FieldsValidation";
 import HideShowInput from "../../components/HideShowInput";
-import mask, { setMaskPositionIfNeeded, getMaskedValue } from "../utils/Mask";
+import mask, { getMaskedValue } from "../utils/Mask";
 
 const InputField = (props) => {
   const { label, name, type, id, required, expression, format, ...rest } =
@@ -50,11 +50,8 @@ const InputField = (props) => {
                 onChange={(e) => {
                   setFieldValue(
                     name,
-                    getMaskedValue(e.target.value, type, format),
+                    getMaskedValue(e.target.value, field.value, type, format),
                   );
-                }}
-                onFocus={(e) => {
-                  setMaskPositionIfNeeded(e, type, format);
                 }}
                 {...(rest["placeholder-color"] && !field.value
                   ? {
