@@ -91,11 +91,7 @@ const calculateExpression = (expression, value = null) => {
   });
   splitExp = splitExp.filter((n) => n);
 
-  console.log(expression, splitExp);
-
   const expressionTree = buildExpressionTree("", splitExp);
-
-  console.log(expressionTree);
 
   return calculateExp(expressionTree, value);
 };

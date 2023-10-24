@@ -50,10 +50,12 @@ const handleSubmit = (
 
 const scrollTop = (scrollTo) => {
   if (scrollTo !== null) {
-    window.scrollTo({
-      top: scrollTo,
-      behavior: "smooth",
-    });
+    setTimeout(function () {
+      window.scrollTo({
+        top: scrollTo,
+        behavior: "smooth",
+      });
+    }, 10);
   }
 };
 

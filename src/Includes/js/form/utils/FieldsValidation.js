@@ -65,25 +65,14 @@ export const validateEmail = (name, value, required) => {
   return errorMessage;
 };
 
-export const validateField = (name, value) => {
-  let errorMessage;
-  const error = errors[name];
-
-  if (!value) {
-    errorMessage = error.required;
-  }
-
-  return errorMessage;
-};
-
-export const validateFieldNumber = (name, value, required, expression) => {
+export const validateField = (name, value, required, expression) => {
   const error = errors[name];
 
   if (required && !value) {
     return error.required;
   }
 
-  if (!calculateExpression(expression, value)) {
+  if (expression && !calculateExpression(expression, value)) {
     return error.expression;
   }
 
