@@ -1,10 +1,7 @@
 export { default as Button } from "./Button";
-export { default as CardCVC } from "./CardCVC";
-export { default as CardExpiryDate } from "./CardExpiryDate";
-export { default as CardNumber } from "./CardNumber";
+export { default as Card } from "./Card";
 export { default as FieldValue } from "./FieldValue";
 export { default as InputField } from "./InputField";
-export { default as Label } from "./Label";
 export { default as Select } from "./Select";
 export { default as ExpressionField } from "./ExpressionField";
 export { default as ValidateField } from "./ValidateField";

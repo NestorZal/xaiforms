@@ -4,10 +4,8 @@ import Tab from "../components/Tab";
 import FormResponse from "../components/FormResponse";
 import ResponseValue from "../components/ResponseValue";
 import {
+  Card,
   InputField,
-  CardNumber,
-  CardCVC,
-  CardExpiryDate,
   Button,
   Select,
   FieldValue,
@@ -17,38 +15,13 @@ import {
   GroupConditionField,
 } from "../form/fields";
 
-export const definedFields = [
-  "cardnumber",
-  "cvc",
-  "expirydate",
-  "input",
-  "select",
-  "textarea",
-];
+export const definedFields = ["card", "input", "select", "textarea"];
 
-export const definedTypes = [
-  "email",
-  "cardnumber",
-  "cvc",
-  "expirydate",
-  "price",
-  "button",
-  "submit",
-  "next",
-  "back",
-  "hidden",
-];
+const excludeTypes = ["hidden"];
 
 export const definedComponents = {
   input: InputField,
-  email: InputField,
-  cardnumber: CardNumber,
-  cvc: CardCVC,
-  expirydate: CardExpiryDate,
-  price: InputField,
-  next: Button,
-  back: Button,
-  submit: Button,
+  card: Card,
   button: Button,
   select: Select,
   fieldvalue: FieldValue,
@@ -64,6 +37,8 @@ export const definedComponents = {
 };
 
 export const getTagComponent = (tag, type) => {
-  const name = type && definedTypes.includes(type) ? type : tag;
-  return definedComponents[name] ? definedComponents[name] : tag;
+  if (excludeTypes.includes(type)) {
+    return tag;
+  }
+  return definedComponents[tag] ? definedComponents[tag] : tag;
 };

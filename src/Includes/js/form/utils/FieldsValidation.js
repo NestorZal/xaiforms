@@ -10,7 +10,7 @@ const defaultErrors = {
   field: {
     required: "Field is required",
   },
-  cardNumber: {
+  number: {
     required: "Please write your credit card number",
     invalid: "Please enter a valid credit card number",
   },
@@ -18,7 +18,7 @@ const defaultErrors = {
     required: "Please write the CVC number",
     invalid: "CVC number must have 3 digits long at least",
   },
-  expiryDate: {
+  expiry: {
     required: "Please insert an expiry date",
     invalid: "Please insert a valid expiry date",
   },
@@ -51,7 +51,7 @@ export const setCustomErrors = (name, props, type) => {
   }
 };
 
-export const validateField = ( field ) => {
+export const validateField = (field) => {
   const { name, value, required, expression, type } = field;
 
   const error = errors[name];
@@ -71,6 +71,17 @@ export const validateField = ( field ) => {
   }
 
   return null;
+};
+
+export const validateCard = (name, errorType) => {
+  let errorMessage;
+
+  const error = errors[name];
+  if (error) {
+    errorMessage = error[errorType];
+  }
+
+  return errorMessage;
 };
 
 export const validate = (name, type) => {

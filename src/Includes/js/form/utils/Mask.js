@@ -99,7 +99,7 @@ export const getMaskedValue = (value, prevValue, type, format) => {
       }
 
       const positionEndArea = format === "international" ? 7 : 4;
-      if ( prevValue === number && length === positionEndArea) {
+      if (prevValue === number && length === positionEndArea) {
         number = number.toString().slice(0, -1);
       }
 

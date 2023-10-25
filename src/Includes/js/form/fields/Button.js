@@ -3,9 +3,15 @@ import { useFormikContext } from "formik";
 import { FormContext } from "../../providers/FormContextProvider";
 
 const Button = (props) => {
-  const { children, className, type, "onclick-callback" : callback, ...rest } = props;
+  const {
+    children,
+    className,
+    type,
+    "onclick-callback": callback,
+    ...rest
+  } = props;
   const { steps, step, setCurrentStep, isValidXaiForm } =
-      React.useContext(FormContext);
+    React.useContext(FormContext);
 
   const { isValid, dirty } = useFormikContext();
   let isValidForm = false;
@@ -20,15 +26,13 @@ const Button = (props) => {
       const index = steps.indexOf(step);
 
       let newStep = null;
-      if ( type === "next" ) {
-
+      if (type === "next") {
         if (!isValidForm) {
           return false;
         }
 
         newStep = steps[index + 1] ? steps[index + 1] : null;
-      }
-      else if ( type === "back" ) {
+      } else if (type === "back") {
         newStep = steps[index - 1] ? steps[index - 1] : null;
       }
 
@@ -50,13 +54,12 @@ const Button = (props) => {
             onClick: () => {
               if (type === "next" || type === "back") {
                 handleOnClick();
-              }
-              else if (callback) {
+              } else if (callback) {
                 window[callback]();
-              }
-              else {
+              } else {
                 return false;
               }
+              return true;
             },
           }
         : "")}

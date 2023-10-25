@@ -1,6 +1,5 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
-import Label from "./Label";
 import { validateField, setCustomErrors } from "../utils/FieldsValidation";
 
 const Options = (props) => {
@@ -40,6 +39,8 @@ const Select = (props) => {
     placeholder,
     id,
     required,
+    "wrapper-class": wrapperClass,
+    "placeholder-color": placeholderColor,
     ...rest
   } = props;
 
@@ -48,14 +49,14 @@ const Select = (props) => {
   }
 
   return (
-    <div className={rest["wrapper-class"] ? rest["wrapper-class"] : null}>
-      {label ? <Label text={label} domId={id || null} /> : ""}
+    <div className={wrapperClass}>
+      {label ? <label htmlFor={id}>{label}</label> : ""}
       <Field
         name={name}
         {...(required
           ? {
               validate: (value) => {
-                return validateField({name, value});
+                return validateField({ name, value });
               },
             }
           : "")}
@@ -65,9 +66,9 @@ const Select = (props) => {
             id={id || null}
             className={className || null}
             {...field}
-            {...(rest["placeholder-color"] && !field.value
+            {...(placeholderColor && !field.value
               ? {
-                  style: { color: rest["placeholder-color"] },
+                  style: { color: placeholderColor },
                 }
               : "")}
           >

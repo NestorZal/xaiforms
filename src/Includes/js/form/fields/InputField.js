@@ -1,13 +1,22 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
-import Label from "./Label";
-import {validateField, setCustomErrors} from "../utils/FieldsValidation";
+import { validateField, setCustomErrors } from "../utils/FieldsValidation";
 import HideShowInput from "../../components/HideShowInput";
 import mask, { getMaskedValue } from "../utils/Mask";
 
 const InputField = (props) => {
-  const { label, name, type, id, required, expression, format, "wrapper-class" : wrapperClass, ...rest } =
-    props;
+  const {
+    label,
+    name,
+    type,
+    id,
+    required,
+    expression,
+    format,
+    "wrapper-class": wrapperClass,
+    "placeholder-color": placeholderColor,
+    ...rest
+  } = props;
 
   const errorType = type === "email" ? "email" : "field";
   setCustomErrors(name, rest, errorType);
@@ -18,21 +27,21 @@ const InputField = (props) => {
   }
 
   return (
-    <div className={wrapperClass || null}>
-      {label ? <Label text={label} domId={id || null} /> : ""}
+    <div className={wrapperClass}>
+      {label ? <label htmlFor={id}>{label}</label> : ""}
       <Field
         name={name}
         validate={(value) => {
-          return validateField({name, value, required, expression, type});
+          return validateField({ name, value, required, expression, type });
         }}
       >
         {({ field, form: { setFieldValue } }) => (
           <>
             {type === "hide-show-input" ? (
-              <HideShowInput id={id || null} type="text" {...rest} {...field} />
+              <HideShowInput id={id} type="text" {...rest} {...field} />
             ) : (
               <input
-                id={id || null}
+                id={id}
                 type={inputType}
                 {...rest}
                 {...field}
@@ -43,9 +52,9 @@ const InputField = (props) => {
                     getMaskedValue(e.target.value, field.value, type, format),
                   );
                 }}
-                {...(rest["placeholder-color"] && !field.value
+                {...(placeholderColor && !field.value
                   ? {
-                      style: { color: rest["placeholder-color"] },
+                      style: { color: placeholderColor },
                     }
                   : "")}
               />
