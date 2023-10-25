@@ -94,7 +94,7 @@ const Field = (props) => {
     );
   }
 
-  return null;
+  return cond ? <FieldElement value={val} {...props} /> : null;
 };
 
 export default Field;
