@@ -1,6 +1,4 @@
 export { default as Button } from "./Button";
-export { default as ButtonBack } from "./ButtonBack";
-export { default as ButtonNext } from "./ButtonNext";
 export { default as CardCVC } from "./CardCVC";
 export { default as CardExpiryDate } from "./CardExpiryDate";
 export { default as CardNumber } from "./CardNumber";
