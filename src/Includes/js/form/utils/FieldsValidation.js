@@ -51,25 +51,19 @@ export const setCustomErrors = (name, props, type) => {
   }
 };
 
-export const validateEmail = (name, value, required) => {
-  let errorMessage;
+export const validateField = ( field ) => {
+  const { name, value, required, expression, type } = field;
 
-  const error = errors[name];
-
-  if (!value) {
-    errorMessage = required ? error.required : null;
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    errorMessage = error.invalid;
-  }
-
-  return errorMessage;
-};
-
-export const validateField = (name, value, required, expression) => {
   const error = errors[name];
 
   if (required && !value) {
     return error.required;
+  }
+
+  if (type === "email" && value) {
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+      return error.invalid;
+    }
   }
 
   if (expression && !calculateExpression(expression, value)) {

@@ -4,7 +4,6 @@ export { default as ButtonNext } from "./ButtonNext";
 export { default as CardCVC } from "./CardCVC";
 export { default as CardExpiryDate } from "./CardExpiryDate";
 export { default as CardNumber } from "./CardNumber";
-export { default as EmailAddress } from "./EmailAddress";
 export { default as FieldValue } from "./FieldValue";
 export { default as InputField } from "./InputField";
 export { default as Label } from "./Label";

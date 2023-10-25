@@ -5,7 +5,6 @@ import FormResponse from "../components/FormResponse";
 import ResponseValue from "../components/ResponseValue";
 import {
   InputField,
-  EmailAddress,
   CardNumber,
   CardCVC,
   CardExpiryDate,
@@ -21,11 +20,9 @@ import {
 } from "../form/fields";
 
 export const definedFields = [
-  "email",
   "cardnumber",
   "cvc",
   "expirydate",
-  "price",
   "input",
   "select",
   "textarea",
@@ -46,7 +43,7 @@ export const definedTypes = [
 
 export const definedComponents = {
   input: InputField,
-  email: EmailAddress,
+  email: InputField,
   cardnumber: CardNumber,
   cvc: CardCVC,
   expirydate: CardExpiryDate,

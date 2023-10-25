@@ -55,7 +55,7 @@ const Select = (props) => {
         {...(required
           ? {
               validate: (value) => {
-                return validateField(name, value);
+                return validateField({name, value});
               },
             }
           : "")}
