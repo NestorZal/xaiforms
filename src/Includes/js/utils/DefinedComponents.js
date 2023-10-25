@@ -8,10 +8,8 @@ import {
   InputField,
   Button,
   Select,
-  FieldValue,
-  ExpressionField,
+  Field,
   ValidateField,
-  ConditionField,
   GroupConditionField,
 } from "../form/fields";
 
@@ -24,15 +22,13 @@ export const definedComponents = {
   card: Card,
   button: Button,
   select: Select,
-  fieldvalue: FieldValue,
+  field: Field,
   form: XaiForm,
   tab: Tab,
   step: Step,
   formresponse: FormResponse,
   responsevalue: ResponseValue,
-  expressionfield: ExpressionField,
   validate: ValidateField,
-  condition: ConditionField,
   groupcondition: GroupConditionField,
 };
 
