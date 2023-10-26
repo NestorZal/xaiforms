@@ -119,6 +119,8 @@ const mask = (value, type, format) => {
       return maskCurrency(value);
     case "phone":
       return maskPhone(value, format);
+    case "uppercase":
+      return value.toUpperCase();
     default:
       return value;
   }

@@ -1,10 +1,10 @@
 import React from "react";
 import { FormResponseContext } from "../providers/FormResponseContextProvider";
 import { getDeepValue } from "../utils/Helper";
-import { maskValue } from "../form/utils/InputCurrencyMask";
+import mask from "../form/utils/Mask";
 
 const ResponseValue = (props) => {
-  const { name, className, format, tag } = props;
+  const { name, className, type, tag } = props;
   const { response } = React.useContext(FormResponseContext);
 
   let value = getDeepValue(name, response);
@@ -12,13 +12,7 @@ const ResponseValue = (props) => {
   const Tag = tag || "span";
 
   if (value) {
-    if (format === "price") {
-      value = maskValue(value);
-    }
-    if (format === "uppercase") {
-      value = value.toUpperCase();
-    }
-
+    value = mask(value, type);
     return <Tag className={className || null}>{value}</Tag>;
   }
 

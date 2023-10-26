@@ -1,6 +1,6 @@
 import { useFormikContext } from "formik";
 import { getCardImage } from "../utils/FormHelper";
-import { getDeepValue } from "../../utils/Helper";
+import { getDeepValue, replaceExpressionValue } from "../../utils/Helper";
 import calculateExpression from "../../utils/math/Expressions";
 import mask from "../utils/Mask";
 
@@ -23,15 +23,13 @@ const getOptionLabel = (options, value) => {
   return optionLabel;
 };
 
-const FieldElement = ({ value, format, className, tag, options }) => {
-  if (value) {
+const FieldElement = ({ value, type, className, tag, options }) => {
+  if (value !== null) {
     const Tag = tag;
     const returnValue =
-      format === "select"
-        ? getOptionLabel(options, value)
-        : mask(value, format);
+      type === "select" ? getOptionLabel(options, value) : mask(value, type);
 
-    if (format === "cardnumber") {
+    if (type === "cardnumber") {
       const Element = Tag || "div";
       return (
         <Element className={`cc-number-review ${className || ""}`}>
@@ -47,54 +45,29 @@ const FieldElement = ({ value, format, className, tag, options }) => {
   return null;
 };
 
-const replaceValExp = (exp, values) => {
-  let expression = exp;
-  Object.keys(values).forEach((key) => {
-    const field = `{${key}}`;
-    if (expression.includes(field)) {
-      expression = expression.replaceAll(field, values[key]);
-    }
-  });
-
-  return expression;
-};
-
 const Field = (props) => {
-  const { name, value, defaultValue, condition, truetxt, falsetxt } = props;
+  const { name, value, defaultValue, condition, truetxt, falsetxt, ...rest } =
+    props;
   const { values } = useFormikContext();
 
-  let val = defaultValue;
+  let val = null;
   if (value) {
-    val = calculateExpression(replaceValExp(value, values));
+    val = calculateExpression(replaceExpressionValue(value, values));
   } else if (name) {
     val = getDeepValue(name, values);
   }
 
-  if (!condition) {
-    return <FieldElement value={val} {...props} />;
+  if (condition) {
+    const cond = calculateExpression(replaceExpressionValue(condition, values));
+    if (cond && truetxt) {
+      val = val ? truetxt.replace("%s", val) : truetxt;
+    } else if (falsetxt) {
+      val = val ? falsetxt.replace("%s", val) : falsetxt;
+    }
   }
 
-  const cond = condition
-    ? calculateExpression(replaceValExp(condition, values))
-    : false;
-  if (cond && truetxt) {
-    return (
-      <FieldElement
-        value={val ? truetxt.replace("%s", value) : truetxt}
-        {...props}
-      />
-    );
-  }
-  if (falsetxt) {
-    return (
-      <FieldElement
-        value={val ? falsetxt.replace("%s", value) : falsetxt}
-        {...props}
-      />
-    );
-  }
-
-  return cond ? <FieldElement value={val} {...props} /> : null;
+  val = !val && defaultValue ? defaultValue : val;
+  return <FieldElement value={val} {...rest} />;
 };
 
 export default Field;

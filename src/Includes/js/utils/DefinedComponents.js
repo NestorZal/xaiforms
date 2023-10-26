@@ -9,8 +9,7 @@ import {
   Button,
   Select,
   Field,
-  ValidateField,
-  GroupConditionField,
+  ConditionField,
 } from "../form/fields";
 
 export const definedFields = ["card", "input", "select", "textarea"];
@@ -28,8 +27,7 @@ export const definedComponents = {
   step: Step,
   formresponse: FormResponse,
   responsevalue: ResponseValue,
-  validate: ValidateField,
-  groupcondition: GroupConditionField,
+  condition: ConditionField,
 };
 
 export const getTagComponent = (tag, type) => {

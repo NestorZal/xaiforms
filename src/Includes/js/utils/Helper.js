@@ -61,3 +61,15 @@ export const getDeepValue = (inputName, values) => {
 
   return values[inputName] || null;
 };
+
+export const replaceExpressionValue = (exp, values) => {
+  let expression = exp;
+  Object.keys(values).forEach((key) => {
+    const field = `{${key}}`;
+    if (expression.includes(field)) {
+      expression = expression.replaceAll(field, values[key]);
+    }
+  });
+
+  return expression;
+};

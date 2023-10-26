@@ -11,7 +11,7 @@ const InputField = (props) => {
     type,
     id,
     required,
-    expression,
+    condition,
     format,
     "wrapper-class": wrapperClass,
     "placeholder-color": placeholderColor,
@@ -32,7 +32,7 @@ const InputField = (props) => {
       <Field
         name={name}
         validate={(value) => {
-          return validateField({ name, value, required, expression, type });
+          return validateField({ name, value, required, condition, type });
         }}
       >
         {({ field, form: { setFieldValue } }) => (

@@ -40,8 +40,8 @@ export const setCustomErrors = (name, props, type) => {
     customErrors.invalid = props["error-msg-invalid"];
   }
 
-  if (props["error-msg-expression"]) {
-    customErrors.expression = props["error-msg-expression"];
+  if (props["error-msg-condition"]) {
+    customErrors.condition = props["error-msg-condition"];
   }
 
   if (Object.keys(customErrors).length > 0) {
@@ -52,7 +52,7 @@ export const setCustomErrors = (name, props, type) => {
 };
 
 export const validateField = (field) => {
-  const { name, value, required, expression, type } = field;
+  const { name, value, required, condition, type } = field;
 
   const error = errors[name];
 
@@ -66,8 +66,8 @@ export const validateField = (field) => {
     }
   }
 
-  if (expression && !calculateExpression(expression, value)) {
-    return error.expression;
+  if (condition && !calculateExpression(condition, value)) {
+    return error.condition;
   }
 
   return null;
@@ -79,17 +79,6 @@ export const validateCard = (name, errorType) => {
   const error = errors[name];
   if (error) {
     errorMessage = error[errorType];
-  }
-
-  return errorMessage;
-};
-
-export const validate = (name, type) => {
-  let errorMessage;
-  const error = errors[name];
-
-  if (error) {
-    errorMessage = type ? error[type] : null;
   }
 
   return errorMessage;
