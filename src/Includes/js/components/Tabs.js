@@ -1,5 +1,3 @@
-import Button from "../form/fields/Button";
-
 const Tabs = (props) => {
   const { tabLabels, activeTab, setCurrentTab } = props;
 
@@ -14,14 +12,14 @@ const Tabs = (props) => {
               key={uniqueKey}
               className={`tab-item ${activeTab === tab ? "active" : ""}`}
             >
-              <Button
+              <button
                 type="button"
                 onClick={() => {
                   setCurrentTab(tab);
                 }}
               >
                 {tab}
-              </Button>
+              </button>
             </li>
           );
         })}

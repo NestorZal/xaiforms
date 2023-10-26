@@ -38,12 +38,11 @@ class PaymentGateways extends AdminPage
         $helper = new Helper();
         ?>
         <div class="wrap">
-
             <div class="render-template">
                 <tab label="FluidPay" class="active">
                     <?php
                     ob_start();
-                    load_template( XAIFORMS_DIR . 'src/Admin/templates/fluidpay-options.php' );
+                    load_template(XAIFORMS_DIR . 'src/Admin/templates/fluidpay-options.php');
 
                     $html = ob_get_clean();
                     ob_end_flush();
@@ -55,7 +54,6 @@ class PaymentGateways extends AdminPage
                      <h2>COMING SOON!</h2>
                 </tab>
             </div>
-
         </div>
         <?php
     }

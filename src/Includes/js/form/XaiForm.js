@@ -60,7 +60,7 @@ const scrollTop = (scrollTo) => {
 };
 
 const renderSteps = (steps, scrollTo) => {
-  if (steps.length === 0) {
+  if (steps.length === 0 || !steps) {
     return { step: null, setCurrentStep: null };
   }
 
