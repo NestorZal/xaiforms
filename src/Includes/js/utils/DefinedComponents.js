@@ -10,11 +10,13 @@ import {
   Select,
   Field,
   ConditionField,
+  Password,
 } from "../form/fields";
 
 export const definedFields = ["card", "input", "select", "textarea"];
 
 const excludeTypes = ["hidden"];
+const includeTypes = ["password"];
 
 export const definedComponents = {
   input: InputField,
@@ -28,11 +30,15 @@ export const definedComponents = {
   formresponse: FormResponse,
   responsevalue: ResponseValue,
   condition: ConditionField,
+  password: Password,
 };
 
 export const getTagComponent = (tag, type) => {
   if (excludeTypes.includes(type)) {
     return tag;
+  }
+  if (includeTypes.includes(type)) {
+    return definedComponents[type];
   }
   return definedComponents[tag] ? definedComponents[tag] : tag;
 };
