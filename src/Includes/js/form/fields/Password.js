@@ -1,5 +1,6 @@
 import React from "react";
 import { Field } from "formik";
+import { Icon, seen, unseen } from '@wordpress/icons';
 
 const errors = {
   required: "Field is required",
@@ -12,12 +13,35 @@ const errors = {
 
 const MessageError = ({ error }) => {
   const splitErrors = error.split("<br>").filter((n) => n);
+  if (splitErrors.length > 0) {
+    return (
+      <div className="error">
+        {splitErrors.map((el, index) => {
+          const uniqueKey = `error-${index}`;
+          return <span key={uniqueKey}>{el}</span>;
+        })}
+      </div>
+    );
+  }
+  return null;
+};
+
+const ShowHideBtn = ({currentType, setCurrentType}) => {
   return (
-    <div className="error">
-      {splitErrors.map((e) => (
-        <span>{e}</span>
-      ))}
-    </div>
+      <button
+          type="button"
+          onClick={() => {
+            if ( currentType === "password" ) {
+              setCurrentType("text");
+            } else {
+              setCurrentType("password");
+            }
+          }}
+      >
+        <Icon icon={ currentType === "text"
+            ? seen
+            : unseen } />
+      </button>
   );
 };
 
@@ -27,10 +51,11 @@ const Password = (props) => {
     label,
     name,
     type,
+    format,
     required,
     minLength,
     contains,
-    "show-all-errors": showAllErrors,
+    "show-errors": showErrors,
     "wrapper-class": wrapperClass,
     "placeholder-color": placeholderColor,
     ...rest
@@ -49,12 +74,7 @@ const Password = (props) => {
     }
 
     let error = "";
-    const all = !!contains.includes("all");
-
-    let showAll = true;
-    if (showAllErrors === null || showAllErrors === undefined) {
-      showAll = false;
-    }
+    const showAll = showErrors === "all";
 
     if (minLength && minLength > value.length) {
       if (showAll) {
@@ -64,22 +84,25 @@ const Password = (props) => {
       }
     }
 
-    const patterns = {
-      uppercase: /[A-Z]/,
-      digit: /\d/,
-      symbol: /\W/,
-      lowercase: /[a-z]/,
-    };
+    if (contains) {
+      const all = !!contains.includes("all");
+      const patterns = {
+        uppercase: /[A-Z]/,
+        digit: /\d/,
+        symbol: /\W/,
+        lowercase: /[a-z]/,
+      };
 
-    for (const key in patterns) {
-      if (patterns[key]) {
-        const pattern = patterns[key];
+      for (const key in patterns) {
+        if (patterns[key]) {
+          const pattern = patterns[key];
 
-        if ((contains.includes(key) || all) && !pattern.test(value)) {
-          if (showAll) {
-            error += `${errors[key]}<br>`;
-          } else {
-            return errors[key];
+          if ((contains.includes(key) || all) && !pattern.test(value)) {
+            if (showAll) {
+              error += `${errors[key]}<br>`;
+            } else {
+              return errors[key];
+            }
           }
         }
       }
@@ -87,6 +110,15 @@ const Password = (props) => {
 
     return error || null;
   };
+
+  const fieldType = format === "text" ? "text" : "password";
+  const [currentType, setType] = React.useState(fieldType);
+  const setCurrentType = React.useCallback(
+      (newType) => {
+        setType(newType);
+      },
+      [currentType],
+  );
 
   return (
     <div className={wrapperClass}>
@@ -99,17 +131,20 @@ const Password = (props) => {
       >
         {({ field, meta }) => (
           <>
-            <input
-              id={id}
-              type="text"
-              {...rest}
-              {...field}
-              {...(placeholderColor && !field.value
-                ? {
-                    style: { color: placeholderColor },
-                  }
-                : "")}
-            />
+            <div className="field-password">
+                <input
+                  id={id}
+                  type={currentType}
+                  {...rest}
+                  {...field}
+                  {...(placeholderColor && !field.value
+                    ? {
+                        style: { color: placeholderColor },
+                      }
+                    : "")}
+                />
+               { fieldType === "password" ? <ShowHideBtn currentType={currentType} setCurrentType={setCurrentType} /> : "" }
+            </div>
             {meta.touched && meta.error && <MessageError error={meta.error} />}
           </>
         )}
