@@ -1,6 +1,6 @@
 import React from "react";
 import { Field } from "formik";
-import { Icon, seen, unseen } from '@wordpress/icons';
+import { Icon, seen, unseen } from "@wordpress/icons";
 
 const errors = {
   required: "Field is required",
@@ -26,22 +26,20 @@ const MessageError = ({ error }) => {
   return null;
 };
 
-const ShowHideBtn = ({currentType, setCurrentType}) => {
+const ShowHideBtn = ({ currentType, setCurrentType, iconColor }) => {
   return (
-      <button
-          type="button"
-          onClick={() => {
-            if ( currentType === "password" ) {
-              setCurrentType("text");
-            } else {
-              setCurrentType("password");
-            }
-          }}
-      >
-        <Icon icon={ currentType === "text"
-            ? seen
-            : unseen } />
-      </button>
+    <button
+      type="button"
+      onClick={() => {
+        if (currentType === "password") {
+          setCurrentType("text");
+        } else {
+          setCurrentType("password");
+        }
+      }}
+    >
+      <Icon icon={currentType === "text" ? seen : unseen} fill={iconColor} />
+    </button>
   );
 };
 
@@ -57,6 +55,7 @@ const Password = (props) => {
     contains,
     "show-errors": showErrors,
     "wrapper-class": wrapperClass,
+    "icon-color": iconColor,
     "placeholder-color": placeholderColor,
     ...rest
   } = props;
@@ -114,10 +113,10 @@ const Password = (props) => {
   const fieldType = format === "text" ? "text" : "password";
   const [currentType, setType] = React.useState(fieldType);
   const setCurrentType = React.useCallback(
-      (newType) => {
-        setType(newType);
-      },
-      [currentType],
+    (newType) => {
+      setType(newType);
+    },
+    [currentType],
   );
 
   return (
@@ -132,18 +131,26 @@ const Password = (props) => {
         {({ field, meta }) => (
           <>
             <div className="field-password">
-                <input
-                  id={id}
-                  type={currentType}
-                  {...rest}
-                  {...field}
-                  {...(placeholderColor && !field.value
-                    ? {
-                        style: { color: placeholderColor },
-                      }
-                    : "")}
+              <input
+                id={id}
+                type={currentType}
+                {...rest}
+                {...field}
+                {...(placeholderColor && !field.value
+                  ? {
+                      style: { color: placeholderColor },
+                    }
+                  : "")}
+              />
+              {fieldType === "password" ? (
+                <ShowHideBtn
+                  iconColor={iconColor}
+                  currentType={currentType}
+                  setCurrentType={setCurrentType}
                 />
-               { fieldType === "password" ? <ShowHideBtn currentType={currentType} setCurrentType={setCurrentType} /> : "" }
+              ) : (
+                ""
+              )}
             </div>
             {meta.touched && meta.error && <MessageError error={meta.error} />}
           </>
