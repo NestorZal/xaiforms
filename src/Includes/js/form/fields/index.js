@@ -5,3 +5,4 @@ export { default as InputField } from "./InputField";
 export { default as Select } from "./Select";
 export { default as ConditionField } from "./ConditionField";
 export { default as Password } from "./Password";
+export { default as Textarea } from "./Textarea";

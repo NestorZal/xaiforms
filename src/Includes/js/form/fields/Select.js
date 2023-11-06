@@ -63,8 +63,8 @@ const Select = (props) => {
       >
         {({ field }) => (
           <select
-            id={id || null}
-            className={className || null}
+            id={id}
+            className={className}
             {...field}
             {...(placeholderColor && !field.value
               ? {

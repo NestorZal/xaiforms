@@ -11,6 +11,7 @@ import {
   Field,
   ConditionField,
   Password,
+  Textarea,
 } from "../form/fields";
 
 export const definedFields = ["card", "input", "select", "textarea"];
@@ -31,6 +32,7 @@ export const definedComponents = {
   responsevalue: ResponseValue,
   condition: ConditionField,
   password: Password,
+  textarea: Textarea,
 };
 
 export const getTagComponent = (tag, type) => {
