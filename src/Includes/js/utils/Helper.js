@@ -73,3 +73,17 @@ export const replaceExpressionValue = (exp, values) => {
 
   return expression;
 };
+
+export const expRequireFieldValues = (exp, values) => {
+  const fields = Object.keys(values);
+  for (let i = 0; i < fields.length; i += 1) {
+    let field = fields[i];
+    field = `{${field}}`;
+
+    if (exp.includes(field)) {
+      return true;
+    }
+  }
+
+  return false;
+};

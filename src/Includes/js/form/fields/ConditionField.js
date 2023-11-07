@@ -2,19 +2,19 @@ import React from "react";
 import { useFormikContext } from "formik";
 import calculateExpression from "../../utils/math/Expressions";
 import { FormContext } from "../../providers/FormContextProvider";
-import { replaceExpressionValue } from "../../utils/Helper";
+import {
+  replaceExpressionValue,
+  expRequireFieldValues,
+} from "../../utils/Helper";
 
-const ValidateCondition = ({ condition, error }) => {
-  const { setCurrentValidXaiForm } = React.useContext(FormContext);
+const ValidateCondition = ({ condition, error, exp, values }) => {
+  const { setCurrentValidXaiForm, firstRender } = React.useContext(FormContext);
 
-  const firstRender = React.useRef(true);
-  React.useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
+  if (!condition) {
+    if (expRequireFieldValues(exp, values) && firstRender) {
+      return null;
     }
-  });
 
-  if (!condition && !firstRender.current) {
     setCurrentValidXaiForm(false);
     return <div className="error">{error}</div>;
   }
@@ -34,11 +34,23 @@ const GroupCondition = ({ children, condition, tag, className }) => {
 
 const ConditionField = (props) => {
   const { children, cond, type, "error-msg-condition": error, ...rest } = props;
+
+  if (!cond) {
+    return null;
+  }
+
   const { values } = useFormikContext();
 
   const condition = calculateExpression(replaceExpressionValue(cond, values));
   if (type === "validate") {
-    return <ValidateCondition condition={condition} error={error} />;
+    return (
+      <ValidateCondition
+        condition={condition}
+        error={error}
+        exp={cond}
+        values={values}
+      />
+    );
   }
 
   return (

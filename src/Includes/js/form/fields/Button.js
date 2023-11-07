@@ -13,21 +13,19 @@ const Button = (props) => {
   const { steps, step, setCurrentStep, isValidXaiForm } =
     React.useContext(FormContext);
 
-  const { isValid, dirty } = useFormikContext();
-  let isValidForm = false;
-  if (isValid && dirty && isValidXaiForm) {
-    isValidForm = true;
-  }
+  const { validateForm } = useFormikContext();
 
   const typeButton = type === "submit" ? "submit" : "button";
 
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     if (steps) {
       const index = steps.indexOf(step);
 
       let newStep = null;
       if (type === "next") {
-        if (!isValidForm) {
+        const errors = await validateForm();
+
+        if (Object.keys(errors).length || !isValidXaiForm) {
           return false;
         }
 
@@ -64,7 +62,6 @@ const Button = (props) => {
           }
         : "")}
       {...rest}
-      {...(type === "next" && !isValidForm ? { disabled: "disabled" } : "")}
     >
       {children}
     </ButtonComponent>

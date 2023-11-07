@@ -89,10 +89,16 @@ const XaiFormComponent = (props) => {
   } = props;
   const { step, setCurrentStep } = renderSteps(steps, scrollTo);
 
+  const firstRender = React.useRef(true);
+
   React.useEffect(() => {
     /* eslint no-param-reassign: "error" */
     formValues.current = values;
-  }, [values]);
+
+    if (firstRender.current) {
+      firstRender.current = false;
+    }
+  }, [values, firstRender.current]);
 
   return (
     <FormContextProvider
@@ -101,6 +107,7 @@ const XaiFormComponent = (props) => {
       setCurrentStep={setCurrentStep}
       isValidXaiForm={isValidXaiForm}
       setCurrentValidXaiForm={setCurrentValidXaiForm}
+      firstRender={firstRender.current}
     >
       {children}
     </FormContextProvider>

@@ -9,6 +9,7 @@ const FormContextProvider = (props) => {
     setCurrentStep,
     isValidXaiForm,
     setCurrentValidXaiForm,
+    firstRender,
   } = props;
 
   const contextValues = React.useMemo(
@@ -18,8 +19,9 @@ const FormContextProvider = (props) => {
       setCurrentStep: setCurrentStep,
       isValidXaiForm: isValidXaiForm,
       setCurrentValidXaiForm: setCurrentValidXaiForm,
+      firstRender: firstRender,
     }),
-    [step, isValidXaiForm],
+    [step, isValidXaiForm, firstRender],
   );
 
   return (
