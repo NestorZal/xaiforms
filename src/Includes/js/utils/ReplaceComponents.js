@@ -81,6 +81,10 @@ const setOptions = (component, formIndex) => {
     const stepName = `step-${currentForm.indexStep}`;
 
     currentForm.steps.push(stepName);
+
+    if (label) {
+      currentForm.stepLabels.push(label);
+    }
   }
 
   if (tag === "formresponse") {
@@ -131,6 +135,7 @@ replaceComponent = (component, formIndex) => {
       options.forms[currentFormIndex] = {
         fieldValues: {},
         steps: [],
+        stepLabels: [],
         indexStep: 0,
         formResponse: {},
       };

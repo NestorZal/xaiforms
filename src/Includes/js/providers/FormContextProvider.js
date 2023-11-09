@@ -5,6 +5,7 @@ const FormContextProvider = (props) => {
   const {
     children,
     steps,
+    stepLabels,
     step,
     setCurrentStep,
     isValidXaiForm,
@@ -15,6 +16,7 @@ const FormContextProvider = (props) => {
   const contextValues = React.useMemo(
     () => ({
       steps: steps,
+      stepLabels: stepLabels,
       step: step,
       setCurrentStep: setCurrentStep,
       isValidXaiForm: isValidXaiForm,

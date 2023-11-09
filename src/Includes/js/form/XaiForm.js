@@ -81,6 +81,7 @@ const XaiFormComponent = (props) => {
   const {
     children,
     steps,
+    stepLabels,
     formValues,
     values,
     scrollTo,
@@ -103,6 +104,7 @@ const XaiFormComponent = (props) => {
   return (
     <FormContextProvider
       steps={steps}
+      stepLabels={stepLabels}
       step={step}
       setCurrentStep={setCurrentStep}
       isValidXaiForm={isValidXaiForm}
@@ -165,6 +167,7 @@ const XaiForm = ({ children, index, method, action, ...rest }) => {
             <Form>
               <XaiFormComponent
                 steps={currentForm.steps}
+                stepLabels={currentForm.stepLabels}
                 formValues={formValues}
                 values={props.values}
                 scrollTo={scrollTo}

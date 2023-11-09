@@ -1,17 +1,21 @@
 import React from "react";
+import Steps from "./Steps";
 import { FormContext } from "../providers/FormContextProvider";
 
 const Step = (props) => {
-  const { name, className, children } = props;
-  const { step } = React.useContext(FormContext);
+  const { children, name, className, label } = props;
+  const { step, stepLabels } = React.useContext(FormContext);
 
   if (step !== name) {
     return null;
   }
 
   return (
-    <div id={name} className={`step ${className || ""}`}>
-      {children}
+    <div className="step-wrapper">
+      <Steps stepLabels={stepLabels} activeStep={label} />
+      <div id={name} className={`step ${className || ""}`}>
+        {children}
+      </div>
     </div>
   );
 };
