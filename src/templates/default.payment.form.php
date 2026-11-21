@@ -2,9 +2,9 @@
 $fluidpay_options = new \XaiForms\Gateway\FluidPay\FluidPayOption();
 $fluidpay_route = new \XaiForms\Gateway\FluidPay\FluidPayRoute();
 ?>
-<div style="margin-bottom: 30px; color: #00a0d2; font-size: 24px; ">TESTING FORM</div>
+<div style="margin-bottom: 30px; color: #00a0d2; font-size: 24px; ">Payment form</div>
 
-<form method="post" action="<?php echo $fluidpay_route->get_route_url('charge_transaction'); ?>">
+<form method="post" action="<?php echo esc_url( $fluidpay_route->get_route_url('charge_transaction') ); ?>">
     <?php $fluidpay_options->nonce_field(); ?>
     <email name="billing_address[email]" label="Your Email" wrapper-class="email-address" required error-msg-required="Your email is required." error-msg-invalid="Your email is invalid. Please try again!"/>
 
@@ -35,16 +35,16 @@ $fluidpay_route = new \XaiForms\Gateway\FluidPay\FluidPayRoute();
     <button type="submit">Pay now!</button>
 
     <formresponse status="success">
-        Thank you! You will receive an email soon with more instructions <responsevalue name="data[billing_address][first_name]"> <responsevalue name="data[billing_address][last_name]"> then we go where ever you want.
+        Thank you! <responsevalue name="data[billing_address][first_name]"> <responsevalue name="data[billing_address][last_name]"> Thank you for your payment.
     </formresponse>
     <formresponse status="declined">
-        Hey <responsevalue name="billingName">, YOur credit card was declined
+        Hey <responsevalue name="billingName">, Your credit card was declined
     </formresponse>
     <formresponse status="failed">
-        there was an error in your application: <responsevalue name="msg">
+        There was an error with your payment: <responsevalue name="msg">
     </formresponse>
     <formresponse status="error">
-        there was an error in your application
+        There was an error with your payment.
     </formresponse>
 
 </form>

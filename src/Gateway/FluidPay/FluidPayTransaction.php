@@ -62,7 +62,7 @@ class FluidPayTransaction extends FluidPay
         $params = $request->get_params();
 
         if ( !is_user_logged_in() ) {
-            $nonce = $params[$this->fluidpay_option->nonce_name()];
+            $nonce = $params[$this->fluidpay_option->nonce_name()] ?? '';
 
             if ( !wp_verify_nonce( $nonce, $this->fluidpay_option->nonce_action() ) ) {
                 return new \WP_Error(400, 'Invalid transaction', array('status' => 'failed'));
